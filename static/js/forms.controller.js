@@ -18,7 +18,7 @@
                 $localForage.getItem('user').then(function (data) {
                     if (data) {
                         if (!!data.id) {
-                            $location.url('/home')
+                            $location.url('/')
                         }
                     } else {
                         $location.url('/login')
@@ -55,7 +55,7 @@
             $localForage.getItem('user').then(function (data) {
                 if (data) {
                     if (!!data.id) {
-                        $location.url('/home')
+                        $location.url('/')
                     }
                 } else {
                     $location.url('/login')
