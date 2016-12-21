@@ -13,7 +13,7 @@
                 .then(function (data) {
                     $localForage.setItem('user', data.data)
 
-                    $location.url('/home')
+                    $location.url('/')
             },
              function () {
                $scope.login_error = 'Invalid Username/password'
@@ -26,7 +26,7 @@
                 if (data){
                     var active = !!data.id
                     if (active){
-                        $location.url('/home')
+                        $location.url('/')
                     }
                 }
             })
