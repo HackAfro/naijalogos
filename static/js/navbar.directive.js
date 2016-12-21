@@ -20,6 +20,24 @@
 
                     $location.url('/login')
                 };
+                $scope.notifcations = 0;
+                var total = 0
+                function gatherNotifications(){
+                    $http.get('/office/vendors/').then(function (response) {
+                        var data = response.data
+                        for(var i; i<data.length; i++){
+                            if(!data[i].is_approved){
+                                alert('yes')
+                                total++
+                            }else {
+                                alert('no')
+                            }
+                        }
+                    },
+                    function (status) {
+                        return;
+                    })
+                }
 
                 $scope.profile= function () {
                     $location.url('/profile')

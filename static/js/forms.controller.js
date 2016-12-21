@@ -63,4 +63,24 @@
             })
         }
     }])
+
+    office.controller('homeCtrl',['$scope',function ($scope) {
+        $scope.editingVendor = false;
+        $scope.editingImprest = false
+
+        $scope.isEditingVendor = function () {
+            $scope.editingVendor = !$scope.editingVendor
+            $scope.editingImprest = false;
+        }
+        $scope.isEditingImprest = function () {
+            $scope.editingImprest = !$scope.editingImprest
+            $scope.editingVendor = false;
+        }
+
+        $scope.cancelEditing = function () {
+            $scope.editingVendor = false;
+            $scope.editingImprest = false
+        }
+
+    }])
 })();

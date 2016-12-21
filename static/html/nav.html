@@ -7,8 +7,9 @@
 
     <div class="right menu">
 
-        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="profile()">
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="profile()" ng-init="number=2">
             <i class="world icon"></i>
+            <div class="floating ui red label" ng-show="number>1" style="font-size: 0.7rem; top: .2rem; left: 80%; padding: .2rem">{{number}}</div>
         </a>
 
         <a class="item" style="margin-top: 5px; font-size: 1.3rem">

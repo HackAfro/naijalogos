@@ -1,43 +1,107 @@
 <nav-bar></nav-bar>
-<h2 class="ui purple centered header" style="margin-top: 100px">Notifications</h2>
-<div class="ui grid">
-    <div class="two wide column"></div>
+<div class="container">
+    <h2 class="ui purple centered header" style="margin-top: 100px">Notifications</h2>
+    <div class="ui grid">
+        <div class="three wide column"></div>
 
-    <div class="sixteen wide column">
-        <div class="ui segment">
-            <h3 class="ui purple centered header">Recent Imprest Forms</h3>
-            <div class="ui divided items" ng-controller="getImprestCtrl">
-                <div class="item" ng-repeat="imprest in data" ng-if="!imprest.is_approved">
-                    <div class="content">
-                        <a class="header">
-                            Imprest
-                        </a>
+        <div class="sixteen wide column">
+            <div class="ui segment">
+                <h3 class="ui purple centered header">Recent Imprest Forms</h3>
+                <div class="ui divided items" ng-controller="getImprestCtrl">
+                    <div class="item" ng-repeat="imprest in data" ng-if="!imprest.is_approved">
+                        <div class="content">
+                            <a class="header">
+                                Imprest
+                            </a>
 
-                        <div class="meta">
-                            Amount: {{ imprest.amount }}
+                            <div class="meta">
+                                Amount: {{ imprest.amount }}
+                            </div>
+                            <div class="description">
+                                {{ imprest.description }}
+                            </div>
+                            <div class="extra">
+                                <p class="ui black label">raised by <span style="text-transform: capitalize">{{imprest.raised_by.username}}</span></p>
+                                <button class="circular ui right floated green icon button" ng-click="accept(imprest)">
+                                    <i class="check icon"></i>
+                                </button>
+                                <button class="circular ui right floated red icon button">
+                                    <i class="close icon"></i>
+                                </button>
+
+                                <button class="circular ui right floated icon button" ng-click="isEditing=true">
+                                    <i class="pencil icon"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="description">
-                            {{ imprest.description }}
-                        </div>
-                        <div class="extra">
-                            <p class="ui black label">raised by {{ imprest.raised_by.username }}</p>
-                            <button class="circular ui right floated green icon button" ng-click="accept(imprest)">
-                                <i class="check icon"></i>
-                            </button>
-                            <button class="circular ui right floated red icon button">
-                                <i class="close icon"></i>
-                            </button>
 
-                            <button class="circular ui right floated icon button">
-                                <i class="pencil icon"></i>
-                            </button>
+                        <form class="ui form" ng-submit="" id="editIm" novalidate ng-show="isEditing" ng-model-options="modelOptions">
+                            <div class="ui blue header">Edit Imprest</div>
+                            <div class="field">
+                                <label>Description</label>
+                                <textarea placeholder="Description...." ng-model="imprest.description" ng-change="update(imprest)" required></textarea>
+                            </div>
+
+                            <div class="field">
+                                <label>Amount</label>
+                                <input type="tel" placeholder="Amount" ng-model="imprest.amount" ng-change="update(imprest)" required>
+                            </div>
+
+                            <button class="positive ui button right floated" type="submit" ng-click="isEditing=false">Save</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="sixteen wide column" ng-controller="getVendorCtrl">
+
+            <div class="ui segment">
+                <h3 class="ui red centered header">Vendor Remittance Forms</h3>
+
+                <div class="ui divided items">
+                    <div class="item" ng-repeat="vendor in vendors" ng-if="!vendor.is_approved">
+                        <div class="content">
+                            <a class="header">{{vendor.vendor_name}}</a>
+
+                            <div class="right floated meta">
+                                <span class="right floated date">{{vendor.delivery_date | date}}</span><br>
+                                <span class="right floated category">{{vendor.amount_due}} - {{vendor.current_payment}}</span><br>
+                                <span class="right floated category"> = {{vendor.outstanding_balance}}</span>
+                            </div>
+
+                            <div class="meta">
+                                <span class="category">Acc.no:  {{vendor.account_details}}</span><br>
+                                <span class="category">{{vendor.bank_name}}</span>
+                            </div>
+
+
+                            <div class="description">
+                                <p>{{vendor.job_description}}</p>
+                            </div>
+
+                            <div class="extra">
+                                <div class="ui violet label">Prepared by <span style="text-transform: capitalize">{{vendor.prepared_by.username}}</span></div>
+                                <div class="right floated ui blue label">{{vendor.quantity}} Units</div>
+                            </div>
+
+                            <div class="extra">
+                                <div class="right floated ui green basic circular icon button" ng-click="accept(vendor)">
+                                    <i class="check icon"></i>
+                                </div>
+                                <div class="right floated ui red basic circular icon button">
+                                    <i class="close icon"></i>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 <notify-bar></notify-bar>

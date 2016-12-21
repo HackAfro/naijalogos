@@ -1,6 +1,6 @@
 <nav-bar></nav-bar>
 
-<div class="container" ng-init="imprestForm=false; vendorForm=false;">
+<div class="container" ng-controller="homeCtrl">
     <h1 class="ui centered header" style="margin-top: 200px">
         Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
     </h1>
@@ -14,7 +14,7 @@
                     Fill the form to raise an imprest. Your form will be sent for approval
                 </div>
             </div>
-            <div class="ui bottom purple attached button" ng-click="imprestForm=!imprestForm; vendorForm=false">
+            <div class="ui bottom purple attached button" ng-click="isEditingImprest()">
                 <i class="arrow up icon"></i>
                 Raise Imprest
             </div>
@@ -28,14 +28,14 @@
                     an ongoing request
                 </div>
             </div>
-            <div class="ui bottom attached button" ng-click="vendorForm=!vendorForm; imprestForm=false">
+            <div class="ui bottom attached button" ng-click="isEditingVendor()">
                 <i class="pencil icon"></i>
                 Vendor Remittance Form
             </div>
         </div>
     </div>
 
-    <div class="ui centered grid" ng-show="imprestForm" ng-controller="imprestCtrl" style="margin-top: 15px">
+    <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Raise Imprest</h2>
@@ -51,7 +51,7 @@
                     <input type="tel" placeholder="Amount" ng-model="imprest.amount" required>
                 </div>
 
-                <button class="positive ui button right floated" type="submit">Submit</button>
+                <button class="positive ui button right floated" type="submit" ng-click="cancelEditing()">Submit</button>
             </form>
 
 
@@ -59,12 +59,12 @@
     </div>
 
 
-    <div class="ui centered grid" ng-show="vendorForm" style="margin-top: 15px" ng-controller="vendorCtrl">
+    <div class="ui centered grid" ng-show="editingVendor" style="margin-top: 15px" ng-controller="vendorCtrl">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Create A Vendor Remittance Form </h2>
 
-            <form class="ui form" ng-submit="addVendor()">
+            <form class="ui form" ng-submit="addVendor()" id="veForm" name="veForm">
                 <h4 class="ui dividing header">Vendor Details</h4>
                 <div class="field">
                     <label>Name</label>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
 
-                <button class="positive ui button right floated" type="submit">Submit</button>
+                <button class="positive ui button right floated" type="submit" ng-click="cancelEditing()">Submit</button>
             </form>
 
 

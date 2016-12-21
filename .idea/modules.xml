@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/naijalogos.iml" filepath="$PROJECT_DIR$/.idea/naijalogos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../office/.idea/office.iml" filepath="$PROJECT_DIR$/../office/.idea/office.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../git/.idea/naijalogos.iml" filepath="$PROJECT_DIR$/../git/.idea/naijalogos.iml" />
     </modules>
   </component>
 </project>

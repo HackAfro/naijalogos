@@ -10,13 +10,35 @@
             $scope.user = data
         });
 
-        $scope.data = {};
+        $scope.editingImprest = false
 
+        $scope.isEditingImprest = function () {
+            $scope.editingImprest = !$scope.editingImprest
+        }
+        $scope.cancelEditing = function () {
+            $scope.editingImprest = false
+        }
 
-        $http.get('/office/imprests/').then(function (response) {
-            $scope.data = response.data
+        $scope.update = function (imprest) {
+            $http.put(
+                '/office/imprests/' + imprest.id + '/',
+                imprest
+            )
+        };
+        $scope.modelOptions = {
+            debounce: 1000
+        };
 
-        });
+        $scope.data = [];
+
+        function retrieve() {
+            $http.get('/office/imprests/').then(function (response) {
+                $scope.data = response.data
+            });
+        }
+
+        retrieve()
+
 
         $scope.accept = function (imprest) {
             imprest.is_approved = true
@@ -31,5 +53,22 @@
                 }
             })
         }
+    }])
+
+    office.controller('getVendorCtrl', ['$scope', '$http',function ($scope, $http) {
+
+        $scope.vendors = []
+
+        retrieve()
+        function retrieve() {
+            $http.get('/office/vendors/').then(function (response) {
+                $scope.vendors = response.data
+            })
+        }
+
+        $scope.accept = function (form) {
+            form.is_approved = true
+            $http.put('/office/vendor/' + form.id+'/', form)
+        };
     }])
 })();
