@@ -13,3 +13,6 @@ body > .grid {
 .ng-valid.ng-dirty{
   border-color: green;
 }
+.ui.menu .item{
+    padding: 10px
+}
