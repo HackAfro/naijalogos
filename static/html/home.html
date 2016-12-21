@@ -14,7 +14,7 @@
                     Fill the form to raise an imprest. Your form will be sent for approval
                 </div>
             </div>
-            <div class="ui bottom purple attached button" ng-click="imprestForm=!imprestForm; vendorForm=!ivendorForm">
+            <div class="ui bottom purple attached button" ng-click="imprestForm=!imprestForm; vendorForm=false">
                 <i class="arrow up icon"></i>
                 Raise Imprest
             </div>
@@ -28,7 +28,7 @@
                     an ongoing request
                 </div>
             </div>
-            <div class="ui bottom attached button" ng-click="vendorForm=!vendorForm; imprestForm=!imprestForm">
+            <div class="ui bottom attached button" ng-click="vendorForm=!vendorForm; imprestForm=false">
                 <i class="pencil icon"></i>
                 Vendor Remittance Form
             </div>
@@ -51,7 +51,7 @@
                     <input type="tel" placeholder="Amount" ng-model="imprest.amount" required>
                 </div>
 
-                <button class="positive ui button right floated" type="submit" ng-click="imprestForm=!imprestForm">Submit</button>
+                <button class="positive ui button right floated" type="submit">Submit</button>
             </form>
 
 
@@ -135,7 +135,7 @@
                     </div>
                 </div>
 
-                <button class="positive ui button right floated" type="submit" ng-click="vendorForm=!vendorForm">Submit</button>
+                <button class="positive ui button right floated" type="submit">Submit</button>
             </form>
 
 
