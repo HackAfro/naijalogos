@@ -26,7 +26,7 @@
                 }
 
                 $scope.home = function () {
-                    $location.url('/home')
+                    $location.url('/')
                 }
             }],
             controllerAs: 'navbarCtrl'
