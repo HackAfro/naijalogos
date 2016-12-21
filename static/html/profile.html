@@ -1,0 +1,43 @@
+<nav-bar></nav-bar>
+<h2 class="ui purple centered header" style="margin-top: 100px">Notifications</h2>
+<div class="ui grid">
+    <div class="two wide column"></div>
+
+    <div class="sixteen wide column">
+        <div class="ui segment">
+            <h3 class="ui purple centered header">Recent Imprest Forms</h3>
+            <div class="ui divided items" ng-controller="getImprestCtrl">
+                <div class="item" ng-repeat="imprest in data" ng-if="!imprest.is_approved">
+                    <div class="content">
+                        <a class="header">
+                            Imprest
+                        </a>
+
+                        <div class="meta">
+                            Amount: {{ imprest.amount }}
+                        </div>
+                        <div class="description">
+                            {{ imprest.description }}
+                        </div>
+                        <div class="extra">
+                            <p class="ui black label">raised by {{ imprest.raised_by.username }}</p>
+                            <button class="circular ui right floated green icon button" ng-click="accept(imprest)">
+                                <i class="check icon"></i>
+                            </button>
+                            <button class="circular ui right floated red icon button">
+                                <i class="close icon"></i>
+                            </button>
+
+                            <button class="circular ui right floated icon button">
+                                <i class="pencil icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<notify-bar></notify-bar>

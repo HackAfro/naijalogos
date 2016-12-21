@@ -1,0 +1,24 @@
+<div class="ui fixed inverted menu">
+
+    <a class="item" style="margin-right: 1.5rem" ng-click="home()">
+        <img ng-src="/static/images/naijalogos.png" class="ui image" height="30px">
+    </a>
+
+
+    <div class="right menu">
+
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="profile()">
+            <i class="world icon"></i>
+        </a>
+
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem">
+            <i class="user icon"></i>
+            {{user.username}}
+        </a>
+
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="logout()">
+            <i class="sign out icon"></i>
+            Logout
+        </a>
+    </div>
+</div>

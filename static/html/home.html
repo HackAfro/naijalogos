@@ -1,0 +1,146 @@
+<nav-bar></nav-bar>
+
+<div class="container" ng-init="imprestForm=false; vendorForm=false;">
+    <h1 class="ui centered header" style="margin-top: 200px">
+        Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
+    </h1>
+
+
+    <div class="ui centered cards">
+        <div class="card">
+            <div class="content">
+                <div class="header">Raise Imprest</div>
+                <div class="description">
+                    Fill the form to raise an imprest. Your form will be sent for approval
+                </div>
+            </div>
+            <div class="ui bottom purple attached button" ng-click="imprestForm=!imprestForm; vendorForm=!ivendorForm">
+                <i class="arrow up icon"></i>
+                Raise Imprest
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <div class="header">Vendor Remittance Form</div>
+                <div class="description">
+                    Submit a vendor remittance form with details about
+                    an ongoing request
+                </div>
+            </div>
+            <div class="ui bottom attached button" ng-click="vendorForm=!vendorForm; imprestForm=!imprestForm">
+                <i class="pencil icon"></i>
+                Vendor Remittance Form
+            </div>
+        </div>
+    </div>
+
+    <div class="ui centered grid" ng-show="imprestForm" ng-controller="imprestCtrl" style="margin-top: 15px">
+
+        <div class="ui four column grid" style="background: #d0d0d0">
+            <h2 class="ui purple header">Raise Imprest</h2>
+
+            <form class="ui form" ng-submit="addImprest()" id="imForm" name="imForm" novalidate>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea placeholder="Description...." ng-model="imprest.description" required></textarea>
+                </div>
+
+                <div class="field">
+                    <label>Amount</label>
+                    <input type="tel" placeholder="Amount" ng-model="imprest.amount" required>
+                </div>
+
+                <button class="positive ui button right floated" type="submit" ng-click="imprestForm=!imprestForm">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+
+
+    <div class="ui centered grid" ng-show="vendorForm" style="margin-top: 15px" ng-controller="vendorCtrl">
+
+        <div class="ui four column grid" style="background: #d0d0d0">
+            <h2 class="ui purple header">Create A Vendor Remittance Form </h2>
+
+            <form class="ui form" ng-submit="addVendor()">
+                <h4 class="ui dividing header">Vendor Details</h4>
+                <div class="field">
+                    <label>Name</label>
+                    <input placeholder="Vendor name" type="text" name="vendor_name" ng-model="vendor.vendorName">
+                </div>
+
+                <h4 class="ui dividing header">Bank Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Account Number</label>
+                            <input type="tel" placeholder="Account Number" name="account_details" ng-model="vendor.accountDetails">
+                        </div>
+
+                        <div class="field">
+                            <label>Bank Name</label>
+                            <input type="text" placeholder="Bank Name" name="bank_name" ng-model="vendor.bankName">
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="ui dividing header">Job Details</h4>
+                <div class="field">
+                    <label>Job description</label>
+                    <textarea placeholder="Description...." name="job_description" ng-model="vendor.jobDescription"></textarea>
+                </div>
+
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Qty</label>
+                            <input type="tel" placeholder="Quantity" name="quantity" ng-model="vendor.quantity">
+                        </div>
+
+                        <div class="field">
+                            <label>Currency</label>
+                            <input type="text" placeholder="NGN" name="currency" ng-model="vendor.currency">
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="ui dividing header">Payment Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Amount Due</label>
+                            <input type="tel" placeholder="Amount Due.." name="amount_due" ng-model="vendor.amountDue">
+                        </div>
+
+                        <div class="field">
+                            <label>Delivery Date</label>
+                            <input type="text" id="deliver" placeholder="YYYY-MM-DD" name="delivery_date" ng-model="vendor.deliveryDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Current Payment</label>
+                            <input type="tel" placeholder="Amount Paid.." name="current_payment" ng-model="vendor.currentPayment">
+                        </div>
+
+                        <div class="field">
+                            <label>Outstanding Balance</label>
+                            <input type="tel" placeholder="Balance.." ng-value="vendor.amountDue - vendor.currentPayment" name="outstanding_balance" ng-model="vendor.outstandingBalance">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="positive ui button right floated" type="submit" ng-click="vendorForm=!vendorForm">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+    <notify-bar></notify-bar>
+</div>
+
