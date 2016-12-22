@@ -33,23 +33,24 @@
                                     <i class="pencil icon"></i>
                                 </button>
                             </div>
+
+                        <div class="extra">
+                            <form class="ui form" ng-submit="" id="editIm" novalidate ng-show="isEditing" ng-model-options="modelOptions">
+                                <div class="ui blue header">Edit Imprest</div>
+                                <div class="field">
+                                    <label>Description</label>
+                                    <textarea placeholder="Description...." ng-model="imprest.description" ng-change="update(imprest)" required></textarea>
+                                </div>
+
+                                <div class="field">
+                                    <label>Amount</label>
+                                    <input type="tel" placeholder="Amount" ng-model="imprest.amount" ng-change="update(imprest)" required>
+                                </div>
+
+                                <button class="positive ui button right floated" type="submit" ng-click="isEditing=false">Save</button>
+                            </form>
                         </div>
-
-                        <form class="ui form" ng-submit="" id="editIm" novalidate ng-show="isEditing" ng-model-options="modelOptions">
-                            <div class="ui blue header">Edit Imprest</div>
-                            <div class="field">
-                                <label>Description</label>
-                                <textarea placeholder="Description...." ng-model="imprest.description" ng-change="update(imprest)" required></textarea>
-                            </div>
-
-                            <div class="field">
-                                <label>Amount</label>
-                                <input type="tel" placeholder="Amount" ng-model="imprest.amount" ng-change="update(imprest)" required>
-                            </div>
-
-                            <button class="positive ui button right floated" type="submit" ng-click="isEditing=false">Save</button>
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,10 +89,10 @@
                             </div>
 
                             <div class="extra">
-                                <div class="right floated ui green basic circular icon button" ng-click="accept(vendor)">
+                                <div class="circular ui green basic icon button right floated" ng-click="approve(vendor)">
                                     <i class="check icon"></i>
                                 </div>
-                                <div class="right floated ui red basic circular icon button">
+                                <div class="circular ui red basic icon button right floated">
                                     <i class="close icon"></i>
                                 </div>
 

@@ -48,10 +48,8 @@
                 outstanding_balance: $scope.vendor.outstandingBalance,
                 is_approved: false
             }
-
             $http.post('/office/vendors/', form)
 
-            form = {}
             $scope.vendor = {}
         }
 

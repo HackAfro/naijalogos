@@ -12,8 +12,7 @@
     office.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/login',{
-                templateUrl: '/static/html/login.html',
-                controller: 'LoginController'
+                templateUrl: '/static/html/login.html'
             })
             .when('/',{
                 templateUrl: '/static/html/home.html'

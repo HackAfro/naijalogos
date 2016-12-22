@@ -66,9 +66,9 @@
             })
         }
 
-        $scope.accept = function (form) {
+        $scope.approve = function (form) {
             form.is_approved = true
-            $http.put('/office/vendor/' + form.id+'/', form)
+            $http.put('/office/vendors/' + form.id+'/', form)
         };
     }])
 })();
