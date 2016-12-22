@@ -1,6 +1,5 @@
-/**
- * Created by Afro on 12/17/2016.
- */
+
+
 (function () {
     'use strict';
 
@@ -11,13 +10,13 @@
         $scope.login = function () {
             $http.post('/auth_api/login/', $scope.user)
                 .then(function (data) {
-                    $localForage.setItem('user', data.data)
+                        $localForage.setItem('user', data.data)
 
-                    $location.url('/')
-            },
-             function () {
-               $scope.login_error = 'Invalid Username/password'
-                })
+                        $location.url('/')
+                    },
+                    function () {
+                        $scope.login_error = 'Invalid Username/password'
+                    })
         };
         activate()
 
