@@ -12,6 +12,8 @@
             $scope.imprest.isApproved = false
             $http.post('/office/imprests/', $scope.imprest)
 
+            $scope.imprest = {}
+        }
             activate();
 
             function activate() {
@@ -26,7 +28,7 @@
                 })
             }
 
-        }
+
     }])
 
     office.controller('vendorCtrl', ['$http', '$scope', '$localForage', '$location', function ($http, $scope, $localForage, $location) {
@@ -48,6 +50,9 @@
             }
 
             $http.post('/office/vendors/', form)
+
+            form = {}
+            $scope.vendor = {}
         }
 
         activate();
