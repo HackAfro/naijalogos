@@ -1,18 +1,18 @@
 <div class="ui fixed inverted menu">
 
     <a class="item" style="margin-right: 1.5rem" ng-click="home()">
-        <img ng-src="/static/images/naijalogos.png" class="ui image" height="30px">
+        <img ng-src="/static/images/web1.png" class="ui image" height="30px">
     </a>
 
 
     <div class="right menu">
 
-        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="profile()" ng-init="number=2">
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="notification()">
             <i class="world icon"></i>
-            <div class="floating ui red label" ng-show="number>1" style="font-size: 0.7rem; top: .2rem; left: 80%; padding: .2rem">{{number}}</div>
+            <div class="floating ui red label" ng-hide="!user.is_superuser || notifications < 1 " style="font-size: 0.7rem; top: .2rem; left: 80%; padding: .2rem">{{notifications}}</div>
         </a>
 
-        <a class="item" style="margin-top: 5px; font-size: 1.3rem">
+        <a class="item" style="margin-top: 5px; font-size: 1.3rem" ng-click="profile()">
             <i class="user icon"></i>
             {{user.username}}
         </a>

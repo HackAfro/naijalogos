@@ -5,7 +5,7 @@
 (function () {
     'use strict'
 
-    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule']);
+    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment']);
 
     office.controller('officeCtrl', ['$http', '$scope', '$cookies', function ($http, $scope, $cookies) {
         $scope.data = [];

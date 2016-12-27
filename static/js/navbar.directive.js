@@ -20,31 +20,52 @@
 
                     $location.url('/login')
                 };
-                $scope.notifcations = 0;
-                var total = 0
-                function gatherNotifications(){
-                    $http.get('/office/vendors/').then(function (response) {
+
+
+            
+                
+                    
+                $http.get('/office/imprests/').then(function (response) {
+                    var total = 0
                         var data = response.data
-                        for(var i; i<data.length; i++){
+                        var prests = 0
+                        for (var i=0; i<data.length; i++){
                             if(!data[i].is_approved){
-                                alert('yes')
-                                total++
-                            }else {
-                                alert('no')
+                                prests++
                             }
                         }
-                    },
-                    function (status) {
-                        return;
+                    total = prests
+                        $http.get('/office/vendors/').then(function (response) {
+                            var data = response.data
+                            var vends = 0
+                            for (var j=0; j<data.length; j++){
+                                if(!data[j].is_approved){
+                                    vends++
+                                }
+                            }
+                        total += vends
+                    $scope.notifications = total
                     })
-                }
+                        
+                    })
 
-                $scope.profile= function () {
-                    $location.url('/profile')
+                
+                    
+                
+
+
+
+
+                $scope.notification = function () {
+                    $location.url('/notifications')
                 }
 
                 $scope.home = function () {
                     $location.url('/')
+                }
+                
+                $scope.profile = function(){
+                    $location.url('/profile')
                 }
             }],
             controllerAs: 'navbarCtrl'

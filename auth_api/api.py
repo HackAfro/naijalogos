@@ -14,7 +14,6 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @method_decorator(csrf_protect)
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return permissions.AllowAny(),
@@ -22,7 +21,7 @@ class UserViewSet(ModelViewSet):
         if self.request.method == 'POST':
             return permissions.AllowAny(),
 
-        return permissions.IsAuthenticated,IsAccountOwner(),
+        return permissions.IsAuthenticated(),IsAccountOwner(),
 
 
 class LoginView(views.APIView):

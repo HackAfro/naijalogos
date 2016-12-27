@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Imprest(models.Model):
@@ -7,6 +8,7 @@ class Imprest(models.Model):
     description = models.TextField()
     amount = models.PositiveIntegerField()
     is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return 'Raised by: {}'.format(self.raised_by)
@@ -25,6 +27,7 @@ class VendorRemittance(models.Model):
     outstanding_balance = models.PositiveIntegerField(null=True,blank=True)
     prepared_by = models.ForeignKey(User, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return 'Vendor: {}'.format(self.vendor_name)

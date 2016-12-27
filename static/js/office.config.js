@@ -17,6 +17,9 @@
             .when('/',{
                 templateUrl: '/static/html/home.html'
             })
+            .when('/notifications',{
+                templateUrl: '/static/html/notifications.html'
+            })
             .when('/profile',{
                 templateUrl: '/static/html/profile.html'
             })

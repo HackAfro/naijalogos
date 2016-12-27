@@ -34,6 +34,13 @@
         function retrieve() {
             $http.get('/office/imprests/').then(function (response) {
                 $scope.data = response.data
+                var imprest = 0
+                for (var i=0; i<$scope.data.length; i++){
+                    if(!$scope.data[i].is_approved){
+                        imprest++
+                    }
+                }
+                $scope.imprests = imprest
             });
         }
 
@@ -63,6 +70,13 @@
         function retrieve() {
             $http.get('/office/vendors/').then(function (response) {
                 $scope.vendors = response.data
+                var vends = 0
+                for (var j=0; j<$scope.vendors.length; j++){
+                    if(!$scope.vendors[j].is_approved){
+                        vends++
+                    }
+                }
+                $scope.vend = vends
             })
         }
 

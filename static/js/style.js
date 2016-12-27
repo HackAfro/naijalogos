@@ -29,6 +29,21 @@ function main() {
             $("#acc-imprest").slideUp(500);
         });
     })
+  
+
+   
+   $(document).on('click','#rotate', function(){
+       
+       $('.ui.left.sidebar')
+           .sidebar({
+              dimPage: true,
+            transition: 'overlay',
+            exclusive: false,
+            closable: true
+       })
+           .sidebar('toggle');
+   })
+    
 
 
 }
