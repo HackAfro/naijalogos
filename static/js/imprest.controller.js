@@ -50,6 +50,17 @@
         $scope.accept = function (imprest) {
             imprest.is_approved = true
             $http.put('/office/imprests/' + imprest.id+'/', imprest)
+                .then(function(){
+                    $("#acc-imprest > p").text("Imprest accepted!! :)")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            },function(){
+                    $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            })
         };
 
         activate()
@@ -83,6 +94,17 @@
         $scope.approve = function (form) {
             form.is_approved = true
             $http.put('/office/vendors/' + form.id+'/', form)
+                .then(function(){
+                    $("#acc-imprest > p").text("Vendor form approved!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            },function(){
+                    $("#acc-imprest > p").text("Error approving form, please try again :(")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            })
         };
     }])
 })();

@@ -25,7 +25,7 @@
                                 {{ imprest.description }}
                             </div>
                             <div class="extra">
-                                <p class="ui black label">raised by <span style="text-transform: capitalize">{{imprest.raised_by.username}}</span></p>
+                                <p class="ui black label">raised by <span style="text-transform: capitalize">{{imprest.user.username}}</span></p>
                                 <button class="circular ui right floated green icon button" ng-click="accept(imprest)">
                                     <i class="check icon"></i>
                                 </button>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div class="one wide column"></div>
+        <div class="two wide column"></div>
         <div class="sixteen wide column" ng-controller="getVendorCtrl">
 
             <div class="ui segment" ng-show="user.is_superuser">
@@ -73,6 +73,11 @@
                     </div>    
                     
                     <div class="item" ng-repeat="vendor in vendors | orderBy: vendor.created_at: true" ng-if="!vendor.is_approved">
+
+                        <div class="meta">
+                            <p class="right floated ui label">{{vendor.created_at | amCalendar}}</p>
+                        </div>
+
                         <div class="content">
                             <a class="header">{{vendor.vendor_name}}</a>
 
@@ -93,7 +98,7 @@
                             </div>
 
                             <div class="extra">
-                                <div class="ui violet label">Prepared by <span style="text-transform: capitalize">{{vendor.prepared_by.username}}</span></div>
+                                <div class="ui violet label">Prepared by <span style="text-transform: capitalize">{{vendor.user.username}}</span></div>
                                 <div class="right floated ui blue label">{{vendor.quantity}} Units</div>
                             </div>
 

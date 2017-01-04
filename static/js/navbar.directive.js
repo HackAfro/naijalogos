@@ -8,7 +8,7 @@
         return {
             restrict: 'E',
             templateUrl: '/static/html/nav.html',
-            controller : ['$scope', '$http', '$location', '$localForage', function ($scope, $http, $location, $localForage) {
+            controller : ['$scope', '$http', '$location', '$localForage','$timeout', function ($scope, $http, $location, $localForage, $timeout) {
                 $localForage.getItem('user').then(function (data) {
                     $scope.user = data
                 });
@@ -22,10 +22,10 @@
                 };
 
 
-            
                 
-                    
-                $http.get('/office/imprests/').then(function (response) {
+                
+                function notify(){
+                  $http.get('/office/imprests/').then(function (response) {
                     var total = 0
                         var data = response.data
                         var prests = 0
@@ -35,20 +35,23 @@
                             }
                         }
                     total = prests
-                        $http.get('/office/vendors/').then(function (response) {
-                            var data = response.data
-                            var vends = 0
-                            for (var j=0; j<data.length; j++){
-                                if(!data[j].is_approved){
+                    $http.get('/office/vendors/').then(function (response) {
+                        var data = response.data
+                        var vends = 0
+                        for (var j=0; j<data.length; j++){
+                            if(!data[j].is_approved){
                                     vends++
-                                }
                             }
+                        }
                         total += vends
                     $scope.notifications = total
                     })
+                    $timeout(notify,50000)
                         
-                    })
-
+                    })  
+                }
+                
+                notify()
                 
                     
                 

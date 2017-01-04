@@ -3,7 +3,7 @@
     
     var office = angular.module('naijalogosOffice');
     
-    office.controller('profileCtrl', ['$http', '$scope', '$localForage', function($http, $scope, $localForage){
+    office.controller('profileCtrl', ['$http', '$scope', '$localForage','$location', function($http, $scope, $localForage, $location){
         $localForage.getItem('user').then(function (data) {
             $scope.user = data
         });
@@ -55,8 +55,24 @@
             if ($scope.new.confPass === $scope.user.password){
                 $http.put('/auth_api/accounts/' + $scope.user.id + '/', $scope.user)
             }
-            
+            $scope.new = {}   
         }
+
+        $scope.imprestPage = function(){
+            $location.url('/imprests')
+            $('.ui.left.sidebar').hide()
+        }
+
+        $scope.vendors = function(){
+            $location.url('/vendors')
+        }
+
+        $scope.billboards = function(){
+            $location.url('/billboards')
+        }
+
+        $scope.limit = 5
+
     }])
     
 })();

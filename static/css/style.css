@@ -1,17 +1,21 @@
 body {
     background-color: #DADADA;
-    }
+    background: #DADADA;
+}
+body.pushable>.pusher {
+    background: #DADADA;
+}
 body > .grid {
     height: 100%;
-    }
+}
 .column {
     max-width: 450px;
-    }
+}
 .ng-invalid.ng-dirty{
-  border-color: red;
+    border-color: red;
 }
 .ng-valid.ng-dirty{
-  border-color: green;
+    border-color: green;
 }
 .ui.menu .item{
     padding: 10px

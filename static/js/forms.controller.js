@@ -11,6 +11,17 @@
 
             $scope.imprest.isApproved = false
             $http.post('/office/imprests/', $scope.imprest)
+                .then(function(){
+                    $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            },function(){
+                    $("#acc-imprest > p").text("Error submitting form, please try again!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            })
 
             $scope.imprest = {}
         }
@@ -49,6 +60,18 @@
                 is_approved: false
             }
             $http.post('/office/vendors/', form)
+                  .then(function(){
+                    $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            },function(){
+                    $("#acc-imprest > p").text("Error submitting form, please try again!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            })
+
 
             $scope.vendor = {}
         }
@@ -67,23 +90,70 @@
         }
     }])
 
+    office.controller('billboardCtrl', ['$scope', '$http', function($scope, $http){
+        $scope.billboard = {}
+
+        $scope.create = function(){
+             var form = {
+            client_name: $scope.billboard.clientName,
+            entry_date: $scope.billboard.entryDate,
+            duration: $scope.billboard.duration,
+            location: $scope.billboard.location,
+            amount_due: $scope.billboard.amountDue,
+            amount_paid: $scope.billboard.amountPaid,
+            balance: $scope.billboard.balance,
+            expiry_date: $scope.billboard.expiryDate,
+            client_mobile: $scope.billboard.mobile,
+            is_expired: false,
+        }
+            $http.post('/office/billboards/', form)
+                  .then(function(){
+                    $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            },function(){
+                    $("#acc-imprest > p").text("Error submitting form, please try again!!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#acc-imprest").slideUp(500);
+                    });
+            })
+
+
+            $scope.billboard = {}
+        }
+
+    }])
+
     office.controller('homeCtrl',['$scope',function ($scope) {
         $scope.editingVendor = false;
-        $scope.editingImprest = false
+        $scope.editingImprest = false;
+        $scope.editingBillboard = false;
+
 
         $scope.isEditingVendor = function () {
             $scope.editingVendor = !$scope.editingVendor
             $scope.editingImprest = false;
+            $scope.editingBillboard = false;
+
         }
         $scope.isEditingImprest = function () {
             $scope.editingImprest = !$scope.editingImprest
             $scope.editingVendor = false;
+            $scope.editingBillboard = false;
+        }
+
+        $scope.isEditingBillboard = function(){
+            $scope.editingBillboard = !$scope.editingBillboard;
+            $scope.editingVendor = false;
+            $scope.editingImprest = false;
         }
 
         $scope.cancelEditing = function () {
             $scope.editingVendor = false;
-            $scope.editingImprest = false
-        }
+            $scope.editingImprest = false;
+            $scope.editingBillboard = false;
 
+        }
     }])
 })();

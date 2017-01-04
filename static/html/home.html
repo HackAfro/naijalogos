@@ -35,6 +35,19 @@
         </div>
     </div>
 
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Billboard Tracker</div>
+            <div class="description">
+                Input the details of leased billboards and get notified once the lease expires
+            </div>
+        </div>
+        <div class="ui black bottom attached button" ng-click="isEditingBillboard()">
+            <i class="tv icon"></i>
+            Lease Billboard
+        </div>
+    </div>
+
     <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px">
 
         <div class="ui four column grid" style="background: #d0d0d0">
@@ -141,6 +154,81 @@
 
         </div>
     </div>
+
+    <div class="ui centered grid" ng-show="editingBillboard" style="margin-top: 15px" ng-controller="billboardCtrl">
+
+        <div class="ui four column grid" style="background: #d0d0d0">
+            <h2 class="ui grey header">Lease A Billboard</h2>
+
+            <form class="ui form" ng-submit="create()" id="biForm" name="biForm">
+                <h4 class="ui dividing header">Client Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Name</label>
+                            <input placeholder="Client name" type="text" name="client_name" ng-model="billboard.clientName">
+                        </div>
+
+                        <div class="field">
+                            <label>Mobile</label>
+                            <input type="tel" name="Mobile" placeholder="0802xxxxxxx" ng-model="billboard.mobile">
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <h4 class="ui dividing header">Time Frame</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Duration</label>
+                            <input type="Number" placeholder="Duration" name="duration" ng-model="billboard.duration"></input>
+                        </div>
+
+                        <div class="field">
+                            <label>Expiry Date</label>
+                            <input type="text" placeholder="YYYY-MM-DD" name="expiry_date" ng-model="billboard.expiryDate">
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="ui dividing header">Location</h4>
+                       <div class="field">
+                            <label>Location</label>
+                            <select ng-model="billboard.location">
+                                <option value="">Location</option>
+                                <option value="AT">Atabong Roundabout</option>
+                                <option value="AR">Afaha-Uqua(Right)</option>
+                                <option value="AL">Afaha-Uqua(Left)</option>
+                            </select>
+                        </div>
+                                    
+                <h4 class="ui dividing header">Payment Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Amount Due</label>
+                            <input type="tel" placeholder="Amount Due" name="amount_due" ng-model="billboard.amountDue">
+                        </div>
+
+                        <div class="field">
+                            <label>Amount Paid</label>
+                            <input type="tel" placeholder="Amount Paid" name="amount_paid" ng-model="billboard.amountPaid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Outstanding Balance</label>
+                    <input type="tel" placeholder="Outstanding Balance" name="outstanding_balance" ng-model="billboard.balance"></input>
+                </div>
+
+                
+                <button class="positive ui button right floated" type="submit" ng-click="cancelEditing()">Submit</button>
+            </form>
+        </div>
+    </div>
+    
     <notify-bar></notify-bar>
 </div>
 
