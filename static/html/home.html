@@ -183,6 +183,7 @@
                         <div class="field">
                             <label>Duration</label>
                             <select placeholder="Duration" ng-model="billboard.duration">
+                                <option value="">Duration</option>
                                 <option value="1">1 Month</option>
                                 <option value="2">2 Months</option>
                                 <option value="3">3 Months</option>
@@ -233,7 +234,7 @@
 
                 <div class="field">
                     <label>Outstanding Balance</label>
-                    <input type="tel" placeholder="Outstanding Balance" name="outstanding_balance" ng-model="billboard.balance"></input>
+                    <input type="tel" placeholder="Outstanding Balance" name="outstanding_balance" ng-model="billboard.balance=billboard.amountDue-billboard.amountPaid">
                 </div>
 
                 
