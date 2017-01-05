@@ -35,10 +35,10 @@
     })
 
     office.controller('allImprestCtrl', ['$http', '$scope', 'timeFilter', function($http, $scope, timeFilter){
-        
+
         $http.get('/office/imprests/').then(function(response){
                 $scope.imprests = response.data
-                function main(month){
+                $scope.total = function (month){
                     var filtered = timeFilter($scope.imprests,month)
                     var total = 0;
                     for(var i=0; i<filtered.length; i++){
@@ -46,7 +46,6 @@
                     }
                     return total
                 }
-
         })
 
 

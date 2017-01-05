@@ -6,355 +6,395 @@
     </h2>
 </div>
 
-<div class="ui stackable white grid" ng-controller="allImprestCtrl" style="margin-top: 10px;">
+<div class="ui container" ng-controller="allImprestCtrl">
 
-    <div class="two wide column"></div>
-    <div class="four wide fluid column">
-        <div class="ui left vertical menu">
-            <div class="item">
-                <h4 class="blue ui centered header">
-                    <i class="filter icon"></i>
-                    <div class="content">
-                        Filter By
-                    </div>
-                    </h4>
-            </div>
-
-            <a class="ui blue active item">
-                <div class="ui blue left pointing label">0</div>
-                Date
-            </a>
-            <a class="item">
-                <div class="ui label">0</div>
-                User
-            </a>
-        </div>
-
+    <div class="ui large breadcrumb">
+        <a class="section" href="#!/home">Home</a>
+        <i class="right chevron icon divider"></i>
+        <a class="section" href="#!/profile">Profile</a>
+        <i class="right chevron icon divider"></i>
+        <div class="active section">Imprests</div>
     </div>
-    <div class="one wide column"></div>
-    <div class="sixteen wide column">
-        <div class="ui segment">
 
-            <div class="ui grey header">
-                <i class="calendar icon"></i>
-                <div class="content">
-                    Imprest by Date
+    <div class="ui divider"></div>
+
+    <div class="ui top attached segment"><br>
+        <div class="description">
+            Imprests can be filtered by date and by user.
+        </div>
+        <div class="ui top attached label">
+            <i class="file text icon"></i>
+            How To
+        </div>
+    </div>
+
+    <div class="ui stackable grid" style="margin-top: 10px;">
+
+        <div class="four wide fluid column">
+            <div class="ui left vertical menu">
+                <div class="item">
+                    <h4 class="blue ui centered header">
+                        <i class="filter icon"></i>
+                        <div class="content">
+                            Filter By
+                        </div>
+                    </h4>
                 </div>
 
-            </div>
-        <div class="ui styled fluid accordion">
-            <div class="blue ui active title">
-                <i class="dropdown icon"></i>
-                January
-            </div>
-            <div class="active content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Jan'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved" class="ui red item">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <a class="ui blue active item">
+                    <div class="ui blue left pointing label">0</div>
+                    Date
+                </a>
+                <a class="item">
+                    <div class="ui label">0</div>
+                    User
+                </a>
             </div>
 
-            <div class="title">
-                <i class="dropdown icon"></i>
-                February
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Feb'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                March
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Mar'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                April
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Apr'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                May
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'May'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                June
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Jun'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                July
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Jul'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                August
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Aug'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                September
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Sep'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                October
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Oct'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                November
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Nov'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                December
-            </div>
-            <div class="content">
-                <table class="ui unstackable table">
-                    <thead>
-                    <tr>
-                        <th>By</th>
-                        <th>Purpose</th>
-                        <th>#</th>
-                        <th class="right aligned">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="imprest in imprests | time:'Dec'">
-                        <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
-                        <td>{{imprest.description}}</td>
-                        <td>{{imprest.amount}}</td>
-                        <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
-                                ng-if="!imprest.is_approved">Pending</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
+
+        <div class="sixteen wide column">
+
+                <div class="ui grey header">
+                    <i class="calendar icon"></i>
+                    <div class="content">
+                        Imprest by Date
+                    </div>
+
+                </div>
+                <div class="ui styled fluid accordion">
+                    <div class="blue ui active title">
+                        <i class="dropdown icon"></i>
+                        January
+                    </div>
+                    <div class="active content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Jan'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved"
+                                                                class="success">Approved</span><span
+                                        ng-if="!imprest.is_approved" class="error">Pending</span></td>
+                            </tr>
+                            </tbody>
+
+                            <tfoot class="full-width">
+                            <tr>
+                                <th colspan="4" class="right aligned">
+                                        Total: <span>{{total('Jan')}}</span>
+
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        February
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Feb'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        March
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Mar'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        April
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Apr'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        May
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'May'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        June
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Jun'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        July
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Jul'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        August
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Aug'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        September
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Sep'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        October
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Oct'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        November
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Nov'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        December
+                    </div>
+                    <div class="content">
+                        <table class="ui unstackable table">
+                            <thead>
+                            <tr>
+                                <th>By</th>
+                                <th>Purpose</th>
+                                <th>#</th>
+                                <th class="right aligned">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="imprest in imprests | time:'Dec'">
+                                <td style="text-transform: capitalize;">{{imprest.user.username}}</td>
+                                <td>{{imprest.description}}</td>
+                                <td>{{imprest.amount}}</td>
+                                <td class="right aligned"><span ng-if="imprest.is_approved">Approved</span><span
+                                        ng-if="!imprest.is_approved">Pending</span></td>
+                            </tr>
+                            </tbody>
+                            </tbody>
+
+                            <tfoot class="full-width">
+                            <tr>
+                                <th colspan="4" class="right aligned">
+                                    Total: <span>{{total('Dec')}}</span>
+
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
