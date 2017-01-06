@@ -131,7 +131,7 @@
                 var day = strDate.slice(8,10)
                 var month = monthToInt(strDate.slice(4,7))
                 var year = strDate.slice(11,15)
-                var full = day + '-' + month + '-' + year;
+                var full = year+ '-' + month + '-' + day;
                 return full
             }
             else {
@@ -140,7 +140,7 @@
                 var day = strDate.slice(8,10)
                 var month = monthToInt(strDate.slice(4,7))
                 var year = strDate.slice(11,15)
-                var full = day + '-' + month + '-' + year;
+                var full = year + '-' + month + '-' + day;
                 return full
             }
 
