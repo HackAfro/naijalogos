@@ -23,10 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'je2t6jiko9baer-zus27391p$c5i*ll9y5syty78^tmu5vg)(3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.naijalogosoffice.com']
 
+SECURE_SSL_REDIRECT = True
 
 
 # Application definition
@@ -80,8 +81,11 @@ WSGI_APPLICATION = 'naijalogos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'iamafro$Naijalogos',
+        'USER': 'iamafro',
+        'PASSWORD': 'metallicpotassium',
+        'HOST': 'iamafro.mysql.pythonanywhere-services.com',
     }
 }
 
