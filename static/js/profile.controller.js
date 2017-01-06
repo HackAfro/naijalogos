@@ -27,7 +27,6 @@
                     }
                 }
                 $scope.numVen = venNum
-                alert($scope.numVen)
         })
         
         $http.get('/office/imprests/').then(function(response){
@@ -39,7 +38,6 @@
                     }
                 }
                 $scope.numImp = impNum
-                alert($scope.numImp)
         })
         
         $scope.isEditing = false;
