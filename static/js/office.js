@@ -46,7 +46,28 @@
                     }
                     return total
                 }
+
+                $scope.totalUser = function (user) {
+                    var total = 0
+                    for (var i=0; i<$scope.imprests.length; i++){
+                        if ($scope.imprests[i].user.username === user){
+                            total+=$scope.imprests[i].amount
+                        }
+                    }
+                    return total
+                }
+
         })
+
+        $scope.tab = 1;
+
+        $scope.selectTab = function(tab){
+            $scope.tab = tab;
+        }
+
+        $scope.isSelected = function(checktab){
+            return $scope.tab === checktab
+        }
 
 
 

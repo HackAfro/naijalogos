@@ -182,26 +182,26 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Duration</label>
-                            <select placeholder="Duration" ng-model="billboard.duration">
+                            <select ng-model="billboard.duration">
                                 <option value="">Duration</option>
-                                <option value="1">1 Month</option>
-                                <option value="2">2 Months</option>
-                                <option value="3">3 Months</option>
-                                <option value="4">4 Months</option>
-                                <option value="5">5 Months</option>
-                                <option value="6">6 Months</option>
-                                <option value="7">7 Months</option>
-                                <option value="8">8 Months</option>
-                                <option value="9">9 Months</option>
-                                <option value="10">10 Months</option>
-                                <option value="11">11 Months</option>
-                                <option value="12">12 Months</option>
+                                <option value="30">1 Month</option>
+                                <option value="60">2 Months</option>
+                                <option value="90">3 Months</option>
+                                <option value="120">4 Months</option>
+                                <option value="150">5 Months</option>
+                                <option value="180">6 Months</option>
+                                <option value="210">7 Months</option>
+                                <option value="240">8 Months</option>
+                                <option value="270">9 Months</option>
+                                <option value="300">10 Months</option>
+                                <option value="330">11 Months</option>
+                                <option value="360">12 Months</option>
                             </select>
                         </div>
 
                         <div class="field">
                             <label>Expiry Date</label>
-                            <input type="text" placeholder="YYYY-MM-DD" name="expiry_date" ng-model="billboard.expiryDate">
+                            <input type="text" placeholder="YYYY-MM-DD" name="expiry_date" ng-model="billboard.expiryDate = addDays(billboard.duration)">
                         </div>
                     </div>
                 </div>

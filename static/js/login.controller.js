@@ -8,6 +8,7 @@
     office.controller('LoginController', ['$http', '$scope', '$location', '$localForage', function ($http, $scope, $location, $localForage) {
 
         $scope.login = function () {
+            $scope.user.username = $scope.user.username.toLowerCase()
             $http.post('/auth_api/login/', $scope.user)
                 .then(function (data) {
                         $localForage.setItem('user', data.data)

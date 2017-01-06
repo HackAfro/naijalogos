@@ -1,6 +1,35 @@
 <nav-bar></nav-bar>
 <div class="container">
     <h2 class="ui purple centered header" style="margin-top: 100px">Notifications</h2>
+
+    <div class="ui segment" ng-if="!user.is_superuser">
+        <div class="ui center aligned grid">
+            <div class="column">
+    <div class="ui centered feed" ng-controller="getImprestCtrl" >
+        <div class="event" ng-repeat="imprest in data | filter: user.username" ng-if="imprest.is_approved">
+            <div class="label">
+                <img src="/static/images/nl.png">
+            </div>
+            <div class="content">
+                <div class="summary">
+                    <a class="user">
+                        Israel
+                    </a> accepted your imprest - {{imprest.description}}
+                    <div class="date">
+                        Sometime ago
+                    </div>
+                </div>
+                <div class="meta">
+                    <a class="like">
+                        <i class="green checkmark icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        </div>
+    </div>
     <div class="ui grid">
         <div class="two wide column"></div>
 
@@ -74,9 +103,6 @@
                     
                     <div class="item" ng-repeat="vendor in vendors | orderBy: vendor.created_at: true" ng-if="!vendor.is_approved">
 
-                        <div class="meta">
-                            <p class="right floated ui label">{{vendor.created_at | amCalendar}}</p>
-                        </div>
 
                         <div class="content">
                             <a class="header">{{vendor.vendor_name}}</a>
@@ -103,6 +129,8 @@
                             </div>
 
                             <div class="extra">
+                                <p class="black ui label">{{vendor.created_at | amCalendar}}</p>
+
                                 <div class="circular ui green basic icon button right floated" ng-click="approve(vendor)">
                                     <i class="check icon"></i>
                                 </div>
@@ -118,5 +146,6 @@
             </div>
         </div>
     </div>
+
 </div>
 <notify-bar></notify-bar>

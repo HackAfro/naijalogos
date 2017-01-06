@@ -27,6 +27,7 @@
                     }
                 }
                 $scope.numVen = venNum
+                alert($scope.numVen)
         })
         
         $http.get('/office/imprests/').then(function(response){
@@ -38,6 +39,7 @@
                     }
                 }
                 $scope.numImp = impNum
+                alert($scope.numImp)
         })
         
         $scope.isEditing = false;
@@ -60,7 +62,7 @@
 
         $scope.imprestPage = function(){
             $location.url('/imprests')
-            $('.ui.left.sidebar').hide()
+            $('.ui.left.sidebar').sidebar('close')
         }
 
         $scope.vendors = function(){

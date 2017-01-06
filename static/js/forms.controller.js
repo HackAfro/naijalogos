@@ -123,6 +123,69 @@
             $scope.billboard = {}
         }
 
+        $scope.addDays = function(days) {
+            if (days > 0){
+                var date = new Date()
+                date.setDate(date.getDate() + parseInt(days))
+                var strDate = date.toDateString()
+                var day = strDate.slice(8,10)
+                var month = monthToInt(strDate.slice(4,7))
+                var year = strDate.slice(11,15)
+                var full = day + '-' + month + '-' + year;
+                return full
+            }
+            else {
+                var date = new Date()
+                var strDate = date.toDateString()
+                var day = strDate.slice(8,10)
+                var month = monthToInt(strDate.slice(4,7))
+                var year = strDate.slice(11,15)
+                var full = day + '-' + month + '-' + year;
+                return full
+            }
+
+        }
+        function monthToInt(month) {
+            switch (month){
+                case 'Jan':
+                    return 1
+                    break
+                case 'Feb':
+                    return 2
+                    break
+                case 'Mar':
+                    return 3
+                    break
+                case 'Apr':
+                    return 4
+                    break
+                case 'May':
+                    return 5
+                    break
+                case 'Jun':
+                    return 6
+                    break
+                case 'Jul':
+                    return 7
+                    break
+                case 'Aug':
+                    return 8
+                    break
+                case 'Sep':
+                    return 9
+                    break
+                case 'Oct':
+                    return 10
+                    break
+                case 'Nov':
+                    return 11
+                    break
+                case 'Dec':
+                    return 12
+                    break
+            }
+        }
+
     }])
 
     office.controller('homeCtrl',['$scope',function ($scope) {
