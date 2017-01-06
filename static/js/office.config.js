@@ -8,14 +8,7 @@
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
         $http.defaults.xsrfCookieName = 'csrftoken'
     }]);
-    
-    office.config(['PusherServiceProvider',
-        function(PusherServiceProvider){
-            PusherServiceProvider
-            .setToken("6cfd92c53d2b858e9196")
-            .setOptions({});
-        }              
-    ]);
+
 
     office.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
