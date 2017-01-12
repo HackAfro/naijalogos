@@ -8,8 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('id', 'username', 'is_active', 'is_superuser', 'password')
-        read_only_fields = ('is_staff', 'is_superuser', 'is_active')
+        fields = ('id', 'username', 'is_active', 'is_staff', 'password')
+        read_only_fields = ('is_staff', 'is_active')
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)

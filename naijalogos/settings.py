@@ -23,12 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'je2t6jiko9baer-zus27391p$c5i*ll9y5syty78^tmu5vg)(3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.naijalogosoffice.com']
+ALLOWED_HOSTS = []
 
-SECURE_SSL_REDIRECT = True
-
+PUSHER_APP_ID = "281587"
+PUSHER_KEY = "6cfd92c53d2b858e9196"
+PUSHER_SECRET = "662081b939c8f922aa0c"
 
 # Application definition
 
@@ -39,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'stored_messages',
     'rest_framework',
     'naijalogos_office',
     'auth_api'
 ]
+MESSAGE_STORAGE = 'stored_messages.storage.PersistentStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,11 +84,8 @@ WSGI_APPLICATION = 'naijalogos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iamafro$Naijalogos',
-        'USER': 'iamafro',
-        'PASSWORD': 'metallicpotassium',
-        'HOST': 'iamafro.mysql.pythonanywhere-services.com',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -120,7 +120,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

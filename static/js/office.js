@@ -6,18 +6,12 @@
     'use strict'
 
     var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment','doowb.angular-pusher']);
+
+    office.config(['PusherServiceProvider', function(PusherServiceProvider) {
+        PusherServiceProvider.setToken("6cfd92c53d2b858e9196")
+        }
+    ]);
     
-    office.controller('officeCtrl', ['$http', '$scope', 'timeFilter', function ($http, $scope, timeFilter) {
-        $scope.data = [];
-
-
-        $http.get('/office/vendors').then(function (response) {
-            $scope.data = response.data;
-        })
-        $scope.all = 55555
-
-
-    }])
 
     office.filter('time', function(){
         return function(items,month){
@@ -34,7 +28,7 @@
         }
     })
 
-    office.controller('allImprestCtrl', ['$http', '$scope', 'timeFilter', function($http, $scope, timeFilter){
+    office.controller('allImprestCtrl', ['$http', '$scope', '$location', '$localForage', 'timeFilter', function($http, $scope, $location, $localForage, timeFilter){
 
         $http.get('/office/imprests/').then(function(response){
                 $scope.imprests = response.data
@@ -58,6 +52,19 @@
                 }
 
         })
+
+        activate()
+        function activate() {
+            $localForage.getItem('user').then(function (data) {
+                if(!data){
+                    $location.url('/login')
+                }else{
+                    if (!data.is_superuser){
+                        $location.url('/')
+                    }
+                }
+            })
+        }
 
         $scope.tab = 1;
 

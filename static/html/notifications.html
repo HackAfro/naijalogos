@@ -1,151 +1,481 @@
 <nav-bar></nav-bar>
-<div class="container">
-    <h2 class="ui purple centered header" style="margin-top: 100px">Notifications</h2>
 
-    <div class="ui segment" ng-if="!user.is_superuser">
-        <div class="ui center aligned grid">
-            <div class="column">
-    <div class="ui centered feed" ng-controller="getImprestCtrl" >
-        <div class="event" ng-repeat="imprest in data | filter: user.username" ng-if="imprest.is_approved">
-            <div class="label">
-                <img src="/static/images/nl.png">
-            </div>
-            <div class="content">
-                <div class="summary">
-                    <a class="user">
-                        Israel
-                    </a> accepted your imprest - {{imprest.description}}
-                    <div class="date">
-                        Sometime ago
+<div class="ui container" ng-controller='notificationCtrl'>
+    <h2 class="ui brown centered header" style="margin-top: 100px"><i class="world icon"></i>Notifications</h2>
+
+    <div class="ui top attached tabular menu">
+        <a class="item" ng-click="selectTab(1)" ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
+            Unread
+            <span class="ui label" ng-class="{red:latest.length > 0 && isSelected(1)}">{{latest.length}}</span>
+        </a>
+        <a class="item" ng-click="selectTab(2)" ng-class="{active:isSelected(2), blue:isSelected(2)}">
+            All 
+            <span class="ui label" style="padding-right:2px" ng-class="{blue:isSelected(2)}">
+                <i class="world icon"></i>
+            </span>        
+        </a>
+    </div>
+
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)"  ng-class="{loading:loading}">
+
+        <!---No new messages display-->
+        
+        <h2 class="ui center aligned icon header" ng-if="latest.length < 1">
+            <i class="circular thumbs up icon"></i>
+            No unread notifications 
+        </h2>
+
+        <!---Feed-->
+        <div class="ui centered feed">
+
+            <!--Event-->
+            <div class="event" ng-repeat="feed in latest">
+                <div class="label">
+                    <img src="/static/images/nl.png">
+                </div>
+
+                <!--Content-->
+                <div class="content">
+
+                    <!--Summary-->
+                    <div class="summary" style="font-weight:400">
+
+                        <!--Message-->
+                        <a class="user" style="font-weight:600" ng-if="feed.tags.actor !== user.username">
+                            {{feed.tags.actor}}
+                        </a>
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="feed.tags.actor=== user.username">
+                            You
+                        </a>
+                          {{feed.message | limitTo : 100}} - <a class="user">
+                              {{feed.tags.target}}
+                          </a>
+
+                        <!--Imprest View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') === -1">
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                           ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
+                        <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
+                           ng-show="show && details.id === feed.id "> - close </a>
+                        </div>
+                        
+                        <!---End Imprest View Link-->   
+
+                        <!---Vendor View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') !== -1">
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                           ng-click=" show=!show; view(feed);" ng-hide="show && vendor.id === feed.id"> - view</a>   
+
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
+                           ng-show="show && vendor.id === feed.id "> - close </a>
+                        </div>
+                        <!---End Vendor View Link-->   
+                           
+                        <!--Message Date-->
+                        <div class="date">
+                            <span am-time-ago="feed.date"></span> 
+                        </div>
+
+
                     </div>
-                </div>
-                <div class="meta">
-                    <a class="like">
-                        <i class="green checkmark icon"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-        </div>
-        </div>
-    </div>
-    <div class="ui grid">
-        <div class="two wide column"></div>
 
-        <div class="sixteen wide column" ng-controller="getImprestCtrl">
-            <div class="ui segment" ng-show="user.is_superuser">
-                <h3 class="ui purple centered header">Recent Imprest Forms</h3>
-                <div class="ui divided items" >
-                    <div class="item" ng-hide="imprests > 0">
-                        <h2 class="ui grey centered header" ><em>Nothing here yet</em></h2>
-                    </div>    
-                    <div class="item" ng-repeat="imprest in data | orderBy: imprest.created_at: true" ng-if="!imprest.is_approved">
-                        <div class="content">
-                            <a class="header">
-                                Imprest
-                            </a>
+                    <!--Extra Content-->
+                    <div class="extra content" ng-show="show">
 
+                        <!--Loader-->
+                        <div class="ui mini centered inline loader" ng-class="{active:feed.conLoading}"></div>
+                        <!---EndLoader-->
+
+                        <!--Imprest Description-->
+                        <div class="description" ng-if="details && !conLoading && details.id === feed.id ">
+
+                            <span>{{details.data.description}}</span><br>
                             <div class="meta">
-                                Amount: {{ imprest.amount }}
-                                <p class="right floated ui label">{{imprest.created_at | amCalendar}}</p>
+                                <span class="ui label">{{details.data.amount | currency:'₦'}}</span>
                             </div>
-                            <div class="description">
-                                {{ imprest.description }}
-                            </div>
-                            <div class="extra">
-                                <p class="ui black label">raised by <span style="text-transform: capitalize">{{imprest.user.username}}</span></p>
-                                <button class="circular ui right floated green icon button" ng-click="accept(imprest)">
-                                    <i class="check icon"></i>
-                                </button>
-                                <button class="circular ui right floated red icon button">
-                                    <i class="close icon"></i>
-                                </button>
+                            <br>
 
-                                <button class="circular ui right floated icon button" ng-click="isEditing=true">
-                                    <i class="pencil icon"></i>
-                                </button>
+
+                            <!---Edit Link-->
+                            <div class="meta" ng-show="user.is_staff">
+                                <a class="link" style="font-size:0.8rem; font-weight:400"
+                                   ng-click="editing=!editing">Edit</a>
                             </div>
 
-                        <div class="extra">
-                            <form class="ui form" ng-submit="" id="editIm" novalidate ng-show="isEditing" ng-model-options="modelOptions">
-                                <div class="ui blue header">Edit Imprest</div>
+                            <!--Edit Form-->
+                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
                                 <div class="field">
                                     <label>Description</label>
-                                    <textarea placeholder="Description...." ng-model="imprest.description" ng-change="update(imprest)" required></textarea>
+                                    <input ng-change="update(details)" ng-model="details.data.description" required>
                                 </div>
-
                                 <div class="field">
                                     <label>Amount</label>
-                                    <input type="tel" placeholder="Amount" ng-model="imprest.amount" ng-change="update(imprest)" required>
+                                    <input ng-change="update(details)" ng-model="details.data.amount" required>
+                                </div>
+                                <div class="ui right floated mini button" ng-click="editing=false">Save</div>
+                            </form>
+
+                        </div>
+
+                        <div class="description" ng-if="vendor && !conLoading && vendor.id === feed.id">
+                            <!--Divider-->
+                            <h6 class="ui horizontal divider header">
+                                <i class="money icon"></i>
+                                Payment Details
+                            </h6>
+
+                            <!--Pay Details-->
+                                <!--Amount Due-->
+                                <span class="ui label">
+                                {{vendor.data.amount_due | currency: '₦'}}
+                                </span>
+                                 -  
+                                 <!--Amount Paid-->
+                                 <span class="ui label">
+                                     {{vendor.data.current_payment | currency : '₦'}}
+                                 </span>
+                                = 
+                                <!--Outstanding Balance-->
+                                <span class="ui label">
+                                {{vendor.data.outstanding_balance | currency : '₦'}}
+                                </span>
+                            <!--End Pay Details-->
+                            
+                            <!--Divider-->    
+                            <h6 class="ui horizontal divider header">
+                                <i class="Payment icon"></i>
+                                Vendor Details
+                            </h6>
+
+                            <!--Job Description-->
+                            <div class="description">
+                                <!--Acc No-->
+                                Acc.no: {{vendor.data.account_details}}<br>
+
+                                <!---Bank Name-->
+                                <span class="ui label">
+                                    <i class="building icon"></i>
+                                    {{vendor.data.bank_name}}
+                                </span>
+
+                                <!---Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="tag icon"></i>
+                                    Job Description
+                                </h6>
+
+                                <!--Vend Des-->
+                                <span style="text-transform:capitalize">{{vendor.data.job_description}}</span><br>
+
+                                <!---Quantity-->
+                                <span class="ui label">
+                                    <i class="shop icon"></i>
+                                    {{vendor.data.quantity}} 
+                                    unit<span ng-if="vendor.data.quantity > 1">s</span>
+                                </span><br>
+
+                                <!---Delivery-->
+                                <span class="ui label" style="margin-top:2px">
+                                    <i class="send icon"></i>
+                                    {{vendor.data.delivery_date}}
+                                </span>
+                            </div>
+                            
+                            <!---Edit Link-->
+                            <div class="meta" ng-show="user.is_staff">
+                                <a class="link" style="font-size:0.8rem; font-weight:400"
+                                   ng-click="editingVen=!editingVen">Edit</a>
+                            </div>
+
+                            <!--Edit Form-->
+                            <form class="ui tiny form" ng-show="editingVen" ng-class="{loading:loadingForm}" ng-model-options="modelOptions">
+                                <h5 class="ui dividing header">Vendor Details</h5>
+
+                                <div class="field">
+                                    <label>Name</label>
+                                    <input type="text" ng-model="vendor.data.vendor_name" ng-change="update(vendor)">
                                 </div>
 
-                                <button class="positive ui button right floated" type="submit" ng-click="isEditing=false">Save</button>
+                                <h5 class="ui dividing header">Bank Details</h5>
+                                    <div class="field">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Account Number</label>
+                                                <input type="tel" ng-model="vendor.data.account_details" ng-change="update(vendor)">
+                                            </div>
+
+                                            <div class="field">
+                                                <label>Bank Name</label>
+                                                <input type="text" ng-model="vendor.data.bank_name" ng-change="update(vendor)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <h5 class="ui dividing header">Job Details</h5>
+
+                                    <div class="field">
+                                        <label>Job description</label>
+                                        <textarea ng-model="vendor.data.job_description" ng-change="update(vendor)"></textarea>
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Qty</label>
+                                                <input type="tel" ng-model="vendor.data.quantity" ng-change="update(vendor)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <h5 class="ui dividing header">Payment Details</h5>
+                                    <div class="field">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Amount Due</label>
+                                                <input type="tel" ng-model="vendor.data.amount_due" ng-change="update(vendor)">
+                                            </div>
+
+                                            <div class="field">
+                                                <label>Delivery Date</label>
+                                                <input type="text" ng-model="vendor.data.delivery_date" ng-change="update(vendor)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Current Payment</label>
+                                                <input type="tel" ng-model="vendor.data.current_payment" ng-change="update(vendor)">
+                                            </div>
+
+                                            <div class="field">
+                                                <label>Outstanding Balance</label>
+                                                <input type="tel" ng-model="vendor.data.outstanding_balance = vendor.data.amount_due - vendor.data.current_payment" ng-change="update(vendor)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="ui right floated mini button" ng-click="editingVen=!editingVen">Save</button>
                             </form>
                         </div>
-                        </div>
+
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="two wide column"></div>
-        <div class="sixteen wide column" ng-controller="getVendorCtrl">
+                    <!--Extra content-->
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1">
 
-            <div class="ui segment" ng-show="user.is_superuser">
-                <h3 class="ui red centered header">Vendor Remittance Forms</h3>
+                        <!---Accept Button-->
+                        <button class="ui green basic mini circular icon button"
+                                ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,feed, $index)">
+                            <i class="checkmark icon"></i>
+                        </button>
 
-                <div class="ui divided items">
-                    
-                    <div class="item" ng-hide="vend > 0">
-                        <h3 class="ui grey centered header" ><em>Nothing new here</em></h3>
-                    </div>    
-                    
-                    <div class="item" ng-repeat="vendor in vendors | orderBy: vendor.created_at: true" ng-if="!vendor.is_approved">
+                        <!--Reject button-->
+                        <button class="ui red basic mini circular icon button">
+                            <i class="close icon"></i>
+                        </button>
 
-
-                        <div class="content">
-                            <a class="header">{{vendor.vendor_name}}</a>
-
-                            <div class="right floated meta">
-                                <span class="right floated date">{{vendor.delivery_date | date}}</span><br>
-                                <span class="right floated category">{{vendor.amount_due}} - {{vendor.current_payment}}</span><br>
-                                <span class="right floated category"> = {{vendor.outstanding_balance}}</span>
-                            </div>
-
-                            <div class="meta">
-                                <span class="category">Acc.no:  {{vendor.account_details}}</span><br>
-                                <span class="category">{{vendor.bank_name}}</span>
-                            </div>
-
-
-                            <div class="description">
-                                <p>{{vendor.job_description}}</p>
-                            </div>
-
-                            <div class="extra">
-                                <div class="ui violet label">Prepared by <span style="text-transform: capitalize">{{vendor.user.username}}</span></div>
-                                <div class="right floated ui blue label">{{vendor.quantity}} Units</div>
-                            </div>
-
-                            <div class="extra">
-                                <p class="black ui label">{{vendor.created_at | amCalendar}}</p>
-
-                                <div class="circular ui green basic icon button right floated" ng-click="approve(vendor)">
-                                    <i class="check icon"></i>
-                                </div>
-                                <div class="circular ui red basic icon button right floated">
-                                    <i class="close icon"></i>
-                                </div>
-
-                            </div>
-
-                        </div>
                     </div>
+
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1">
+
+                        <!---Accept Button-->
+                        <button class="ui green basic mini circular icon button"
+                                ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,feed, $index)">
+                            <i class="checkmark icon"></i>
+                        </button>
+
+                        <!--Reject button-->
+                        <button class="ui red basic mini circular icon button">
+                            <i class="close icon"></i>
+                        </button>
+
+                    </div>
+
+                    <!---Action Icons-->
+                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'accepted'">
+                        <i class="ui green checkmark icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'created'">
+                        <i class="text file icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'edited'">
+                        <i class="pencil icon"></i>
+                    </div>
+                    <!--End Action Icons-->
+
                 </div>
+
             </div>
         </div>
     </div>
 
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(2)">
+
+        <!---Feed-->
+        <div class="ui centered feed">
+
+            <!--Event-->
+            <div class="event" ng-repeat="message in messages | orderBy: message.message.date:true">
+                <div class="label">
+                    <img src="/static/images/nl.png">
+                </div>
+
+                <!--Content-->
+                <div class="content">
+
+                    <!--Summary-->
+                    <div class="summary" style="font-weight:400">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor !== user.username">
+                            {{message.message.tags.actor}}
+                        </a>
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor=== user.username">
+                            You
+                        </a>
+                        <!--Message-->
+                        {{message.message.message}}
+
+                        <a class="user">
+                            {{message.message.tags.target}}
+                        </a>
+
+                        <!--Imprest View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') === -1">
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                           ng-click=" show=!show; view(message.message);" ng-hide="show && details.id === message.message.id"> - view</a>
+                        
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
+                           ng-show="show && details.id === message.message.id "> - close </a>
+                        </div>
+                        
+                        <!---End Imprest View Link-->   
+
+                        <!---Vendor View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') !== -1">
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                           ng-click=" show=!show; view(message.message);" ng-hide="show && vendor.id === message.message.id"> - view</a>   
+
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
+                           ng-show="show && vendor.id === message.message.id"> - close </a>
+                        </div>
+                        <!---End Vendor View Link--> 
+
+                        <!--Message Date-->
+                        <div class="date">
+                            <time am-time-ago="message.message.date"></time>
+                        </div>
+                    </div>
+
+                    <!--Extra Content-->
+                    <div class="extra content" ng-show="show">
+
+                        <!--Loader-->
+                        <div class="ui mini centered inline loader" ng-class="{active:message.message.conLoading}"></div>
+                        <!---EndLoader-->
+
+                        <!--Description-->
+                        <div class="description" ng-if="!loading && details.id === message.message.id">
+                            {{details.data.description}}<br>
+                            <div class="meta">
+                                <span class="ui label">{{details.data.amount | currency:'₦'}}</span>
+                            </div>
+                            <br>
+                        </div>
+
+                        <div class="description" ng-if="!loading && vendor.id === message.message.id">
+                            <!--Divider-->
+                            <h6 class="ui horizontal divider header">
+                                <i class="money icon"></i>
+                                Payment Details
+                            </h6>
+
+                            <!--Pay Details-->
+                                <!--Amount Due-->
+                                <span class="ui label">
+                                {{vendor.data.amount_due | currency: '₦'}}
+                                </span>
+                                 -  
+                                 <!--Amount Paid-->
+                                 <span class="ui label">
+                                     {{vendor.data.current_payment | currency : '₦'}}
+                                 </span>
+                                = 
+                                <!--Outstanding Balance-->
+                                <span class="ui label">
+                                {{vendor.data.outstanding_balance | currency : '₦'}}
+                                </span>
+                            <!--End Pay Details-->
+                            
+                            <!--Divider-->    
+                            <h6 class="ui horizontal divider header">
+                                <i class="Payment icon"></i>
+                                Vendor Details
+                            </h6>
+
+                            <!--Job Description-->
+                            <div class="description">
+                                <!--Acc No-->
+                                Acc.no: {{vendor.data.account_details}}<br>
+
+                                <!---Bank Name-->
+                                <span class="ui label">
+                                    <i class="building icon"></i>
+                                    {{vendor.data.bank_name}}
+                                </span>
+
+                                <!---Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="tag icon"></i>
+                                    Job Description
+                                </h6>
+
+                                <!--Vend Des-->
+                                <span style="text-transform:capitalize">{{vendor.data.job_description}}</span><br>
+
+                                <!---Quantity-->
+                                <span class="ui label">
+                                    <i class="shop icon"></i>
+                                    {{vendor.data.quantity}} 
+                                    unit<span ng-if="vendor.data.quantity > 1">s</span>
+                                </span><br>
+
+                                <!---Delivery-->
+                                <span class="ui label" style="margin-top:2px">
+                                    <i class="send icon"></i>
+                                    {{vendor.data.delivery_date}}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!---Action Icons-->
+                    <div class="extra content" ng-if="message.message.tags.action === 'accepted'">
+                        <i class="ui green checkmark icon"></i>{{accepted}}
+                    </div>
+
+                    <div class="extra content" ng-if="message.message.tags.action === 'created'">
+                        <i class="text file icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="message.message.tags.action === 'edited'">
+                        <i class="pencil icon"></i>
+                    </div>
+                    <!--End Action Icons-->
+
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<!--Bottom Notification Bar-->
 <notify-bar></notify-bar>

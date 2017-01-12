@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^$', ensure_csrf_cookie(TemplateView.as_view(template_name='base.html'))),
     url(r'^office/', include('naijalogos_office.urls')),
     url(r'auth_api/', include('auth_api.urls')),
+    url(r'api/', include('stored_messages.urls')),
 ]

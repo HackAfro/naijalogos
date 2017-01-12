@@ -17,7 +17,7 @@
         $scope.isSelected = function(checktab){
             return $scope.tab === checktab
         }
-        
+
         $http.get('/office/vendors/').then(function(response){
                 $scope.vendors = response.data
                 var venNum = 0
@@ -28,7 +28,16 @@
                 }
                 $scope.numVen = venNum
         })
-        
+
+        activate()
+        function activate() {
+            $localForage.getItem('user').then(function (data) {
+                if (!data) {
+                    $location.url('/login')
+                }
+            })
+        }
+
         $http.get('/office/imprests/').then(function(response){
                 $scope.imprests = response.data
                 var impNum = 0
@@ -39,7 +48,7 @@
                 }
                 $scope.numImp = impNum
         })
-        
+
         $scope.isEditing = false;
         
         $scope.editing = function(){

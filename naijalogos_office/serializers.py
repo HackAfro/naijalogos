@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from auth_api.serializers import UserSerializer
+from stored_messages.models import MessageArchive, Message
 
 from .models import Imprest, VendorRemittance, BillboardTracker
 from django.contrib.auth.models import User
@@ -7,6 +8,7 @@ from django.contrib.auth.models import User
 
 class ImprestSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, required=False)
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Imprest
@@ -21,6 +23,7 @@ class ImprestSerializer(serializers.ModelSerializer):
 
 class VendorRemittanceSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, required=False)
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = VendorRemittance
@@ -45,3 +48,16 @@ class BillboardSerializer(serializers.ModelSerializer):
         return exclusions + ['contact_person']
             
         
+class MessageSerializer(serializers.ModelSerializer):
+    """docstring for MessageSerializer"""
+    class Meta:
+        model = Message
+        fields = '__all__'        
+
+class ArchiveSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    message = MessageSerializer(read_only=True)
+
+    class Meta:
+        model = MessageArchive
+        fields = '__all__'

@@ -11,6 +11,14 @@
             controller : ['$scope', '$http', '$location', '$localForage','$timeout', function ($scope, $http, $location, $localForage, $timeout) {
                 $localForage.getItem('user').then(function (data) {
                     $scope.user = data
+
+                    Pusher.subscribe($scope.user.username + '_inbox','update',function(item){
+                        alert('new')
+                        $http.get('/api/inbox/').then(function(data){
+                            $scope.notifications = data.data.length
+                        })
+            
+                      })
                 });
 
                 $scope.logout = function () {
@@ -25,29 +33,8 @@
                 
                 
                 function notify(){
-                  $http.get('/office/imprests/').then(function (response) {
-                    var total = 0
-                        var data = response.data
-                        var prests = 0
-                        for (var i=0; i<data.length; i++){
-                            if(!data[i].is_approved){
-                                prests++
-                            }
-                        }
-                    total = prests
-                    $http.get('/office/vendors/').then(function (response) {
-                        var data = response.data
-                        var vends = 0
-                        for (var j=0; j<data.length; j++){
-                            if(!data[j].is_approved){
-                                    vends++
-                            }
-                        }
-                        total += vends
-                    $scope.notifications = total
-                    })
-                    $timeout(notify,50000)
-                        
+                  $http.get('/api/inbox/').then(function (response) {
+                    $scope.notifications = response.data.length
                     })  
                 }
                 
