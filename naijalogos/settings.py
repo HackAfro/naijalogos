@@ -25,11 +25,13 @@ SECRET_KEY = 'je2t6jiko9baer-zus27391p$c5i*ll9y5syty78^tmu5vg)(3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.naijalogosoffice.com']
 
-PUSHER_APP_ID = "281587"
-PUSHER_KEY = "6cfd92c53d2b858e9196"
-PUSHER_SECRET = "662081b939c8f922aa0c"
+SECURE_SSL_REDIRECT = True
+
+PUSHER_APP_ID = "281589"
+PUSHER_KEY = "1e6cf382786b2218bb7b"
+PUSHER_SECRET = "7b0d6824a33529c98562"
 
 # Application definition
 
@@ -81,11 +83,13 @@ WSGI_APPLICATION = 'naijalogos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'iamafro$Naijalogos',
+        'USER': 'iamafro',
+        'PASSWORD': 'metallicpotassium',
+        'HOST': 'iamafro.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -120,7 +124,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
