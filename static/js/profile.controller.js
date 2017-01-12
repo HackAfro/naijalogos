@@ -19,6 +19,7 @@
         }
 
         $http.get('/office/vendors/').then(function(response){
+                $scope.loading = false
                 $scope.vendors = response.data
                 var venNum = 0
                 for (var j=0; j<$scope.vendors.length; j++){
@@ -27,6 +28,7 @@
                     }
                 }
                 $scope.numVen = venNum
+                
         })
 
         activate()
@@ -37,8 +39,9 @@
                 }
             })
         }
-
+        $scope.loading = true
         $http.get('/office/imprests/').then(function(response){
+                $scope.loading = false 
                 $scope.imprests = response.data
                 var impNum = 0
                 for (var i=0; i<$scope.imprests.length; i++){
@@ -47,6 +50,7 @@
                     }
                 }
                 $scope.numImp = impNum
+                
         })
 
         $scope.isEditing = false;

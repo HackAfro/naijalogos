@@ -16,7 +16,7 @@
         </a>
     </div>
 
-    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)"  ng-class="{loading:loading}">
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)"  ng-class="{loading:loading}" style="min-height:100px">
 
         <!---No new messages display-->
         
@@ -41,10 +41,10 @@
                     <div class="summary" style="font-weight:400">
 
                         <!--Message-->
-                        <a class="user" style="font-weight:600" ng-if="feed.tags.actor !== user.username">
+                        <a class="user" style="font-weight:600" ng-if="feed.tags.actor.toLowerCase() !== user.username">
                             {{feed.tags.actor}}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="feed.tags.actor=== user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="feed.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
                           {{feed.message | limitTo : 100}} - <a class="user">
@@ -176,7 +176,7 @@
 
                                 <!---Delivery-->
                                 <span class="ui label" style="margin-top:2px">
-                                    <i class="send icon"></i>
+                                    <i class="calendar icon"></i>
                                     {{vendor.data.delivery_date}}
                                 </span>
                             </div>
@@ -329,10 +329,10 @@
 
                     <!--Summary-->
                     <div class="summary" style="font-weight:400">
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor !== user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() !== user.username">
                             {{message.message.tags.actor}}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor=== user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
                         <!--Message-->

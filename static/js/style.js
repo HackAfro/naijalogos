@@ -4,15 +4,13 @@
 function main() {
    
    $(document).on('click','#rotate', function(){
-       
-       $('.ui.left.sidebar')
-           .sidebar({
+
+       $('.ui.left.sidebar').sidebar({
               dimPage: true,
             transition: 'overlay',
             exclusive: false,
             closable: true
-       })
-           .sidebar('toggle');
+       }).sidebar('toggle');
    })
 
    $('.ui.accordion')
@@ -21,6 +19,13 @@ function main() {
   $(document).on('click','.ui.styled.accordion', function(){
 
     $('.ui.styled.accordion').accordion()
+  })
+
+  $(document).on('focus','.ui.fluid.dropdown', function(){
+    $('.ui.fluid.dropdown').dropdown()
+  })
+  $(document).on('click','.ui.fluid.dropdown', function(){
+    $('.ui.fluid.dropdown').dropdown()
   })
 
 }

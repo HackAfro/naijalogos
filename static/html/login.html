@@ -12,7 +12,10 @@
 
                 <form class="ui large form" ng-submit="login()" >
 
-                    <div class="ui red text">{{login_error}}</div>
+                    
+                    <div class="ui tiny negative message" ng-if="login_error" id="error">
+                        {{login_error}}
+                    </div>
 
                     <div class="ui stacked segment">
                         <div class="field">

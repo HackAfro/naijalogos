@@ -4,7 +4,7 @@
     <nav-bar></nav-bar>
 
     <div class="ui inverted masthead center aligned segment">
-        <div class="ui black launch right attached fixed button" id="rotate" style="margin-top:35px; position:fixed; left:0;" ng-if="user.is_superuser">
+        <div class="ui black launch right attached fixed button" id="rotate" style="margin-top:35px; position:fixed; left:0;" ng-show="user.is_staff">
             <i class="content icon"></i>
         </div>
 
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="ui bottom attached segment" ng-show="isSelected(1)">
+            <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="numImp < 1">
                     <div class="column">
                         <h3 class="ui grey centered header" ><em>Nothing here yet</em></h3>
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="ui bottom attached segment" ng-show="isSelected(2)">
+            <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}" style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="numVen < 1">
                     <div class="column">
                         <h3 class="ui grey centered header"><em>Nothing here yet</em></h3>

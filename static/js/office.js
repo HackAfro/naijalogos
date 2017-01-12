@@ -59,7 +59,7 @@
                 if(!data){
                     $location.url('/login')
                 }else{
-                    if (!data.is_superuser){
+                    if (!data.is_staff){
                         $location.url('/')
                     }
                 }

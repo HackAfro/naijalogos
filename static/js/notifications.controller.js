@@ -11,6 +11,18 @@
 		$localForage.getItem('user').then(function (data) {
             $scope.user = data
 
+            $http.get('/api/inbox/').then(function(data){
+			var latest = data.data
+			for(var i=0; i<latest.length; i++){
+				latest[i].tags = JSON.parse(latest[i].tags) 
+			}
+			$scope.latest = latest.reverse()
+			$scope.loading = false
+			if (!$scope.user.is_staff) {
+				$http.post('/api/mark_all_read/')
+			}
+		})
+
             Pusher.subscribe($scope.user.username + '_inbox','update',function(item){
             $scope.loading = true
             $http.get('/api/inbox/').then(function(data){
@@ -22,8 +34,8 @@
 				$scope.loading = false
             })
             $("#acc-imprest > p").text(item.message)
-				$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
-				$("#acc-imprest").slideUp(500);
+				$("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function(){
+				$("#acc-imprest").slideUp(1000);
 			})
         })
         });
@@ -46,17 +58,7 @@
         
 
 		$scope.loading = true
-		$http.get('/api/inbox/').then(function(data){
-			var latest = data.data
-			for(var i=0; i<latest.length; i++){
-				latest[i].tags = JSON.parse(latest[i].tags) 
-			}
-			$scope.latest = latest.reverse()
-			$scope.loading = false
-			if (!$scope.user.is_staff) {
-				$http.post('/api/mark_all_read/')
-			}
-		})
+		
 		
 
 		$http.get('/office/messages/').then(function(data){

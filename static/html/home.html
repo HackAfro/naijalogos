@@ -5,6 +5,7 @@
         Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
     </h1>
 
+    
 
     <div class="ui centered cards">
         <div class="card">
@@ -114,7 +115,11 @@
 
                         <div class="field">
                             <label>Currency</label>
-                            <input type="text" placeholder="NGN" name="currency" ng-model="vendor.currency">
+                            <select class="ui fluid dropdown" name="currency" ng-model="vendor.currency">
+                                <option value="">Currency</option>
+                                <option value="NGN"><i class="ng flag"></i>NGN</option>
+                                <option value="USD"><i class="us flag"></i>USD</option>
+                            </select>
                         </div>
                     </div>
                 </div>
