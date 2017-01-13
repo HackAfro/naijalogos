@@ -47,7 +47,7 @@ class ImprestViewSet(ModelViewSet):
         users = [imprest.user,User.objects.get(username='lydia')]
         lydia = users[1]
         data = request.data
-
+        self.perform_update(serializer)
 
         if imprest.description == data['description'] and int(imprest.amount) == int(data['amount']):
             
@@ -59,17 +59,17 @@ class ImprestViewSet(ModelViewSet):
                 add_message_for(users=[User.objects.get(username="aba")],level=3, message_text="accepted {}'s imprest".format(imprest.user.capitalize()),date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))    
             else:
                 self.pusher.trigger(u'{}_inbox'.format(imprest.user.username),u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
-                add_message_for(users=[users[0]],level=3, message_text="accepted your imprest".format(request.user, imprest.description),date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))
+                add_message_for(users=[users[0]],level=3, message_text="accepted your imprest",date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))
                 self.pusher.trigger([u'lydia_inbox',u'aba_inbox'],u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
-                add_message_for(users=[lydia,User.objects.get(username="aba")],level=3, message_text="accepted {}'s imprest".format(imprest.user.capitalize()),date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))            
+                add_message_for(users=[lydia,User.objects.get(username="aba")],level=3, message_text="accepted {}'s imprest".format(imprest.user.username.capitalize()),date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))            
         
         else:
             
-            self.pusher.trigger(u'{}_inbox'.format(imprest.user.username),u'update',{'message':'{} edited your imprest - {}'.format(request.user.username.capitalize(),data['description'])})
-            tags = {"action":"edited","actor": request.user.username.capitalize(), "target": imprest.description.capitalize()}
+            self.pusher.trigger(u'{}_inbox'.format(imprest.user.username.capitalize()),u'update',{'message':'{} edited your imprest - {}'.format(request.user.username.capitalize(),data['description'])})
+            tags = {"action":"edited","actor": request.user.username.capitalize(), "target": data['description'].capitalize()}
             add_message_for(users=[users[0]],level=3, message_text="edited your imprest",date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))
         
-        self.perform_update(serializer)
+        
 
         if getattr(imprest,  '_prefetched_objects_cache',None):
             instance._prefetched_objects_cache = {}
@@ -103,7 +103,8 @@ class VendorViewSet(ModelViewSet):
         serializer = self.serializer_class(vendor,data=request.data)
         serializer.is_valid(raise_exception=True)
         users = [User.objects.get(username='lydia'),User.objects.get(username='aba')]
-
+        self.perform_update(serializer)
+        
         if vendor.user == users[0]:
 
             self.pusher.trigger(u'{}_inbox'.format(vendor.user.username.capitalize()),u'update',{'message':'{} appproved your vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
@@ -118,7 +119,7 @@ class VendorViewSet(ModelViewSet):
             tags = {"action":"accepted","actor": request.user.username, "target": vendor.vendor_name}
             add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
         
-        self.perform_update(serializer)
+        
 
         if getattr(vendor,  '_prefetched_objects_cache',None):
             instance._prefetched_objects_cache = {}
