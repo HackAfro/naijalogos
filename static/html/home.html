@@ -1,12 +1,65 @@
 <nav-bar></nav-bar>
 
-<div class="container" ng-controller="homeCtrl">
+<div class="ui container" ng-controller="homeCtrl" id="home">
     <h1 class="ui centered header" style="margin-top: 200px">
         Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
     </h1>
 
-    
+    <div class="ui horizontal divider header">
+        <i class="briefcase icon"></i>
+        Recent Jobs
+    </div>
 
+    <div class="ui centered grid" ng-controller="newJobCtrl">
+        <div class="sixteen wide column">
+            <h5 class="ui top attached inverted header">
+                <i class="tag icon"></i>
+                Current Job
+            </h5>
+        
+            <div class="ui fluid attached raised segment">
+                <div class="item">
+                    <div class="content">
+                        <h3 class="ui teal header">{{latestJob.client_name}}</h3>
+                    </div>
+
+                    <div class="right floated meta">
+                        <span class="ui brown label">+234{{latestJob.client_no | limitTo : 40 : 1}}</span>
+                    </div>
+
+                    <div class="description" style="margin-top:10px">
+                        <p>{{latestJob.job_description}}</p>
+                    </div>
+
+                    <div class="ui teal progress" data-percent="{{latestJob.percentage}}" id="example1">
+                        <div class="bar" style="width: {{latestJob.percentage}}%">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="label">{{ latestJob.percentage }}% <span ng-if="latestJob.percentage > 0">Completed</span></div>
+                    </div> 
+                    <div class="extra">
+                        by: <span class="ui label" style="text-transform:capitalize">{{latestJob.handler}}</span>
+                        <a class="ui right floated teal mini animated button" tabindex="0" href="#!/jobs">
+                            <div class="visible content">All Jobs</div>
+                            <div class="hidden content">
+                                <i class="right arrow icon"></i>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui horizontal divider header">
+        <i class="file icon"></i>
+        Forms
+    </div>
+    
+    
     <div class="ui centered cards">
         <div class="card">
             <div class="content">
@@ -34,6 +87,19 @@
                 Vendor Remittance Form
             </div>
         </div>
+
+        <div class="card">
+            <div class="content">
+                <div class="header">Job Tracker</div>
+                <div class="description">
+                    Input the details of an ongoing job to monitor the progress
+                </div>
+            </div>
+            <div class="ui blue bottom attached button" ng-click="isEditingJob()">
+                <i class="briefcase icon"></i>
+                Track Job
+            </div>
+        </div>
     </div>
 
     <div class="ui centered card">
@@ -48,6 +114,7 @@
             Lease Billboard
         </div>
     </div>
+  
 
     <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px">
 
@@ -247,6 +314,91 @@
             </form>
         </div>
     </div>
+
+    
+    <div class="ui centered grid" ng-show="editingJob" style="margin-top: 15px" ng-controller="jobCtrl">
+
+        <div class="ui four column grid" style="background: #d0d0d0">
+            <h2 class="ui blue header">Enter Job Details</h2>
+
+            <form class="ui form" ng-submit="create()" ng-class="{loading:loading}">
+                <h4 class="ui dividing header">Client Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Client Name</label>
+                            <input placeholder="Client name" type="text" ng-model="job.clientName">
+                        </div>
+
+                        <div class="field">
+                            <label>Client Mobile</label>
+                            <input type="tel" placeholder="0802xxxxxxx" ng-model="job.clientNo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Client Contact Person</label>
+                    <input type="text" ng-model="job.clientContactPerson" placeholder="Contact Person">
+                </div>
+
+                <h4 class="ui dividing header">Job Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Job Handler</label>
+                            <select ng-model="job.handler">
+                                <option value="">Handler</option>
+                                <option value="afro">Richard</option>
+                                <option value="lydia">Lydia</option>
+                                <option value="israel">Israel</option>
+                                <option value="andre">Andre</option>
+                            </select>
+                                
+                        </div>
+
+                        <div class="field">
+                            <label>Job Percentage</label>
+                            <input type="tel" ng-model="job.percentage" placeholder="%..">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Start Date</label>
+                    <input type="text" ng-model="job.createdAt" placeholder="YYYY-MM-DD">
+                </div>
+
+                <div class="field">
+                    <label>Job Description</label>
+                    <textarea placeholder="Job Description....." ng-model="job.jobDescription"></textarea>
+                </div>
+                                    
+                <h4 class="ui dividing header">Payment Details</h4>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Amount Due</label>
+                            <input type="tel" placeholder="Amount Due" ng-model="job.amountDue">
+                        </div>
+
+                        <div class="field">
+                            <label>Amount Paid</label>
+                            <input type="tel" placeholder="Amount Paid" ng-model="job.amountPaid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Outstanding Balance</label>
+                    <input type="tel" placeholder="Outstanding Balance" ng-model="job.balance=job.amountDue-job.amountPaid">
+                </div>
+                
+                <button class="positive ui button right floated" type="submit" ng-click="">Submit</button>
+            </form>
+        </div>
+    </div>
+
     
     <notify-bar></notify-bar>
 </div>

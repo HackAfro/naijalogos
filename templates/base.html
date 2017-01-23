@@ -2,13 +2,15 @@
 <html lang="en" ng-app="naijalogosOffice">
 <head>
     <meta charset="UTF-8">
+    <meta name="theme-color" content="black">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="target-densitydpi=160">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Naijalogos Office</title>
 
+    <link type="image/png" href="{% static 'favicon.ico' %}" rel="shortcut icon">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet"/>
-    <link href="{% static 'Semantic-UI-1.0/dist/semantic.css' %}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
@@ -21,7 +23,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-pusher/0.0.14/angular-pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>   
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>  
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script> 
+<script src="{% static 'js/site.js' %}"></script>
 <script src="{% static 'Semantic-UI-1.0/dist/semantic.js' %}"></script>  
 <script src="{% static 'js/localforage.min.js' %}"></script>
 <script src="{% static 'js/angular-localForage.js' %}"></script>
@@ -32,6 +35,8 @@
 <script src="{% static 'js/sidebar.directive.js' %}"></script>
 <script src="{% static 'js/navbar.directive.js' %}"></script>
 <script src="{% static 'js/forms.controller.js' %}"></script>
+<script src="{% static 'js/jobs.controller.js' %}"></script>
+<script src="{% static 'js/account.controller.js' %}"></script>
 <script src="{% static 'js/profile.controller.js' %}"></script>    
 <script src="{% static 'js/notify.directive.js' %}"></script>
 <script src="{% static 'js/style.js' %}"></script>

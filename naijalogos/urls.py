@@ -21,6 +21,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^sw(.*.js)(?:/(?P<params>[a-zA-Z]+)/)?', 
+        TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
     url(r'^$', ensure_csrf_cookie(TemplateView.as_view(template_name='base.html'))),
     url(r'^office/', include('naijalogos_office.urls')),
     url(r'auth_api/', include('auth_api.urls')),

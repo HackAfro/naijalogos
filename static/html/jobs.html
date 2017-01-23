@@ -1,0 +1,262 @@
+<nav-bar></nav-bar>
+<div class="ui inverted center aligned masthead segment">
+    <h2 class="ui inverted center aligned icon header" style="margin-top: 60px">
+        <i class="circular briefcase icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
+        Job Orders
+    </h2>
+</div>
+
+<div class="ui container" ng-controller="jobsController" style="margin-top:30px">
+	
+	<div class="ui segment" style="background:linear-gradient(transparent,rgba(0,0,0,.05)) #545454">
+    	<div class="ui small breadcrumb">
+        	<a class="section" href="#!/home" style="color:whitesmoke"><em>Home</em></a>
+        	<i class="white right chevron icon divider"></i>
+        	<div class="active section" style="color:grey"><em>Jobs</em></div>
+    	</div>
+    </div>		
+
+    <div class="ui divider"></div>
+
+	<div class="ui grid">	
+
+		<div class="four wide column">
+				<div class="ui left teal vertical menu">
+
+					<div class="item" style="background:linear-gradient(transparent,rgba(0,0,0,.05)) #545454">
+						<h4 class="ui inverted header">
+							<i class="filter icon"></i>
+							Filter
+						</h4>
+					</div>
+
+					<a href="" class="item" ng-class="{active:isSelected(1), grey:isSelected(1)}" ng-click="selectTab(1)">
+						<span class="ui label">{{incomplete}}</span>
+						Ongoing
+					</a>
+
+					<a href="" class="item" ng-class="{active:isSelected(2), grey:isSelected(2)}" ng-click="selectTab(2)">
+						<span class="ui label">{{complete}}</span>
+						Completed
+					</a>
+				</div>
+			</div> 
+
+		
+		<div class="sixteen wide column" style="max-width:550px" ng-show="isSelected(1)">
+
+			<h4 class="ui top attached inverted header">
+			<i class="hourglass start icon"></i>
+			Ongoing Jobs
+		</h4>
+			<div class="ui raised grey attached segment" ng-class="{loading:getting}" style="min-height:200px">
+		<div class="ui grid">
+
+			<div class="sixteen wide centered column" ng-if="incomplete < 1">
+				<img src="/static/images/file.png" class="ui medium centered image">
+				<h2 class="ui grey centered header">
+					No Ongoing Jobs 
+				</h2>
+			</div>
+
+			<div class="sixteen wide column" ng-repeat="job in jobs | filter : job.is_complete === false">
+					<div class="item">
+            			<div class="content">
+            			<a class="ui teal header">{{job.client_name}}</a><br>
+            				<div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;">
+            					
+                				<span class="right floated" >
+                					<span class="ui label">{{job.amount_due | currency:'₦'}} </span>- <span class="ui label">{{job.amount_paid | currency:'₦'}}</span>
+                				</span><br>
+
+                				
+                				<span class="right floated ui blue label" style="float:right; margin-top:5px">
+                					= {{job.balance | currency:'₦'}}
+                				</span>
+                			</div>
+                    		
+                    		<span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 0}}</span><br>
+                		
+                    		by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
+                    	
+                		</div>
+
+                		
+                		
+                		<div class="description" style="margin-top:10px">
+                    		<p>{{job.job_description}}</p>
+                		</div> 
+
+                		<div class="ui black progress" data-percent="{{job.percentage}}" id="example1">
+                    		<div class="bar" style="width: {{job.percentage}}%">
+                        		<div class="progress"></div>
+                    		</div>
+                   			<div class="label">{{ job.percentage }}%<span ng-if="job.percentage > 0">  Completed</span></div>
+                		</div>
+                		
+                		<div class="meta" ng-show="job.handler === user.username">
+                			<a class="link" href="" style="font-size:0.8rem; font-weight:400; color:grey;" ng-click="editing=!editing">Edit</a>
+                		</div>
+
+                		<form class="ui mini form" novalidate ng-show="editing" ng-class="{loading:loading}" ng-model-options="modelOptions">
+                			<div class="field">
+                				<label>Percentage</label>
+                				<input type="tel" style="width:15%" ng-model="job.percentage" ng-change="update(job)">
+                			</div>
+                		</form>
+                		
+                    	<div class="ui top attached tabular menu">
+                    		<a href="" class="item" ng-click="lit=!lit" ng-class="{active:lit}" id="remark">Remarks</a>
+                    	</div>
+
+                    	<div class="ui attached segment" ng-show="lit">
+                    		<h5 class="ui grey header" ng-if="!job.remarks.length">
+                    			<i class="attention icon"></i>
+                    			No Remarks
+                    		</h5>
+                    		<div class="ui feed">
+                    			<div class="event" ng-repeat="remark in job.remarks | limitTo:5 | orderBy:remark.id:true">
+                    			
+                    					<i class="ui teal pencil icon"></i>
+                    				
+                    				<div class="content" style="margin-left:5px">
+                    					<div>
+                    					{{remark.comment}} - <span am-time-ago="remark.created_at" style="font-size:0.8rem; font-weight:400; color:grey;"></span>
+                    				</div>
+                    				</div>
+                    				
+                    			</div>
+                    		</div>
+
+                    		<div class="ui divider"></div>
+
+                    		<form class="ui mini form" ng-show="user.username === job.handler" ng-submit="addRemark(job)" ng-class="{loading:remarkLoading}">
+                    			<h5 class="ui teal header">Add New Remark</h5>
+                    			<div class="field">
+                    				<label>Remark</label>
+                    				<textarea placeholder="Remark...." style="height:5%" ng-model="message.comment"></textarea>
+                    			</div>
+                    				
+                    			<button class="ui teal mini button" type="submit">Add</button>
+               
+                    				
+                    		</form>
+                    	</div>
+           			</div> 
+
+			</div>
+		</div>
+		
+	</div>
+		</div>
+
+		<div class="sixteen wide column" style="max-width:550px" ng-show="isSelected(2)">
+
+			<h4 class="ui top attached inverted header">
+			<i class="hourglass full icon"></i>
+			Completed Jobs
+		</h4>
+			<div class="ui raised grey attached segment">
+		<div class="ui grid">
+
+			<div class="sixteen wide centered column" ng-if="complete < 1">
+				<img src="/static/images/file.png" class="ui medium centered image">
+				<h2 class="ui grey centered header">
+					No Completed Jobs 
+				</h2>
+			</div>
+
+			<div class="sixteen wide column" ng-repeat="job in jobs | filter : !job.is_complete">
+					<div class="item">
+            			<div class="content">
+            			<a class="ui teal header">{{job.client_name}}</a><br>
+            				<div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;">
+            					
+                				<span class="right floated" >
+                					<span class="ui label">{{job.amount_due | currency:'₦'}} </span>- <span class="ui label">{{job.amount_paid | currency:'₦'}}</span>
+                				</span><br>
+
+                				
+                				<span class="right floated ui blue label" style="float:right; margin-top:5px">
+                					= {{job.balance | currency:'₦'}}
+                				</span>
+                			</div>
+                    		
+                    		<span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 0}}</span><br>
+                		
+                    		by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
+                    	
+                		</div>
+
+                		
+                		
+                		<div class="description" style="margin-top:10px">
+                    		<p>{{job.job_description}}</p>
+                		</div> 
+
+                		<div class="ui black progress" data-percent="{{job.percentage}}" id="example1">
+                    		<div class="bar" style="width: {{job.percentage}}%">
+                        		<div class="progress"></div>
+                    		</div>
+                   			<div class="label">{{ job.percentage }}%<span ng-if="job.percentage > 0">  Completed</span></div>
+                		</div>
+                		
+                		<div class="meta" ng-show="job.handler === user.username">
+                			<a class="link" href="" style="font-size:0.8rem; font-weight:400; color:grey;" ng-click="editing=!editing">Edit</a>
+                		</div>
+
+                		<form class="ui mini form" novalidate ng-show="editing" ng-class="{loading:loading}" ng-model-options="modelOptions">
+                			<div class="field">
+                				<label>Percentage</label>
+                				<input type="tel" style="width:15%" ng-model="job.percentage" ng-change="update(job)">
+                			</div>
+                		</form>
+                		
+                    	<div class="ui top attached tabular menu">
+                    		<a href="" class="item" ng-click="lit=!lit" ng-class="{active:lit}" id="remark">Remarks</a>
+                    	</div>
+
+                    	<div class="ui attached segment" ng-show="lit">
+                    		<h5 class="ui grey header" ng-if="!job.remarks.length">
+                    			<i class="attention icon"></i>
+                    			No Remarks
+                    		</h5>
+                    		<div class="ui feed">
+                    			<div class="event" ng-repeat="remark in job.remarks | limitTo:5 | orderBy:remark.id:true">
+                    			
+                    					<i class="ui teal pencil icon"></i>
+                    				
+                    				<div class="content" style="margin-left:5px">
+                    					<div>
+                    					{{remark.comment}} - <span am-time-ago="remark.created_at" style="font-size:0.8rem; font-weight:400; color:grey;"></span>
+                    				</div>
+                    				</div>
+                    				
+                    			</div>
+                    		</div>
+
+                    		<div class="ui divider"></div>
+
+                    		<form class="ui mini form" ng-show="user.username === job.handler" ng-submit="addRemark(job)" ng-class="{loading:remarkLoading}">
+                    			<h5 class="ui teal header">Add New Remark</h5>
+                    			<div class="field">
+                    				<label>Remark</label>
+                    				<textarea placeholder="Remark...." style="height:5%" ng-model="message.comment"></textarea>
+                    			</div>
+                    				
+                    			<button class="ui teal mini button" type="submit">Add</button>
+               
+                    				
+                    		</form>
+                    	</div>
+           			</div> 
+
+			</div>
+		</div>
+		
+	</div>
+		</div>
+	</div>
+
+<notify-bar></notify-bar>
+</div>

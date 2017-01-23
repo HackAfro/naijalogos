@@ -6,9 +6,9 @@ function main() {
    $(document).on('click','#rotate', function(){
 
        $('.ui.left.sidebar').sidebar({
-              dimPage: true,
+              dimPage: false,
             transition: 'overlay',
-            exclusive: false,
+            exclusive: true,
             closable: true
        }).sidebar('toggle');
    })
@@ -21,12 +21,14 @@ function main() {
     $('.ui.styled.accordion').accordion()
   })
 
-  $(document).on('focus','.ui.fluid.dropdown', function(){
-    $('.ui.fluid.dropdown').dropdown()
-  })
   $(document).on('click','.ui.fluid.dropdown', function(){
     $('.ui.fluid.dropdown').dropdown()
   })
+
+
+
+
+ 
 
 }
 $(document).ready(main);

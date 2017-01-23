@@ -6,7 +6,20 @@
 
     var office = angular.module('naijalogosOffice');
 
-    office.controller('imprestCtrl', ['$http', '$scope', '$localForage', '$location', function ($http, $scope, $localForage, $location) {
+    office.controller('imprestCtrl', ['$http', '$scope', '$localForage', '$location','Pusher', function ($http, $scope, $localForage, $location,Pusher) {
+        $localForage.getItem('user').then(function (data) {
+            $scope.user = data
+
+            Pusher.subscribe($scope.user.username + '_inbox','update',function(item){
+    
+                $("#acc-imprest > p").text(item.message)
+                    $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function(){
+                    $("#acc-imprest").slideUp(1000);
+                })
+            })
+        });
+        
+
         $scope.addImprest = function () {
 
             $scope.imprest.isApproved = false
@@ -91,9 +104,11 @@
     }])
 
     office.controller('billboardCtrl', ['$scope', '$http', function($scope, $http){
+
         $scope.billboard = {}
 
         $scope.create = function(){
+            
              var form = {
             client_name: $scope.billboard.clientName,
             entry_date: $scope.billboard.entryDate,
@@ -106,8 +121,8 @@
             client_mobile: $scope.billboard.mobile,
             is_expired: false,
         }
-            $http.post('/office/billboards/', form)
-                  .then(function(){
+            $http.post('/office/billboards/', form).then(function(){
+                   
                     $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
                     $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
                     $("#acc-imprest").slideUp(500);
@@ -188,34 +203,126 @@
 
     }])
 
-    office.controller('homeCtrl',['$scope',function ($scope) {
+office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
+    $scope.job = {}
+    $scope.loading = false
+
+    $scope.create = function(editing){
+
+        $scope.loading = true
+        var form = {
+            client_name: $scope.job.clientName,
+            handler: $scope.job.handler,
+            client_contact_person: $scope.job.clientContactPerson,
+            job_description: $scope.job.jobDescription,
+            amount_due: $scope.job.amountDue,
+            amount_paid: $scope.job.amountPaid,
+            balance: $scope.job.balance,
+            percentage: $scope.job.percentage,
+            client_no: $scope.job.clientNo,
+            created_at: $scope.job.createdAt,
+            remarks: $scope.job.remarks,
+        }
+
+        $http.post('/office/jobs/',form).then(function () {
+            $scope.loading = false
+            editing = false
+             $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+             $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+             $("#acc-imprest").slideUp(500);
+             });
+        },
+        function (err) {
+            console.log(err)
+             $("#acc-imprest > p").text("Error Submitting form, check network and try again")
+             $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+             $("#acc-imprest").slideUp(500);
+             });            
+        })
+
+        $scope.job = {}
+    }
+
+
+}])
+
+office.controller('newJobCtrl', ['$scope', '$http',function($scope,$http){
+
+    function recentJob() {
+        var url = '/office/jobs/'
+
+        if ('caches' in window) {
+
+            var networkPending = true
+            caches.match(url).then(function (response) {
+                if (response) {
+                    response.json().then(function (json) {
+                        if (networkPending) {
+                            var jobs = json
+
+                            $scope.latestJob = jobs[jobs.length - 1]
+                        }
+                    })
+                }
+            })
+        }
+
+        $http.get(url).then(function (data) {
+            var jobs = data.data
+
+            $scope.latestJob = jobs[jobs.length - 1]
+            networkPending = false
+        })
+
+    }
+
+    recentJob()
+    
+
+}])
+
+
+
+office.controller('homeCtrl',['$scope',function ($scope) {
         $scope.editingVendor = false;
         $scope.editingImprest = false;
         $scope.editingBillboard = false;
+        $scope.editingJob = false;
 
 
         $scope.isEditingVendor = function () {
             $scope.editingVendor = !$scope.editingVendor
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
+            $scope.editingJob = false
 
         }
         $scope.isEditingImprest = function () {
             $scope.editingImprest = !$scope.editingImprest
             $scope.editingVendor = false;
             $scope.editingBillboard = false;
+            $scope.editingJob = false
         }
 
         $scope.isEditingBillboard = function(){
             $scope.editingBillboard = !$scope.editingBillboard;
             $scope.editingVendor = false;
             $scope.editingImprest = false;
+            $scope.editingJob = false
+        }
+
+        $scope.isEditingJob = function(){
+            $scope.editingJob = !$scope.editingJob;
+            $scope.editingVendor = false;
+            $scope.editingImprest = false;
+            $scope.editingBillboard = false;
         }
 
         $scope.cancelEditing = function () {
             $scope.editingVendor = false;
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
+            $scope.editingJob = false
 
         }
     }])

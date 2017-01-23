@@ -21,8 +21,13 @@ body > .grid {
     padding: 10px
 }
 .ui.tabular.menu .active.item{
-	background: ghostwhite
+	background: ghostwhite;
 }
 .ui.segment{
-	background: ghostwhite
+	background: ghostwhite;
+}
+#remark{
+    background: whitesmoke;
+    box-shadow: 2px 0 2px grey;
+    color: teal;
 }

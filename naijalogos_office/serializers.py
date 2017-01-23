@@ -2,8 +2,16 @@ from rest_framework import serializers
 from auth_api.serializers import UserSerializer
 from stored_messages.models import MessageArchive, Message
 
-from .models import Imprest, VendorRemittance, BillboardTracker
+from .models import Imprest, VendorRemittance, BillboardTracker, Account, JobTracker, Billboard, Credit, Remark
 from django.contrib.auth.models import User
+
+
+class AccountSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model =  Account
+        fields = '__all__'
+
 
 
 class ImprestSerializer(serializers.ModelSerializer):
@@ -19,6 +27,20 @@ class ImprestSerializer(serializers.ModelSerializer):
 
         return exclusions + ['user']
 
+
+class RemarkSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Remark
+        fields = '__all__'
+
+
+class JobSerializer(serializers.ModelSerializer):
+    remarks = RemarkSerializer(read_only=True,many=True)
+
+    class Meta:
+        model = JobTracker
+        fields = '__all__'
     
 
 class VendorRemittanceSerializer(serializers.ModelSerializer):
@@ -34,12 +56,28 @@ class VendorRemittanceSerializer(serializers.ModelSerializer):
         return exclusions + ['user']
 
 
+
+class CreditSerializer(serializers.ModelSerializer):
+    deposit_date = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        model = Credit
+        fields = '__all__'
+    
+
+
+class BoardSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Billboard
+        fields = '__all__'
+    
+
 class BillboardSerializer(serializers.ModelSerializer):
-    """docstring for BillboardSerializer"""
+    location = BoardSerializer()
     contact_person = UserSerializer(read_only=True, required=False)
 
     class Meta(object):
-        """docstring for Meta"""
         model = BillboardTracker
         fields = '__all__'
 
@@ -47,12 +85,14 @@ class BillboardSerializer(serializers.ModelSerializer):
         exclusions = super(BillboardSerializer, self).get_validation_exclusions(instance)
         return exclusions + ['contact_person']
             
+
         
 class MessageSerializer(serializers.ModelSerializer):
-    """docstring for MessageSerializer"""
+
     class Meta:
         model = Message
         fields = '__all__'        
+
 
 class ArchiveSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

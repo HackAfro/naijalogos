@@ -28,6 +28,12 @@
             .when('/imprests',{
                 templateUrl: '/static/html/imprests.html',
             })
+            .when('/jobs',{
+                templateUrl: '/static/html/jobs.html'
+            })
+            .when('/account',{
+                templateUrl: '/static/html/accounts.html'
+            })
             .otherwise('/')
     }])
 })();

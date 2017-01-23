@@ -30,29 +30,48 @@
 
     office.controller('allImprestCtrl', ['$http', '$scope', '$location', '$localForage', 'timeFilter', function($http, $scope, $location, $localForage, timeFilter){
 
-        $http.get('/office/imprests/').then(function(response){
+        function getImprest(argument) {
+            var url = '/office/imprests/'
+
+            if ('caches' in window) {
+                caches.match(url).then(function (response) {
+                    if (response) {
+                        response.json().then(function (json) {
+                            if (networkLoading) {
+                                $scope.imprests = json
+                            }
+                        })
+                    }
+                })
+            }
+            var networkLoading = true
+            $http.get(url).then(function(response){
                 $scope.imprests = response.data
-                $scope.total = function (month){
-                    var filtered = timeFilter($scope.imprests,month)
-                    var total = 0;
-                    for(var i=0; i<filtered.length; i++){
-                        total+=filtered[i].amount
-                    }
-                    return total
+                networkLoading = false
+            })
+
+            $scope.total = function (month){
+                var filtered = timeFilter($scope.imprests,month)
+                var total = 0;
+                for(var i=0; i<filtered.length; i++){
+                    total+=filtered[i].amount
                 }
+                return total
+            }
 
-                $scope.totalUser = function (user) {
-                    var total = 0
-                    for (var i=0; i<$scope.imprests.length; i++){
-                        if ($scope.imprests[i].user.username === user){
-                            total+=$scope.imprests[i].amount
-                        }
+            $scope.totalUser = function (user) {
+                var total = 0
+                for (var i=0; i<$scope.imprests.length; i++){
+                    if ($scope.imprests[i].user.username === user){
+                        total+=$scope.imprests[i].amount
                     }
-                    return total
                 }
+                return total
+            }
+        }
 
-        })
-
+        getImprest()
+        
         activate()
         function activate() {
             $localForage.getItem('user').then(function (data) {

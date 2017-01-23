@@ -8,12 +8,11 @@
         return {
             restrict: 'E',
             templateUrl: '/static/html/nav.html',
-            controller : ['$scope', '$http', '$location', '$localForage','$timeout', function ($scope, $http, $location, $localForage, $timeout) {
+            controller : ['$scope', '$http', '$location', '$localForage','Pusher', function ($scope, $http, $location, $localForage, Pusher) {
                 $localForage.getItem('user').then(function (data) {
                     $scope.user = data
 
                     Pusher.subscribe($scope.user.username + '_inbox','update',function(item){
-                        alert('new')
                         $http.get('/api/inbox/').then(function(data){
                             $scope.notifications = data.data.length
                         })
@@ -27,24 +26,17 @@
                     $http.post('/auth_api/logout/');
 
                     $location.url('/login')
-                };
-
-
-                
+                };                
                 
                 function notify(){
-                  $http.get('/api/inbox/').then(function (response) {
-                    $scope.notifications = response.data.length
+                    var url = '/api/inbox/'
+
+                    $http.get(url).then(function (response) {
+                        $scope.notifications = response.data.length
                     })  
                 }
                 
                 notify()
-                
-                    
-                
-
-
-
 
                 $scope.notification = function () {
                     $location.url('/notifications')

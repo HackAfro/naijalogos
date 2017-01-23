@@ -7,20 +7,27 @@
 
 	var office = angular.module('naijalogosOffice');
 
-	office.controller('notificationCtrl', ['$scope', '$http','$localForage','Pusher',function($scope,$http,$localForage,Pusher){
+	office.controller('notificationCtrl', ['$scope', '$http','$localForage','$location','Pusher',function($scope,$http,$localForage,$location,Pusher){
 		$localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            $http.get('/api/inbox/').then(function(data){
-			var latest = data.data
-			for(var i=0; i<latest.length; i++){
-				latest[i].tags = JSON.parse(latest[i].tags) 
+            
+            $scope.loading = true
+            var url = '/api/inbox/'
+            $http.get(url).then(function(data){
+			
+				var latest = data.data
+				for(var j=0; j<latest.length; j++){
+					latest[j].tags = JSON.parse(latest[j].tags) 
 			}
 			$scope.latest = latest.reverse()
 			$scope.loading = false
 			if (!$scope.user.is_staff) {
 				$http.post('/api/mark_all_read/')
 			}
+		},function (err) {
+			console.log(err)
+			$scope.latest = []
+			$scope.loading = false
 		})
 
             Pusher.subscribe($scope.user.username + '_inbox','update',function(item){
@@ -39,11 +46,15 @@
 			})
         })
         });
-
-        
-       
-
 		
+		activate()
+        function activate() {
+            $localForage.getItem('user').then(function (data) {
+                if (!data) {
+                    $location.url('/login')
+                }
+            })
+        }
 
         $scope.tab = 1;
         
@@ -57,17 +68,43 @@
 
         
 
-		$scope.loading = true
 		
 		
+		
+		function getMessages() {
+			var url = '/office/messages/'
 
-		$http.get('/office/messages/').then(function(data){
-			var messages = data.data
-			for (var i = 0; i<messages.length; i++) {
-				messages[i].message.tags = JSON.parse(messages[i].message.tags)
+			if ('caches' in window) {
+				caches.match(url).then(function (response) {
+					if (response){
+						
+						response.json().then(function (json) {
+							if (pendingNetwork) {
+								var messages = json
+								for (var i = 0; i<messages.length; i++) {
+									messages[i].message.tags = JSON.parse(messages[i].message.tags)
+								}
+								$scope.messages = messages
+							}
+							
+						})
+
+						
+					}
+				})
 			}
-			$scope.messages = messages
-		})
+			var pendingNetwork = true
+			$http.get('/office/messages/').then(function(data){
+				var messages = data.data
+				for (var i = 0; i<messages.length; i++) {
+					messages[i].message.tags = JSON.parse(messages[i].message.tags)
+				}
+				$scope.messages = messages
+				pendingNetwork = false
+			})
+		}
+
+		getMessages()
 
 		$scope.view = function(feed){
             if (feed.url.indexOf('v') === -1){
@@ -194,7 +231,7 @@
 					});
 				},function(){
 					$scope.loadingForm = false
-					$("#acc-imprest > p").text("Error editing form, please try again :(")
+					$("#acc-imprest > p").text("Error editing form, please check the network and try again :(")
 						$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
 						$("#acc-imprest").slideUp(500);
 					});

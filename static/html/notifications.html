@@ -52,7 +52,7 @@
                           </a>
 
                         <!--Imprest View Link-->
-                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') === -1">
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('m') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
                            ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
                         <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
@@ -69,7 +69,14 @@
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
                            ng-show="show && vendor.id === feed.id "> - close </a>
                         </div>
-                        <!---End Vendor View Link-->   
+                        <!---End Vendor View Link-->
+
+                        <!---Job View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('j') !== -1">
+                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>   
+                        </div>
+                        <!---End View Link-->
+
                            
                         <!--Message Date-->
                         <div class="date">
@@ -263,7 +270,7 @@
                     </div>
 
                     <!--Extra content-->
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1">
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -278,7 +285,7 @@
 
                     </div>
 
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1">
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -294,7 +301,7 @@
                     </div>
 
                     <!---Action Icons-->
-                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'accepted'">
+                    <div class="extra content" ng-if="feed.tags.action === 'accepted'">
                         <i class="ui green checkmark icon"></i>
                     </div>
 
@@ -302,8 +309,12 @@
                         <i class="text file icon"></i>
                     </div>
 
-                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'edited'">
+                    <div class="extra content" ng-if="feed.tags.action === 'edited'">
                         <i class="pencil icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="feed.tags.action === 'started'">
+                        <i class="briefcase icon"></i>
                     </div>
                     <!--End Action Icons-->
 
@@ -313,7 +324,19 @@
         </div>
     </div>
 
-    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(2)">
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(2)" style="min-height:100px">
+
+        <!---No messages-->
+        <div class="item" ng-hide="messages.length">
+            <img src="/static/images/file.png" class="ui medium centered image">
+            <h2 class="ui grey centered header">
+                No messages! 
+                <div class="sub header">
+                    Go raise an imprest of something
+                </div> 
+            </h2>
+        </div>
+        
 
         <!---Feed-->
         <div class="ui centered feed">
@@ -343,7 +366,7 @@
                         </a>
 
                         <!--Imprest View Link-->
-                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') === -1">
+                        <div class="ui horizontal list" ng-show="message.message.url.indexOf('m') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
                            ng-click=" show=!show; view(message.message);" ng-hide="show && details.id === message.message.id"> - view</a>
                         
@@ -354,7 +377,7 @@
                         <!---End Imprest View Link-->   
 
                         <!---Vendor View Link-->
-                        <div class="ui horizontal list" ng-show="feed.url.indexOf('v') !== -1">
+                        <div class="ui horizontal list" ng-show="message.message.url.indexOf('v') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
                            ng-click=" show=!show; view(message.message);" ng-hide="show && vendor.id === message.message.id"> - view</a>   
 
@@ -362,6 +385,13 @@
                            ng-show="show && vendor.id === message.message.id"> - close </a>
                         </div>
                         <!---End Vendor View Link--> 
+
+                        <!---Job View Link-->
+                        <div class="ui horizontal list" ng-show="message.message.url.indexOf('j') !== -1">
+                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>   
+                        </div>
+                        <!---End View Link-->
+
 
                         <!--Message Date-->
                         <div class="date">
@@ -463,6 +493,10 @@
 
                     <div class="extra content" ng-if="message.message.tags.action === 'edited'">
                         <i class="pencil icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="message.message.tags.action === 'started'">
+                        <i class="briefcase icon"></i>
                     </div>
                     <!--End Action Icons-->
 
