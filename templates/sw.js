@@ -77,7 +77,7 @@ self.addEventListener('fetch',function (event) {
 
 	console.log('[ServiceWorker] fetch', url);
 
-	if (url === 'http://127.0.0.1:8000/office/vendors/' || url === 'http://127.0.0.1:8000/office/imprests/' || url === 'http://127.0.0.1:8000/office/messages/' || url === 'http://127.0.0.1:8000/office/jobs/' || url === 'http://127.0.0.1:8000/office/balance/' || url === 'http://127.0.0.1:8000/api/inbox/' || url === 'http://127.0.0.1:8000/office/credits/') {
+	if (url === 'https://naijalogosoffice.com/office/vendors/' || url === 'http://naijalogosoffice.com/office/imprests/' || url === 'http://naijalogosoffice.com/office/messages/' || url === 'http://naijalogosoffice.com/office/jobs/' || url === 'http://naijalogosoffice.com/office/balance/' || url === 'http://naijalogosoffice.com/api/inbox/' || url === 'http://naijalogosoffice.com/office/credits/') {
 		console.log('Getting data')
 		console.log('Method: ',event.request.method)
 
