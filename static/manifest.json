@@ -3,7 +3,7 @@
 	"short_name": "Office",
 	"description": "Naijalogos - Nigeria's #1 Online Logo Design Shop",
 	"display": "standalone",
-	"start_url": "/",
+	"start_url": "/#!/home",
 	"theme_color": "#712BE2",
 	"background_color":"black",
 	"orientation": "portrait",
