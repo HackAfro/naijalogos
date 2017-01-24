@@ -274,6 +274,7 @@ office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
         },
         function (err) {
             console.log(err)
+            $scope.loading = false
              $("#acc-imprest > p").text("Error Submitting form, check network and try again")
              $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
              $("#acc-imprest").slideUp(500);
