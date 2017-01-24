@@ -5,20 +5,20 @@
         Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
     </h1>
 
-    <div class="ui horizontal divider header">
+    <div class="ui horizontal divider header" ng-controller="jobCtrl" ng-show="jobList.length">
         <i class="briefcase icon"></i>
         Recent Jobs
     </div>
 
-    <div class="ui centered grid" ng-controller="newJobCtrl">
+    <div class="ui centered grid" ng-controller="jobCtrl" ng-show="jobList.length">
         <div class="sixteen wide column">
             <h5 class="ui top attached inverted header">
                 <i class="tag icon"></i>
                 Current Job
             </h5>
         
-            <div class="ui fluid attached raised segment">
-                <div class="item">
+            <div class="ui fluid attached raised segment" ng-class="{loading:loading}">
+                <div class="item" ng-repeat="latestJob in jobList | limitTo:1">
                     <div class="content">
                         <h3 class="ui teal header">{{latestJob.client_name}}</h3>
                     </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div class="ui horizontal divider header">
+    <div class="ui horizontal divider header" ng-controller="jobCtrl" ng-show="jobList.length" >
         <i class="file icon"></i>
         Forms
     </div>

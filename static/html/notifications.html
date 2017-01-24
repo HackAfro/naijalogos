@@ -413,6 +413,21 @@
                                 <span class="ui label">{{details.data.amount | currency:'₦'}}</span>
                             </div>
                             <br>
+
+                            <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && !details.data.is_approved">
+
+                                <!---Accept Button-->
+                                <button class="ui green basic mini circular icon button"
+                                    ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,message.message, $index)">
+                                    <i class="checkmark icon"></i>
+                                </button>
+
+                                <!--Reject button-->
+                                <button class="ui red basic mini circular icon button">
+                                    <i class="close icon"></i>
+                                </button>
+
+                            </div>
                         </div>
 
                         <div class="description" ng-if="!loading && vendor.id === message.message.id">
@@ -477,6 +492,21 @@
                                     <i class="send icon"></i>
                                     {{vendor.data.delivery_date}}
                                 </span>
+                            </div>
+
+                            <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && !vendor.data.is_approved">
+
+                                 <!---Accept Button-->
+                                <button class="ui green basic mini circular icon button"
+                                    ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,message.message, $index)">
+                                    <i class="checkmark icon"></i>
+                                </button>
+
+                                <!--Reject button-->
+                                <button class="ui red basic mini circular icon button">
+                                    <i class="close icon"></i>
+                                </button>
+
                             </div>
                         </div>
 

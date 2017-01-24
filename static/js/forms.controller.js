@@ -206,6 +206,43 @@
 office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
     $scope.job = {}
     $scope.loading = false
+    $scope.jobList = []
+
+    function recentJob() {
+        $scope.loading = true
+        var url = '/office/jobs/'
+
+        if ('caches' in window) {
+
+            var networkPending = true
+            caches.match(url).then(function (response) {
+                if (response) {
+                    response.json().then(function (json) {
+                        if (networkPending) {
+                            var jobs = json
+                            $scope.jobList = []
+                            $scope.jobList.push(jobs[jobs.length - 1])
+                            $scope.loading = false
+                        }
+                    })
+                }
+            })
+        }
+
+        $http.get(url).then(function (data) {
+            var jobs = data.data
+            $scope.jobList = []
+            if (jobs[jobs.length - 1] !== undefined) {
+                $scope.jobList.push(jobs[jobs.length - 1])
+            }
+            
+            networkPending = false
+            $scope.loading = false
+        })
+
+    }
+
+    recentJob()
 
     $scope.create = function(editing){
 
@@ -224,10 +261,11 @@ office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
             remarks: $scope.job.remarks,
         }
 
-        $http.post('/office/jobs/',form).then(function () {
+        $http.post('/office/jobs/',form).then(function (data) {
             $scope.loading = false
             editing = false
-             $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+            recentJob()
+             $("#acc-imprest > p").text("Form submitted!")
              $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
              $("#acc-imprest").slideUp(500);
              });
@@ -242,45 +280,9 @@ office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
 
         $scope.job = {}
     }
-
-
-}])
-
-office.controller('newJobCtrl', ['$scope', '$http',function($scope,$http){
-
-    function recentJob() {
-        var url = '/office/jobs/'
-
-        if ('caches' in window) {
-
-            var networkPending = true
-            caches.match(url).then(function (response) {
-                if (response) {
-                    response.json().then(function (json) {
-                        if (networkPending) {
-                            var jobs = json
-
-                            $scope.latestJob = jobs[jobs.length - 1]
-                        }
-                    })
-                }
-            })
-        }
-
-        $http.get(url).then(function (data) {
-            var jobs = data.data
-
-            $scope.latestJob = jobs[jobs.length - 1]
-            networkPending = false
-        })
-
-    }
-
-    recentJob()
     
 
 }])
-
 
 
 office.controller('homeCtrl',['$scope',function ($scope) {

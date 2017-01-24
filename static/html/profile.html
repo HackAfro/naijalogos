@@ -46,8 +46,10 @@
             <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px">
                 <div class="ui center aligned grid" ng-show="numImp < 1">
                     <div class="column">
-                        <h3 class="ui grey centered header" ><em>Nothing here yet</em></h3>
-                        <h5><em>Raise an Imprest <a href="#!/" class="ui link">here</a> </em></h5>
+                        <h2 class="ui grey center aligned icon header">
+                            <i class="circular attention icon"></i>
+                            Raise an imprest <a href="#!/home">Here</a>
+                        </h2>
                     </div>
                 </div>
 
@@ -62,7 +64,7 @@
 
                                     <p class="right floated ui black label">{{imprest.created_at | amCalendar}}</p>
                                     <div class="meta">
-                                        Amount: {{ imprest.amount | currency:'₦'}}
+                                        Amount: <span class="ui label">{{ imprest.amount | currency:'₦'}}</span>
                                     </div>
                                     <div class="description">
                                         {{ imprest.description }}
@@ -90,9 +92,10 @@
             <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}" style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="numVen < 1">
                     <div class="column">
-                        <h3 class="ui grey centered header"><em>Nothing here yet</em></h3>
-                        <h5><em>Create a Vendor Remittance Form
-                            <a class="ui link">here</a></em></h5>
+                        <h2 class="ui grey center aligned icon header">
+                            <i class="circular down arrow icon"></i>
+                            Create a form <a href="#!/home">Here</a>
+                        </h2>
                     </div>
                 </div>
 
@@ -104,8 +107,8 @@
                                     <a class="header">{{vendor.vendor_name}}</a>
                                     <div class="right floated meta">
                                         <span class="right floated date">{{vendor.delivery_date | date}}</span><br>
-                                        <span class="right floated category">{{vendor.amount_due | currency:'₦'}} - {{vendor.current_payment | currency:'₦'}}</span><br>
-                                        <span class="right floated category"> = {{vendor.outstanding_balance | currency:'₦'}}</span>
+                                        <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span class="ui label">{{vendor.current_payment | currency:'₦'}}</span></span><br>
+                                        <span class="right floated category"> = <span class="ui red label">{{vendor.outstanding_balance | currency:'₦'}}</span></span>
                                     </div>
 
                                     <div class="meta">

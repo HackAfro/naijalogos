@@ -10,7 +10,7 @@ class Account(models.Model):
     balance = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.balance
+        return '{}'.format(self.balance)
 
 
 class Credit(models.Model):
@@ -50,7 +50,6 @@ class VendorRemittance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=datetime.now)
-    due_date = models.DateField()
 
     def __str__(self):
         return 'Vendor: {}'.format(self.vendor_name)

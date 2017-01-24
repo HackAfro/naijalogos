@@ -28,6 +28,10 @@
 				Credit Timelime</div>
 
 				<div class="ui centered feed">
+					<h4 class="ui grey centered header" ng-show="credits.length < 1">
+						<i class="attention icon"></i>
+						No recents credit info
+					</h4>
 					<div class="event" ng-repeat="credit in credits">
 						<i class="ui grey arrow up icon"></i>
 
