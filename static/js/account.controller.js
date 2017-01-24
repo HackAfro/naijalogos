@@ -13,8 +13,8 @@
 					if (response) {
 						response.json().then(function (json) {
 							if (networkPending) {
-								$scope.balance = json
-								console.log(json)
+								console.log(JSON.stringify(json[0]))
+								$scope.balance = json[0]
 							}
 						})
 					}
@@ -38,7 +38,8 @@
 					if (response) {
 						response.json().then(function (json) {
 							if (networkPending) {
-								$scope.credits = json
+								console.log(JSON.stringify(json))
+								$scope.credits = json.reverse()
 							}
 						})
 					}
@@ -69,6 +70,17 @@
 				$scope.credits.unshift(data.data)
 				$scope.loading = false
 				$scope.detail = {}
+				$("#acc-imprest > p").text("Balance Updated Successfully")
+             		$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+             		$("#acc-imprest").slideUp(500);
+             	});
+			},
+			function () {
+				$scope.loading = false
+				$("#acc-imprest > p").text("Error Submitting Form. Try again")
+             		$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+             		$("#acc-imprest").slideUp(500);
+             	});
 			})
 		}
 

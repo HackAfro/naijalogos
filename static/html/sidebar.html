@@ -3,12 +3,12 @@
         <i class="dashboard icon"></i>
         Dashboard
     </h3>
-    <a class="item" href="#!/imprests">
+    <a class="item" href="#!/imprests" ng-show="user.is_staff">
         <i class="file outline icon left floated"></i>
         Imprests
     </a>
     
-    <a class="item">
+    <a class="item" ng-show="user.is_staff">
         <i class="payment icon"></i>
         V.R.Fs
     </a>
@@ -18,8 +18,13 @@
         Billboards
     </a>
 
-    <a href="#!/account" class="item">
+    <a href="#!/account" class="item" ng-show="user.is_staff || user.username === 'lydia'">
         <i class="money icon"></i>
         Accounts
+    </a>
+
+    <a href="#!/jobs" class="item">
+        <i class="briefcase icon"></i>
+        Jobs
     </a>
 </div>

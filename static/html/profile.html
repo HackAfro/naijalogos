@@ -4,7 +4,7 @@
     <nav-bar></nav-bar>
 
     <div class="ui inverted masthead center aligned segment">
-        <div class="ui black launch right attached fixed button" id="rotate" style="margin-top:35px; position:fixed; left:0;" ng-show="user.is_staff">
+        <div class="ui black launch right attached fixed button" id="rotate" style="margin-top:35px; position:fixed; left:0;">
             <i class="content icon"></i>
         </div>
 
@@ -129,7 +129,7 @@
                                         <p class="black ui label">{{vendor.created_at | amCalendar}}</p>
                                         <div class="item right floated">
                                             Status: <span class="ui green" ng-if="vendor.is_approved" style="color:green">Approved</span>
-                                            <span class="ui red" ng-if="!vendor.is_approved" style="color:red">Pending{{numVen}}</span>
+                                            <span class="ui red" ng-if="!vendor.is_approved" style="color:red">Pending</span>
                                         </div>
                                     </div>
 
