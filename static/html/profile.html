@@ -24,7 +24,7 @@
 
             <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()" ng-show="user.username === 'lydia' || user.username === 'israel'">
                 <i class="payment icon"></i>
-                Top Up
+                Top Up 
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             </div>
 
             <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="imprests.length < 1">
+                <div class="ui center aligned grid" ng-if="!imprests">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular attention icon"></i>
@@ -90,7 +90,7 @@
             </div>
 
             <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}" style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="vendors.length < 1">
+                <div class="ui center aligned grid" ng-if="!vendors">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular down arrow icon"></i>

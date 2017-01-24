@@ -414,7 +414,25 @@
                             </div>
                             <br>
 
-                            <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && !details.data.is_approved">
+                            <div class="meta" ng-show="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved" >
+                                <a class="link" style="font-size:0.8rem; font-weight:400"
+                                   ng-click="editing=!editing">Edit</a>
+                            </div>
+
+                            <!--Edit Form-->
+                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
+                                <div class="field">
+                                    <label>Description</label>
+                                    <input ng-change="update(details)" ng-model="details.data.description" required>
+                                </div>
+                                <div class="field">
+                                    <label>Amount</label>
+                                    <input ng-change="update(details)" ng-model="details.data.amount" required>
+                                </div>
+                                <div class="ui right floated mini button" ng-click="editing=false">Save</div>
+                            </form>
+
+                            <div class="extra content" ng-if="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
 
                                 <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"
@@ -494,7 +512,7 @@
                                 </span>
                             </div>
 
-                            <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && !vendor.data.is_approved">
+                            <div class="extra content" ng-if="user.is_staff && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
 
                                  <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"

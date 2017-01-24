@@ -63,6 +63,9 @@
 					<div class="item">
             			<div class="content">
             			<a class="ui teal header">{{job.client_name}}</a><br>
+                        <span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 0}}</span><br>
+                        
+                            by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
             				<div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;">
             					
                 				<span class="right floated" >
@@ -73,12 +76,7 @@
                 				<span class="right floated ui blue label" style="float:right; margin-top:5px">
                 					= {{job.balance | currency:'₦'}}
                 				</span>
-                			</div>
-                    		
-                    		<span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 0}}</span><br>
-                		
-                    		by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
-                    	
+                			</div>                    	
                 		</div>
 
                 		

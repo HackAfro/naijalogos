@@ -75,7 +75,7 @@ class BillboardTracker(models.Model):
     amount_paid = models.PositiveIntegerField()
     balance = models.PositiveIntegerField()
     expiry_date = models.DateField()
-    client_mobile = models.PositiveIntegerField()
+    client_mobile = models.CharField(max_length=15)
     contact_person = models.ForeignKey(User, on_delete=models.CASCADE)
 
     @property
@@ -99,7 +99,7 @@ class JobTracker(models.Model):
     amount_paid = models.PositiveIntegerField()
     balance = models.PositiveIntegerField()
     client_name = models.CharField(max_length=100)
-    client_no = models.PositiveIntegerField()
+    client_no = models.CharField(max_length=15)
     client_contact_person = models.CharField(max_length=100)
     is_complete = models.BooleanField(default=False)
     created_at = models.DateField()
