@@ -37,15 +37,15 @@
                     if (response){
                         response.json().then(function (json) {
                             if (networkPending) {
-                                $scope.vendors = json
-                                var venNum = 0
-                                if ($scope.vendors[0].vendor_name) {
-                                    for (var j=0; j<$scope.vendors.length; j++){
-                                        if($scope.vendors[j].user.username === $scope.user.username){
-                                            venNum++
+                                var data = json
+                                var vendors = []
+                                if (data[0].vendor_name) {
+                                    for (var j=0; j<data.length; j++){
+                                        if(data[j].user.username === $scope.user.username){
+                                            vendors.push(data[j])
                                         }
                                     }
-                                        $scope.numVen = venNum
+                                        $scope.vendors = vendors
                                     }
                                 }
                             })
@@ -56,14 +56,14 @@
 
                 $http.get(url).then(function(response){
                     $scope.loading = false
-                    $scope.vendors = response.data
-                    var venNum = 0
-                    for (var j=0; j<$scope.vendors.length; j++){
-                        if($scope.vendors[j].user.username === $scope.user.username){
-                            venNum++
+                    var data = response.data
+                    var vendors = []
+                    for (var j=0; j<data.length; j++){
+                        if(data[j].user.username === $scope.user.username){
+                            vendors.push(data[j])
                         }
                     }
-                    $scope.numVen = venNum
+                    $scope.vendors = vendors
 
                     networkPending = false
                 
@@ -97,15 +97,15 @@
                     if (response) {
                       response.json().then(function (json) {
                         if (networkPending) {
-                            $scope.imprests = json
-                            var impNum = 0
-                            if ($scope.imprests[0].description) {
-                                for (var i=0; i<$scope.imprests.length; i++){
-                                    if($scope.imprests[i].user.username === $scope.user.username){
-                                        impNum++
+                            var data = json
+                            var imprests = []
+                            if (data[0].description) {
+                                for (var i=0; i<data.length; i++){
+                                    if(data[i].user.username === $scope.user.username){
+                                        imprests.push(data[i])
                                     }
                             }
-                            $scope.numImp = impNum
+                            $scope.imprests = imprests
                             $scope.loading = false
                             }
                         
@@ -118,14 +118,17 @@
             var networkPending = true
             $http.get('/office/imprests/').then(function(response){
                 
-                $scope.imprests = response.data
-                var impNum = 0
-                for (var i=0; i<$scope.imprests.length; i++){
-                    if($scope.imprests[i].user.username === $scope.user.username){
-                        impNum++
+                var data = response.data
+                var imprests = []
+                for (var i=0; i<data.length; i++){
+                    
+                    if(data[i].user.username === $scope.user.username){
+                        imprests.push(data[i])
+
                     }
                 }
-                $scope.numImp = impNum
+
+                $scope.imprests = imprests
                 networkPending = false
                 $scope.loading = false 
             },function () {

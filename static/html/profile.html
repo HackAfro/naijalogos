@@ -44,7 +44,7 @@
             </div>
 
             <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px">
-                <div class="ui center aligned grid" ng-show="numImp < 1">
+                <div class="ui center aligned grid" ng-if="imprests.length < 1">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular attention icon"></i>
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" ng-if="numImp >= 10">
+                <div class="item" ng-if="imprests >= 10">
                     <a class="right floated link">
                         View All
                     </a>
@@ -90,7 +90,7 @@
             </div>
 
             <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}" style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="numVen < 1">
+                <div class="ui center aligned grid" ng-if="vendors.length < 1">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular down arrow icon"></i>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="right floated meta" ng-if="numVen >= 10">
+                <div class="right floated meta" ng-if="vendors >= 10">
                     <a class="right floated link">
                         View All
                     </a>

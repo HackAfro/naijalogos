@@ -1,8 +1,8 @@
-var fileCache = 'naijalogos-files-v2'
+var fileCache = 'naijalogos-files-2'
 var dataCache = 'naijalogos-data'
 
 var files = [
-				'./',
+				'/',
 				'/static/html/home.html',
 				'https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin',
 				'https://fonts.gstatic.com/s/lato/v11/H2DMvhDLycM56KNuAtbJYA.woff2',
@@ -46,7 +46,9 @@ var files = [
 self.addEventListener('install',function (e) {
 	e.waitUntil(
 		caches.open(fileCache).then(function (cache) {
-			cache.addAll(files)
+			cache.addAll(files).then(function () {
+				self.skipWaiting()
+			})
 		})
 		);
 });

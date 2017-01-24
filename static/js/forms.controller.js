@@ -221,7 +221,9 @@ office.controller('jobCtrl', ['$scope', '$http', function($scope,$http){
                         if (networkPending) {
                             var jobs = json
                             $scope.jobList = []
-                            $scope.jobList.push(jobs[jobs.length - 1])
+                            if (jobs[jobs.length - 1] !== undefined) {
+                                $scope.jobList.push(jobs[jobs.length - 1])
+                            }
                             $scope.loading = false
                         }
                     })
