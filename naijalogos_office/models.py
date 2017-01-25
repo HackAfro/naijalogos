@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from stored_messages.api import add_message_for
-from datetime import datetime
+import datetime
 from django.db.models.signals import post_save
 import json
 
@@ -17,7 +17,7 @@ class Credit(models.Model):
 
     amount = models.PositiveIntegerField()
     description = models.TextField()
-    deposit_date = models.DateTimeField(default=datetime.now)
+    deposit_date = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return '{} - {}'.format(self.description,self.amount)
@@ -28,7 +28,7 @@ class Imprest(models.Model):
     description = models.TextField()
     amount = models.PositiveIntegerField()
     is_approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
 
     def __str__(self):
@@ -49,7 +49,7 @@ class VendorRemittance(models.Model):
     outstanding_balance = models.PositiveIntegerField(null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return 'Vendor: {}'.format(self.vendor_name)
@@ -58,34 +58,31 @@ class VendorRemittance(models.Model):
 class Billboard(models.Model):
     location = models.CharField(max_length=100)
     is_leased = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.location
-    
+   
 
 
 class BillboardTracker(models.Model):
     """docstring for BillboardTracker"""
     client_name = models.CharField(max_length=400)
-    entry_date = models.DateField()
+    start_date = models.DateField()
     duration = models.PositiveIntegerField()
     agent = models.CharField(max_length=50)
-    location = models.ForeignKey(Billboard,on_delete=models.CASCADE)
+    location = models.ForeignKey(Billboard,related_name='lease_info')
     amount_due = models.PositiveIntegerField()
     amount_paid = models.PositiveIntegerField()
     balance = models.PositiveIntegerField()
     expiry_date = models.DateField()
     client_mobile = models.CharField(max_length=15)
     contact_person = models.ForeignKey(User, on_delete=models.CASCADE)
-
+       
     @property
-    def expire(self):
-        if datetime.now() >= self.expiry_date:
-            self.is_expired = True
-            add_message_for([User.objects.get(username='afro')],message_text='{}\'s billboard lease has expired'.format(self.client_name),extra_tags='expire',date=datetime.now())
+    def started(self):
+        today = str(datetime.date.today())
+        start_date = str(self.start_date)
+    
+        if today == start_date:
             return True
         return False
-        
 
     def __str__(self):
         return '{} - {}'.format(self.client_name, self.location) 
@@ -112,7 +109,7 @@ class Remark(models.Model):
 
     job = models.ForeignKey(JobTracker, related_name='remarks')
     comment = models.TextField()
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return '{} - {}'.format(self.job, self.comment)

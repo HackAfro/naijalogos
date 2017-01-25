@@ -65,16 +65,7 @@ class CreditSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 
-
-class BoardSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Billboard
-        fields = '__all__'
-    
-
 class BillboardSerializer(serializers.ModelSerializer):
-    location = BoardSerializer()
     contact_person = UserSerializer(read_only=True, required=False)
 
     class Meta(object):
@@ -86,7 +77,13 @@ class BillboardSerializer(serializers.ModelSerializer):
         return exclusions + ['contact_person']
             
 
-        
+class BoardSerializer(serializers.ModelSerializer):
+    lease_info = BillboardSerializer(read_only=True,many=True)
+    class Meta:
+        model = Billboard
+        fields = '__all__'
+    
+
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:

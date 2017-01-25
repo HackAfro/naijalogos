@@ -270,7 +270,7 @@
                     </div>
 
                     <!--Extra content-->
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted'">
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -285,7 +285,7 @@
 
                     </div>
 
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted'">
+                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -302,7 +302,8 @@
 
                     <!---Action Icons-->
                     <div class="extra content" ng-if="feed.tags.action === 'accepted'">
-                        <i class="ui green checkmark icon"></i>
+                        <i class="ui green checkmark icon" ng-if="user.username !== 'lydia'"></i>
+                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia'" ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i class="Angle Double Right icon"></i></button>
                     </div>
 
                     <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'created'">
@@ -436,7 +437,7 @@
 
                                 <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"
-                                    ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,message.message, $index)">
+                                    ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,message.message, $index); editing=false">
                                     <i class="checkmark icon"></i>
                                 </button>
 

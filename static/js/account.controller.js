@@ -6,6 +6,7 @@
 	office.controller('balanceCtrl', ['$scope','$http','$localForage','$location', function($scope,$http,$localForage,$location){
 		
 		function get() {
+			$scope.balLoading = true
 			var url = '/office/balance/'
 
 			if ('caches' in window) {
@@ -15,6 +16,7 @@
 							if (networkPending) {
 								console.log(JSON.stringify(json[0]))
 								$scope.balance = json[0]
+								$scope.balLoading = false
 							}
 						})
 					}
@@ -25,12 +27,14 @@
 			$http.get(url).then(function (data) {
 				$scope.balance = data.data[0]
 				networkPending = false
+				$scope.balLoading = false
 			})
 		}
 
 		get()
 
 		function getCredit() {
+			$scope.feedLoading = true
 			var url = '/office/credits/'
 
 			if ('caches' in window) {
@@ -40,6 +44,8 @@
 							if (networkPending) {
 								console.log(JSON.stringify(json))
 								$scope.credits = json.reverse()
+								$scope.feedLoading = false
+
 							}
 						})
 					}
@@ -52,6 +58,7 @@
 
 				$scope.credits = credits.reverse()
 				networkPending = false
+				$scope.feedLoading = false
 			})
 		}
 
@@ -71,7 +78,7 @@
 				$scope.loading = false
 				$scope.detail = {}
 				$("#acc-imprest > p").text("Balance Updated Successfully")
-             		$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+             		$("#acc-imprest").fadeTo(2000, 5000).slideUp(500, function(){
              		$("#acc-imprest").slideUp(500);
              	});
 			},

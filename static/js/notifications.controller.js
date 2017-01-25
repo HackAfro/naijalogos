@@ -21,9 +21,31 @@
 			}
 			$scope.latest = latest.reverse()
 			$scope.loading = false
-			if (!$scope.user.is_staff) {
-				$http.post('/api/mark_all_read/')
+			
+			read()
+			function read() {
+				console.log('reading')
+				for (var i = 0; i<$scope.latest.length; i++) {
+				if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff || $scope.user.username === 'lydia')) {
+					if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
+						$http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
+						console.log($scope.user.username,'read')
+					}
+					else {
+						if ($scope.latest[i].tags.action === 'created' && !$scope.user.is_staff) {
+							$http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
+						}
+					}
+				} else {
+					console.log($scope.latest[i].tags.action === 'created')
+					$http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
+				}
+				}
 			}
+			
+			
+			
+
 		},function (err) {
 			console.log(err)
 			$scope.latest = []
@@ -351,6 +373,101 @@
 				})
 			}
 
+		}
+
+		$scope.issue = function (feed,details,index) {
+			var url = '/office/balance/'
+			feed.loading = true
+
+			if (details) {
+				var newDetails = details.data
+				
+				$http.get(url).then(function (data) {
+					var balance = data.data[0]
+					balance.balance = balance.balance - newDetails.amount
+
+					if (balance.balance < 0) {
+						$("#acc-imprest > p").text("Balance is too low for this operation. Please top up.")
+						$("#acc-imprest").fadeTo(2000, 500).slideUp(2000, function(){
+						$("#acc-imprest").slideUp(2000);
+						});
+						feed.loading = false
+						return;
+					}
+					else{
+						$http.put(url + '1/',balance).then(function () {
+							$("#acc-imprest > p").text("Imprest issued!!")
+							$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+							$("#acc-imprest").slideUp(500);
+						});
+							var id = feed.id
+							$http.post('/api/inbox/' + id + '/read/')
+							$scope.latest.splice(index,1)
+							feed.loading = false
+					},
+						function () {
+							$("#acc-imprest > p").text("Error, check network and try again!!")
+							$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+							$("#acc-imprest").slideUp(500);
+							});
+							feed.loading = false
+						})
+					}
+					
+					
+				},
+				function () {
+					$("#acc-imprest > p").text("Error, check network and try again!!")
+					$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+						$("#acc-imprest").slideUp(500);
+					});
+				})
+			}
+			else{
+				$http.get(feed.url).then(function (data) {
+					var newDetails = data.data
+					$http.get(url).then(function (data) {
+						var balance = data.data[0]
+						balance.balance = balance.balance - newDetails.amount
+
+						if (balance.balance < 0) {
+							$("#acc-imprest > p").text("Balance is too low for this operation. Please top up.")
+							$("#acc-imprest").fadeTo(2000, 500).slideUp(2000, function(){
+								$("#acc-imprest").slideUp(2000);
+							});
+							feed.loading = false
+						return;
+					}
+					else{
+						$http.put(url + '1/',balance).then(function () {
+							$("#acc-imprest > p").text("Imprest issued!!")
+							$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+								$("#acc-imprest").slideUp(500);
+						});
+							var id = feed.id
+							$http.post('/api/inbox/' + id + '/read/')
+							$scope.latest.splice(index,1)
+							feed.loading = false
+					},
+						function () {
+							$("#acc-imprest > p").text("Error, check network and try again!!")
+							$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+							$("#acc-imprest").slideUp(500);
+							});
+							feed.loading = false
+						})
+					}
+					
+					
+					},
+					function () {
+						$("#acc-imprest > p").text("Error, check network and try again!!")
+						$("#acc-imprest").fadeTo(2000, 500).slideUp(500, function(){
+							$("#acc-imprest").slideUp(500);
+						});
+					})
+				})
+			}
 		}
 	}])
 })();/**

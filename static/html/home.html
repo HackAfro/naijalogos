@@ -248,6 +248,12 @@
                 </div>
 
                 <h4 class="ui dividing header">Time Frame</h4>
+
+                <div class="field">
+                    <label>Entry Date</label>
+                    <input type="text" placeholder="YYYY-MM-DD" ng-model="billboard.entryDate">
+                </div>
+
                 <div class="field">
                     <div class="two fields">
                         <div class="field">
@@ -277,14 +283,23 @@
                 </div>
 
                 <h4 class="ui dividing header">Location</h4>
-                       <div class="field">
-                            <label>Location</label>
-                            <select ng-model="billboard.location">
-                                <option value="">Location</option>
-                                <option value="AT">Atabong Roundabout</option>
-                                <option value="A-UV">Afaha-Uqua(Uqua View)</option>
-                                <option value="A-MV">Afaha-Uqua(Marina View)</option>
-                            </select>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Location</label>
+                                    <select ng-model="billboard.location">
+                                        <option value="">Location</option>
+                                        <option value="3">Atabong Roundabout</option>
+                                        <option value="1">Afaha-Uqua(Uqua View)</option>
+                                        <option value="2">Afaha-Uqua(Marina View)</option>
+                                    </select>
+                                </div>
+
+                                <div class="field">
+                                    <label>Agent</label>
+                                    <input type="text" ng-model="billboard.agent" placeholder="Installation Agent">
+                                </div>
+                            </div>
                         </div>
                                     
                 <h4 class="ui dividing header">Payment Details</h4>

@@ -28,29 +28,24 @@
         function getVendors() {
             $localForage.getItem('user').then(function (data) {
                 $scope.user = data
-        
-
+                var url = '/office/vendors/'
+                
                 if ('caches' in window) {
 
-                    caches.match('/office/vendors/').then(function (response) {
+                caches.match(url).then(function (response) {
                     if (response){
-                        console.log('using cahced data')
                         response.json().then(function (json) {
                             if (networkPending) {
                                 var data = json
-                                console.log('Cached data is available')
                                 var vendors = []
-                                    console.log('Data is valid')
                                 if (data[0].vendor_name) {
                                     for (var j=0; j<data.length; j++){
                                         if(data[j].user.username === $scope.user.username){
                                             vendors.push(data[j])
                                         }
-                                        console.log('Valid Data')
-                                    }   
-                                    $scope.vendors = vendors
-                                }  
-                                    
+                                    }   console.log(vendors)
+                                        $scope.vendors = vendors
+                                    }
                                 }
                             })
                         }
@@ -58,7 +53,7 @@
                 }
                 var networkPending = true
 
-                $http.get('/office/vendors/').then(function(response){
+                $http.get(url).then(function(response){
                     $scope.loading = false
                     var data = response.data
                     var vendors = []
@@ -99,16 +94,18 @@
             if ('caches' in window){
                 caches.match(url).then(function (response) {
                     if (response) {
-                      response.json().then(function (object) {
+                      response.json().then(function (json) {
                         if (networkPending) {
-                            var imp = object
+                            var data = json
                             var imprests = []
-                            if (imp[0].description) {
-                                for (var i=0; i<imp.length; i++){
-                                    if(imp[i].user.username === $scope.user.username){
-                                        imprests.push(imp[i])
+                            if (data[0].description) {
+                                for (var i=0; i<data.length; i++){
+                                    if(data[i].user.username === $scope.user.username){
+                                        imprests.push(data[i])
                                     }
                             }
+                            console.log(imprests.length)
+                            console.log(imprests)
                             $scope.imprests = imprests
                             $scope.loading = false
                             }
@@ -122,12 +119,12 @@
             var networkPending = true
             $http.get('/office/imprests/').then(function(response){
                 
-                var imp = response.data
+                var data = response.data
                 var imprests = []
-                for (var i=0; i<imp.length; i++){
+                for (var i=0; i<data.length; i++){
                     
-                    if(imp[i].user.username === $scope.user.username){
-                        imprests.push(imp[i])
+                    if(data[i].user.username === $scope.user.username){
+                        imprests.push(data[i])
 
                     }
                 }

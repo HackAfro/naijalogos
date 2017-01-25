@@ -17,8 +17,8 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
-from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark
-from .serializers import VendorRemittanceSerializer, ImprestSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer
+from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark, Billboard
+from .serializers import VendorRemittanceSerializer, ImprestSerializer, BoardSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer
 
 
 class ImprestViewSet(ModelViewSet):
@@ -176,17 +176,20 @@ class VendorViewSet(ModelViewSet):
         instance = serializer.save(user=self.request.user)
 
 
-class BillboardViewSet(ModelViewSet):
-    """docstring for BillboardViewSet"""
+class LeaseViewSet(ModelViewSet):
     queryset = BillboardTracker.objects.all()
-
     serializer_class = BillboardSerializer
     permission_classes = permissions.IsAuthenticated,
 
-
     def perform_create(self, serializer):
         instance = serializer.save(contact_person=self.request.user)
-        
+
+
+class BillboardViewSet(ModelViewSet):
+    queryset = Billboard.objects.all()
+    serializer_class = BoardSerializer
+    permission_classes = permissions.IsAuthenticated,
+
 
 class ArchiveViewSet(viewsets.ViewSet):
     queryset = MessageArchive.objects.all()

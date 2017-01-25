@@ -119,7 +119,7 @@
             balance: $scope.billboard.balance,
             expiry_date: $scope.billboard.expiryDate,
             client_mobile: $scope.billboard.mobile,
-            is_expired: false,
+            agent: $scope.billboard.agent,
         }
             $http.post('/office/billboards/', form).then(function(){
                    

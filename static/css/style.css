@@ -31,3 +31,9 @@ body > .grid {
     box-shadow: 2px 0 2px grey;
     color: teal;
 }
+#balLoader:after{
+    left: 20%
+}
+#balLoader:before{
+    left: 20%
+}

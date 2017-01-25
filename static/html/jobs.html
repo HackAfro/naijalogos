@@ -66,7 +66,7 @@
                         <span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 0}}</span><br>
                         
                             by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
-            				<div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;">
+            				<div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;" ng-if="job.balance > 0">
             					
                 				<span class="right floated" >
                 					<span class="ui label">{{job.amount_due | currency:'₦'}} </span>- <span class="ui label">{{job.amount_paid | currency:'₦'}}</span>
@@ -76,7 +76,11 @@
                 				<span class="right floated ui blue label" style="float:right; margin-top:5px">
                 					= {{job.balance | currency:'₦'}}
                 				</span>
-                			</div>                    	
+                			</div>
+
+                            <div class="right floated meta" style="float: right; margin-right: 0; margin-left: .25em;" ng-if="job.balance === 0">
+                                <span class="right floated"><span class="ui green label">{{job.amount_paid | currency:'₦'}}</span></span>
+                            </div>                    	
                 		</div>
 
                 		

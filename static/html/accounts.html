@@ -14,25 +14,28 @@
 
 	<div class="ui attached segment">
 		<div class="ui centered stackable grid">
-			<div class="six wide column">
+			<div class="six wide column" ng-class="{loading:balLoading}">
 				<h1 class="ui grey center aligned header" style="margin-top:20px">
 					Available Balance
 					<div class="sub header">
 						<i class="arrow down icon"></i>
 					</div>
-					
+					<div class="ui active centered small inline loader" ng-show="balLoading" id="balLoader"></div>
+					<div class="content" ng-hide="balLoading">
 						{{balance.balance | currency:'₦'}}
+					</div>
+						
 				</h1>
 
 				<div class="ui horizontal brown header divider"><i class="payment icon"></i>
 				Credit Timelime</div>
-
-				<div class="ui centered feed">
+				<div class="ui active centered small inline loader" ng-show="feedLoading"></div>
+				<div class="ui centered feed" ng-hide="feedLoading">
 					<h4 class="ui grey centered header" ng-show="credits.length < 1">
 						<i class="attention icon"></i>
 						No recent credit info
 					</h4>
-					<div class="event" ng-repeat="credit in credits">
+					<div class="event" ng-repeat="credit in credits | limitTo:5">
 						<i class="ui grey arrow up icon"></i>
 
 						<div class="content" style="margin-left:5px">
