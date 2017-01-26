@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from stored_messages.api import add_message_for
-import datetime
+from datetime import datetime
 from django.db.models.signals import post_save
 import json
 
@@ -17,7 +17,7 @@ class Credit(models.Model):
 
     amount = models.PositiveIntegerField()
     description = models.TextField()
-    deposit_date = models.DateTimeField(default=datetime.datetime.now)
+    deposit_date = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return '{} - {}'.format(self.description,self.amount)
@@ -28,7 +28,7 @@ class Imprest(models.Model):
     description = models.TextField()
     amount = models.PositiveIntegerField()
     is_approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=datetime.datetime.now)
+    created_at = models.DateTimeField(default=datetime.now)
 
 
     def __str__(self):
@@ -49,7 +49,7 @@ class VendorRemittance(models.Model):
     outstanding_balance = models.PositiveIntegerField(null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=datetime.datetime.now)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return 'Vendor: {}'.format(self.vendor_name)
@@ -109,7 +109,7 @@ class Remark(models.Model):
 
     job = models.ForeignKey(JobTracker, related_name='remarks')
     comment = models.TextField()
-    created_at = models.DateTimeField(default=datetime.datetime.now)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return '{} - {}'.format(self.job, self.comment)
