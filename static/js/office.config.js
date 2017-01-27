@@ -10,29 +10,31 @@
     }]);
 
 
-    
     office.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-            .when('/login',{
+            .when('/login', {
                 templateUrl: '/static/html/login.html'
             })
-            .when('/',{
+            .when('/', {
                 templateUrl: '/static/html/home.html'
             })
-            .when('/notifications',{
+            .when('/notifications', {
                 templateUrl: '/static/html/notifications.html'
             })
-            .when('/profile',{
+            .when('/profile', {
                 templateUrl: '/static/html/profile.html'
             })
-            .when('/imprests',{
-                templateUrl: '/static/html/imprests.html',
+            .when('/imprests', {
+                templateUrl: '/static/html/imprests.html'
             })
-            .when('/jobs',{
+            .when('/jobs', {
                 templateUrl: '/static/html/jobs.html'
             })
-            .when('/account',{
+            .when('/account', {
                 templateUrl: '/static/html/accounts.html'
+            })
+            .when('/billboards', {
+                templateUrl: '/static/html/billboard.html'
             })
             .otherwise('/')
     }])

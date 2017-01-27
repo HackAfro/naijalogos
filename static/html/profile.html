@@ -4,14 +4,16 @@
     <nav-bar></nav-bar>
 
     <div class="ui inverted masthead center aligned segment">
-        <div class="ui black launch right attached fixed button" id="rotate" style="margin-top:35px; position:fixed; left:0;">
+        <div class="ui black launch right attached fixed button" id="rotate"
+             style="margin-top:35px; position:fixed; left:0;">
             <i class="content icon"></i>
         </div>
 
         <div class="ui text container" style="margin-top:60px">
             <h3>
-                <img ng-src="/static/images/nl.png" class="ui centered circular image" width="60px" height="60px" style="padding-bottom:0">
-                <span style="text-transform:capitalize;">Hello,  {{user.username}}</span>
+                <img ng-src="/static/images/nl.png" class="ui centered circular image" width="60px" height="60px"
+                     style="padding-bottom:0">
+                <span style="text-transform:capitalize;">Hello   {{user.username}}</span>
             </h3>
         </div>
     </div>
@@ -22,9 +24,10 @@
                 Edit profile
             </div>
 
-            <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()" ng-show="user.username === 'lydia' || user.username === 'israel'">
+            <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()"
+                 ng-show="user.username === 'lydia' || user.username === 'israel'">
                 <i class="payment icon"></i>
-                Top Up 
+                Top Up
             </div>
         </div>
 
@@ -43,7 +46,8 @@
                 </div>
             </div>
 
-            <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px">
+            <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
+                 style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="!imprests.length">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
@@ -54,7 +58,8 @@
                 </div>
 
                 <div class="ui grid">
-                    <div class="sixteen wide column"  ng-repeat="imprest in imprests | orderBy: imprest.created_at: true | filter: user.username |limitTo: 10 ">
+                    <div class="sixteen wide column"
+                         ng-repeat="imprest in imprests | orderBy: imprest.created_at: true | filter: user.username |limitTo: number">
                         <div class="ui divided items">
                             <div class="item">
                                 <div class="content">
@@ -72,8 +77,10 @@
 
                                     <div class="extra">
                                         <div class="item right floated">
-                                            Status: <span class="ui green" ng-if="imprest.is_approved" style="color:green">Approved</span>
-                                            <span class="ui red" ng-if="!imprest.is_approved" style="color:red">Pending</span>
+                                            Status: <span class="ui green" ng-if="imprest.is_approved"
+                                                          style="color:green">Approved</span>
+                                            <span class="ui red" ng-if="!imprest.is_approved"
+                                                  style="color:red">Pending</span>
                                         </div>
                                     </div>
                                     <div class="ui divider"></div>
@@ -82,14 +89,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" ng-if="imprests >= 10">
-                    <a class="right floated link">
-                        View All
+                <div class="right floated item" ng-if="imprests.length > number">
+                    <a class="right floated link" href="" ng-click="viewMore()">
+                        View More
                     </a>
                 </div>
             </div>
 
-            <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}" style="min-height:100px">
+            <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}"
+                 style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="!vendors.length">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
@@ -100,14 +108,16 @@
                 </div>
 
                 <div class="ui grid">
-                    <div class="sixteen wide column"  ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | filter: user.username |limitTo: 10 ">
+                    <div class="sixteen wide column"
+                         ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | filter: user.username |limitTo: amount">
                         <div class="ui divided items">
                             <div class="item">
                                 <div class="content">
                                     <a class="header">{{vendor.vendor_name}}</a>
                                     <div class="right floated meta">
                                         <span class="right floated date">{{vendor.delivery_date | date}}</span><br>
-                                        <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span class="ui label">{{vendor.current_payment | currency:'₦'}}</span></span><br>
+                                        <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span
+                                                class="ui label">{{vendor.current_payment | currency:'₦'}}</span></span><br>
                                         <span class="right floated category"> = <span class="ui red label">{{vendor.outstanding_balance | currency:'₦'}}</span></span>
                                     </div>
 
@@ -128,8 +138,10 @@
                                     <div class="extra">
                                         <p class="black ui label">{{vendor.created_at | amCalendar}}</p>
                                         <div class="item right floated">
-                                            Status: <span class="ui green" ng-if="vendor.is_approved" style="color:green">Approved</span>
-                                            <span class="ui red" ng-if="!vendor.is_approved" style="color:red">Pending</span>
+                                            Status: <span class="ui green" ng-if="vendor.is_approved"
+                                                          style="color:green">Approved</span>
+                                            <span class="ui red" ng-if="!vendor.is_approved"
+                                                  style="color:red">Pending</span>
                                         </div>
                                     </div>
 
@@ -140,9 +152,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="right floated meta" ng-if="vendors >= 10">
-                    <a class="right floated link">
-                        View All
+                <div class="right floated meta" ng-if="vendors.length > amount">
+                    <a class="right floated link" ng-click="addMore()">
+                        View More
                     </a>
                 </div>
             </div>
@@ -151,7 +163,8 @@
         <div class="item">
             <div class="ui middle center aligned grid" ng-show="isEditing">
                 <div class="column">
-                    <form class="ui inverted form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()" novalidate>
+                    <form class="ui inverted form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()"
+                          novalidate>
                         <h3 class="ui grey header">Change Password</h3>
                         <div class="field">
                             <label class="ui blue label">New password</label>
@@ -163,7 +176,8 @@
                             <input type="password" placeholder="Confirm Password" ng-model="new.confPass" required>
                         </div>
 
-                        <button class="ui blue right floated button" type="submit" ng-click="cancelEditing()">Submit</button>
+                        <button class="ui blue right floated button" type="submit" ng-click="cancelEditing()">Submit
+                        </button>
 
                         <button class="ui right floated button" ng-click="cancelEditing()" type="button">Cancel</button>
                     </form>

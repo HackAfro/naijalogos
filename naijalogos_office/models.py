@@ -59,6 +59,8 @@ class Billboard(models.Model):
     location = models.CharField(max_length=100)
     is_leased = models.BooleanField(default=False)
    
+    def __str__(self):
+        return '{} - {}'.format(self.location, self.is_leased) 
 
 
 class BillboardTracker(models.Model):

@@ -4,25 +4,27 @@
     <h2 class="ui brown centered header" style="margin-top: 100px"><i class="world icon"></i>Notifications</h2>
 
     <div class="ui top attached tabular menu">
-        <a class="item" ng-click="selectTab(1)" ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
+        <a class="item" ng-click="selectTab(1)"
+           ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
             Unread
             <span class="ui label" ng-class="{red:latest.length > 0 && isSelected(1)}">{{latest.length}}</span>
         </a>
         <a class="item" ng-click="selectTab(2)" ng-class="{active:isSelected(2), blue:isSelected(2)}">
-            All 
+            All
             <span class="ui label" style="padding-right:2px" ng-class="{blue:isSelected(2)}">
                 <i class="world icon"></i>
-            </span>        
+            </span>
         </a>
     </div>
 
-    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)"  ng-class="{loading:loading}" style="min-height:100px">
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
+         style="min-height:100px">
 
         <!---No new messages display-->
-        
+
         <h2 class="ui center aligned icon header" ng-if="latest.length < 1">
             <i class="circular thumbs up icon"></i>
-            No unread notifications 
+            No unread notifications
         </h2>
 
         <!---Feed-->
@@ -44,43 +46,50 @@
                         <a class="user" style="font-weight:600" ng-if="feed.tags.actor.toLowerCase() !== user.username">
                             {{feed.tags.actor}}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="feed.tags.actor.toLowerCase() === user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600"
+                           ng-if="feed.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
-                          {{feed.message | limitTo : 100}} - <a class="user">
-                              {{feed.tags.target}}
-                          </a>
+                        {{feed.message | limitTo : 100}} <a class="user">
+                        {{feed.tags.target}}
+                    </a>
 
                         <!--Imprest View Link-->
                         <div class="ui horizontal list" ng-show="feed.url.indexOf('m') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                           ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
-                        <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                           ng-show="show && details.id === feed.id "> - close </a>
+                               ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
+                               ng-show="show && details.id === feed.id "> - close </a>
                         </div>
-                        
-                        <!---End Imprest View Link-->   
+
+                        <!---End Imprest View Link-->
 
                         <!---Vendor View Link-->
                         <div class="ui horizontal list" ng-show="feed.url.indexOf('v') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                           ng-click=" show=!show; view(feed);" ng-hide="show && vendor.id === feed.id"> - view</a>   
+                               ng-click=" show=!show; view(feed);" ng-hide="show && vendor.id === feed.id"> - view</a>
 
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                           ng-show="show && vendor.id === feed.id "> - close </a>
+                               ng-show="show && vendor.id === feed.id "> - close </a>
                         </div>
                         <!---End Vendor View Link-->
 
                         <!---Job View Link-->
                         <div class="ui horizontal list" ng-show="feed.url.indexOf('j') !== -1">
-                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>   
+                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>
                         </div>
                         <!---End View Link-->
 
-                           
+                        <!---Low Balance View Link-->
+                        <div class="ui horizontal list" ng-show="feed.url.indexOf('l') !== -1">
+                            <a class="ui red link" href="#!/account" style="font-size:0.8rem; font-weight:400"> - top
+                                up</a>
+                        </div>
+                        <!---End Balance View Link-->
+
                         <!--Message Date-->
                         <div class="date">
-                            <span am-time-ago="feed.date"></span> 
+                            <span am-time-ago="feed.date"></span>
                         </div>
 
 
@@ -110,7 +119,8 @@
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
+                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions"
+                                  ng-class="{loading:loadingForm}">
                                 <div class="field">
                                     <label>Description</label>
                                     <input ng-change="update(details)" ng-model="details.data.description" required>
@@ -132,23 +142,23 @@
                             </h6>
 
                             <!--Pay Details-->
-                                <!--Amount Due-->
-                                <span class="ui label">
+                            <!--Amount Due-->
+                            <span class="ui label">
                                 {{vendor.data.amount_due | currency: '₦'}}
                                 </span>
-                                 -  
-                                 <!--Amount Paid-->
-                                 <span class="ui label">
+                            -
+                            <!--Amount Paid-->
+                            <span class="ui label">
                                      {{vendor.data.current_payment | currency : '₦'}}
                                  </span>
-                                = 
-                                <!--Outstanding Balance-->
-                                <span class="ui label">
+                            =
+                            <!--Outstanding Balance-->
+                            <span class="ui label">
                                 {{vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
                             <!--End Pay Details-->
-                            
-                            <!--Divider-->    
+
+                            <!--Divider-->
                             <h6 class="ui horizontal divider header">
                                 <i class="Payment icon"></i>
                                 Vendor Details
@@ -187,7 +197,7 @@
                                     {{vendor.data.delivery_date}}
                                 </span>
                             </div>
-                            
+
                             <!---Edit Link-->
                             <div class="meta" ng-show="user.is_staff">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
@@ -195,7 +205,8 @@
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editingVen" ng-class="{loading:loadingForm}" ng-model-options="modelOptions">
+                            <form class="ui tiny form" ng-show="editingVen" ng-class="{loading:loadingForm}"
+                                  ng-model-options="modelOptions">
                                 <h5 class="ui dividing header">Vendor Details</h5>
 
                                 <div class="field">
@@ -204,73 +215,84 @@
                                 </div>
 
                                 <h5 class="ui dividing header">Bank Details</h5>
-                                    <div class="field">
-                                        <div class="two fields">
-                                            <div class="field">
-                                                <label>Account Number</label>
-                                                <input type="tel" ng-model="vendor.data.account_details" ng-change="update(vendor)">
-                                            </div>
+                                <div class="field">
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <label>Account Number</label>
+                                            <input type="tel" ng-model="vendor.data.account_details"
+                                                   ng-change="update(vendor)">
+                                        </div>
 
-                                            <div class="field">
-                                                <label>Bank Name</label>
-                                                <input type="text" ng-model="vendor.data.bank_name" ng-change="update(vendor)">
-                                            </div>
+                                        <div class="field">
+                                            <label>Bank Name</label>
+                                            <input type="text" ng-model="vendor.data.bank_name"
+                                                   ng-change="update(vendor)">
                                         </div>
                                     </div>
+                                </div>
 
                                 <h5 class="ui dividing header">Job Details</h5>
 
-                                    <div class="field">
-                                        <label>Job description</label>
-                                        <textarea ng-model="vendor.data.job_description" ng-change="update(vendor)"></textarea>
-                                    </div>
+                                <div class="field">
+                                    <label>Job description</label>
+                                    <textarea ng-model="vendor.data.job_description"
+                                              ng-change="update(vendor)"></textarea>
+                                </div>
 
-                                    <div class="field">
-                                        <div class="two fields">
-                                            <div class="field">
-                                                <label>Qty</label>
-                                                <input type="tel" ng-model="vendor.data.quantity" ng-change="update(vendor)">
-                                            </div>
+                                <div class="field">
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <label>Qty</label>
+                                            <input type="tel" ng-model="vendor.data.quantity"
+                                                   ng-change="update(vendor)">
                                         </div>
                                     </div>
+                                </div>
 
                                 <h5 class="ui dividing header">Payment Details</h5>
-                                    <div class="field">
-                                        <div class="two fields">
-                                            <div class="field">
-                                                <label>Amount Due</label>
-                                                <input type="tel" ng-model="vendor.data.amount_due" ng-change="update(vendor)">
-                                            </div>
+                                <div class="field">
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <label>Amount Due</label>
+                                            <input type="tel" ng-model="vendor.data.amount_due"
+                                                   ng-change="update(vendor)">
+                                        </div>
 
-                                            <div class="field">
-                                                <label>Delivery Date</label>
-                                                <input type="text" ng-model="vendor.data.delivery_date" ng-change="update(vendor)">
-                                            </div>
+                                        <div class="field">
+                                            <label>Delivery Date</label>
+                                            <input type="text" ng-model="vendor.data.delivery_date"
+                                                   ng-change="update(vendor)">
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="field">
-                                        <div class="two fields">
-                                            <div class="field">
-                                                <label>Current Payment</label>
-                                                <input type="tel" ng-model="vendor.data.current_payment" ng-change="update(vendor)">
-                                            </div>
+                                <div class="field">
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <label>Current Payment</label>
+                                            <input type="tel" ng-model="vendor.data.current_payment"
+                                                   ng-change="update(vendor)">
+                                        </div>
 
-                                            <div class="field">
-                                                <label>Outstanding Balance</label>
-                                                <input type="tel" ng-model="vendor.data.outstanding_balance = vendor.data.amount_due - vendor.data.current_payment" ng-change="update(vendor)">
-                                            </div>
+                                        <div class="field">
+                                            <label>Outstanding Balance</label>
+                                            <input type="tel"
+                                                   ng-model="vendor.data.outstanding_balance = vendor.data.amount_due - vendor.data.current_payment"
+                                                   ng-change="update(vendor)">
                                         </div>
                                     </div>
+                                </div>
 
-                                    <button class="ui right floated mini button" ng-click="editingVen=!editingVen">Save</button>
+                                <button class="ui right floated mini button" ng-click="editingVen=!editingVen">Save
+                                </button>
                             </form>
                         </div>
 
                     </div>
 
                     <!--Extra content-->
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
+                    <div class="extra content"
+                         ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -285,7 +307,8 @@
 
                     </div>
 
-                    <div class="extra content" ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
+                    <div class="extra content"
+                         ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -303,11 +326,13 @@
                     <!---Action Icons-->
                     <div class="extra content" ng-if="feed.tags.action === 'accepted'">
                         <i class="ui green checkmark icon" ng-if="user.username !== 'lydia'"></i>
-                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia'" ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i class="Angle Double Right icon"></i></button>
+                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia'"
+                                ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i
+                                class="Angle Double Right icon"></i></button>
                     </div>
 
                     <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'created'">
-                        <i class="text file icon"></i>
+                        <i class="ui blue text file icon"></i>
                     </div>
 
                     <div class="extra content" ng-if="feed.tags.action === 'edited'">
@@ -315,7 +340,11 @@
                     </div>
 
                     <div class="extra content" ng-if="feed.tags.action === 'started'">
-                        <i class="briefcase icon"></i>
+                        <i class="ui teal briefcase icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="feed.tags.action === 'balance'">
+                        <i class="ui red arrow up icon"></i>
                     </div>
                     <!--End Action Icons-->
 
@@ -331,13 +360,13 @@
         <div class="item" ng-hide="messages.length">
             <img src="/static/images/file.png" class="ui medium centered image">
             <h2 class="ui grey centered header">
-                No messages! 
+                No messages!
                 <div class="sub header">
                     Go raise an imprest of something
-                </div> 
+                </div>
             </h2>
         </div>
-        
+
 
         <!---Feed-->
         <div class="ui centered feed">
@@ -353,10 +382,12 @@
 
                     <!--Summary-->
                     <div class="summary" style="font-weight:400">
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() !== user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600"
+                           ng-if="message.message.tags.actor.toLowerCase() !== user.username">
                             {{message.message.tags.actor}}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() === user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600"
+                           ng-if="message.message.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
                         <!--Message-->
@@ -369,29 +400,37 @@
                         <!--Imprest View Link-->
                         <div class="ui horizontal list" ng-show="message.message.url.indexOf('m') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                           ng-click=" show=!show; view(message.message);" ng-hide="show && details.id === message.message.id"> - view</a>
-                        
+                               ng-click=" show=!show; view(message.message);"
+                               ng-hide="show && details.id === message.message.id"> - view</a>
+
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                           ng-show="show && details.id === message.message.id "> - close </a>
+                               ng-show="show && details.id === message.message.id "> - close </a>
                         </div>
-                        
-                        <!---End Imprest View Link-->   
+
+                        <!---End Imprest View Link-->
 
                         <!---Vendor View Link-->
                         <div class="ui horizontal list" ng-show="message.message.url.indexOf('v') !== -1">
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                           ng-click=" show=!show; view(message.message);" ng-hide="show && vendor.id === message.message.id"> - view</a>   
+                               ng-click=" show=!show; view(message.message);"
+                               ng-hide="show && vendor.id === message.message.id"> - view</a>
 
                             <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                           ng-show="show && vendor.id === message.message.id"> - close </a>
+                               ng-show="show && vendor.id === message.message.id"> - close </a>
                         </div>
-                        <!---End Vendor View Link--> 
+                        <!---End Vendor View Link-->
 
                         <!---Job View Link-->
                         <div class="ui horizontal list" ng-show="message.message.url.indexOf('j') !== -1">
-                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>   
+                            <a class="link" href="#!/jobs" style="font-size:0.8rem; font-weight:400"> - view</a>
                         </div>
                         <!---End View Link-->
+
+                        <!---Low Balance View Link-->
+                        <div class="ui horizontal list" ng-show="message.message.url.indexOf('l') !== -1">
+                            <a class="link" href="#!/balance" style="font-size:0.8rem; font-weight:400"> - top up</a>
+                        </div>
+                        <!---End Balance View Link-->
 
 
                         <!--Message Date-->
@@ -404,7 +443,8 @@
                     <div class="extra content" ng-show="show">
 
                         <!--Loader-->
-                        <div class="ui mini centered inline loader" ng-class="{active:message.message.conLoading}"></div>
+                        <div class="ui mini centered inline loader"
+                             ng-class="{active:message.message.conLoading}"></div>
                         <!---EndLoader-->
 
                         <!--Description-->
@@ -415,13 +455,15 @@
                             </div>
                             <br>
 
-                            <div class="meta" ng-show="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved" >
+                            <div class="meta"
+                                 ng-show="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
                                    ng-click="editing=!editing">Edit</a>
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
+                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions"
+                                  ng-class="{loading:loadingForm}">
                                 <div class="field">
                                     <label>Description</label>
                                     <input ng-change="update(details)" ng-model="details.data.description" required>
@@ -433,11 +475,13 @@
                                 <div class="ui right floated mini button" ng-click="editing=false">Save</div>
                             </form>
 
-                            <div class="extra content" ng-if="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+                            <div class="extra content"
+                                 ng-if="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
 
                                 <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"
-                                    ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,message.message, $index); editing=false">
+                                        ng-class="{loading:feed.loading}"
+                                        ng-click="acceptImprest(details,message.message, $index); editing=false">
                                     <i class="checkmark icon"></i>
                                 </button>
 
@@ -457,23 +501,23 @@
                             </h6>
 
                             <!--Pay Details-->
-                                <!--Amount Due-->
-                                <span class="ui label">
+                            <!--Amount Due-->
+                            <span class="ui label">
                                 {{vendor.data.amount_due | currency: '₦'}}
                                 </span>
-                                 -  
-                                 <!--Amount Paid-->
-                                 <span class="ui label">
+                            -
+                            <!--Amount Paid-->
+                            <span class="ui label">
                                      {{vendor.data.current_payment | currency : '₦'}}
                                  </span>
-                                = 
-                                <!--Outstanding Balance-->
-                                <span class="ui label">
+                            =
+                            <!--Outstanding Balance-->
+                            <span class="ui label">
                                 {{vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
                             <!--End Pay Details-->
-                            
-                            <!--Divider-->    
+
+                            <!--Divider-->
                             <h6 class="ui horizontal divider header">
                                 <i class="Payment icon"></i>
                                 Vendor Details
@@ -513,11 +557,13 @@
                                 </span>
                             </div>
 
-                            <div class="extra content" ng-if="user.is_staff && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
+                            <div class="extra content"
+                                 ng-if="user.is_staff && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
 
-                                 <!---Accept Button-->
+                                <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"
-                                    ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,message.message, $index)">
+                                        ng-class="{loading:feed.loading}"
+                                        ng-click="acceptVendor(vendor,message.message, $index)">
                                     <i class="checkmark icon"></i>
                                 </button>
 
@@ -537,7 +583,7 @@
                     </div>
 
                     <div class="extra content" ng-if="message.message.tags.action === 'created'">
-                        <i class="text file icon"></i>
+                        <i class="ui blue text file icon"></i>
                     </div>
 
                     <div class="extra content" ng-if="message.message.tags.action === 'edited'">
@@ -545,19 +591,22 @@
                     </div>
 
                     <div class="extra content" ng-if="message.message.tags.action === 'started'">
-                        <i class="briefcase icon"></i>
+                        <i class="ui teal briefcase icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="message.message.tags.action === 'balance'">
+                        <i class="ui red arrow up icon"></i>
                     </div>
                     <!--End Action Icons-->
 
-                    </div>
-
-                    
-
                 </div>
 
+
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 <!--Bottom Notification Bar-->

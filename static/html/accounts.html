@@ -7,77 +7,79 @@
 </div>
 
 <div class="ui container" ng-controller="balanceCtrl">
-	<div class="ui top attached header" style="background:#A5673F; color:lightgrey">
-		<i class="info icon"></i>
-		Accounts Section
-	</div>
+    <div class="ui top attached header" style="background:#A5673F; color:lightgrey">
+        <i class="info icon"></i>
+        Accounts Section
+    </div>
 
-	<div class="ui attached segment">
-		<div class="ui centered stackable grid">
-			<div class="six wide column" ng-class="{loading:balLoading}">
-				<h1 class="ui grey center aligned header" style="margin-top:20px">
-					Available Balance
-					<div class="sub header">
-						<i class="arrow down icon"></i>
-					</div>
-					<div class="ui active centered small inline loader" ng-show="balLoading" id="balLoader"></div>
-					<div class="content" ng-hide="balLoading">
-						{{balance.balance | currency:'₦'}}
-					</div>
-						
-				</h1>
+    <div class="ui attached segment">
+        <div class="ui centered stackable grid">
+            <div class="six wide column" ng-class="{loading:balLoading}">
+                <h1 class="ui grey center aligned header" style="margin-top:20px">
+                    Available Balance
+                    <div class="sub header">
+                        <i class="arrow down icon"></i>
+                    </div>
+                    <div class="ui active centered small inline loader" ng-show="balLoading" id="balLoader"></div>
+                    <div class="content" ng-hide="balLoading">
+                        {{balance.balance | currency:'₦'}}
+                    </div>
 
-				<div class="ui horizontal brown header divider"><i class="payment icon"></i>
-				Credit Timelime</div>
-				<div class="ui active centered small inline loader" ng-show="feedLoading"></div>
-				<div class="ui centered feed" ng-hide="feedLoading">
-					<h4 class="ui grey centered header" ng-show="credits.length < 1">
-						<i class="attention icon"></i>
-						No recent credit info
-					</h4>
-					<div class="event" ng-repeat="credit in credits | limitTo:5">
-						<i class="ui grey arrow up icon"></i>
+                </h1>
 
-						<div class="content" style="margin-left:5px">
-							<div class="summary">
-								{{credit.description}} 
+                <div class="ui horizontal brown header divider"><i class="payment icon"></i>
+                    Credit Timelime
+                </div>
+                <div class="ui active centered small inline loader" ng-show="feedLoading"></div>
+                <div class="ui centered feed" ng-hide="feedLoading">
+                    <h4 class="ui grey centered header" ng-show="credits.length < 1">
+                        <i class="attention icon"></i>
+                        No recent credit info
+                    </h4>
+                    <div class="event" ng-repeat="credit in credits | limitTo:5">
+                        <i class="ui grey arrow up icon"></i>
 
-								<div class="date">
-									<span am-time-ago="credit.deposit_date" style="font-size:0.8rem; font-weight:400; color:grey;"></span> 
-								</div>
-							</div>
+                        <div class="content" style="margin-left:5px">
+                            <div class="summary">
+                                {{credit.description}}
 
-							<div class="extra content">
-								<span style="font-weight:400;" class="ui label">{{credit.amount | currency:'₦'}}</span>
-							</div>	
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="two wide column">
-				<h3 class="ui vertical divider">
-					Top Up
-				</h3>
-			</div>
-			
+                                <div class="date">
+                                    <span am-time-ago="credit.deposit_date"
+                                          style="font-size:0.8rem; font-weight:400; color:grey;"></span>
+                                </div>
+                            </div>
 
-			<div class="eight wide column">
-				<form class="ui mini form" ng-submit="create()" ng-class="{loading:loading}">
-					<h3 class="ui brown header">Top Up</h3>
-					<div class="field">
-						<label>Amount</label>
-						<input type="tel" ng-model="detail.amount" placeholder="Amount" >
-					</div>
-					<div class="field">
-						<label>Description</label>
-						<textarea placeholder="Cash Source" ng-model="detail.description" style="height:5%"></textarea>
-					</div>
-					<button class="right floated ui tiny black button" type="submit">Top Up</button>
-				</form>
-			</div>
-		</div>
-		
-	</div>
+                            <div class="extra content">
+                                <span style="font-weight:400;" class="ui label">{{credit.amount | currency:'₦'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide column">
+                <h3 class="ui vertical divider">
+                    Top Up
+                </h3>
+            </div>
+
+
+            <div class="eight wide column">
+                <form class="ui mini form" ng-submit="create()" ng-class="{loading:loading}">
+                    <h3 class="ui brown header">Top Up</h3>
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="tel" ng-model="detail.amount" placeholder="Amount">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea placeholder="Cash Source" ng-model="detail.description" style="height:5%"></textarea>
+                    </div>
+                    <button class="right floated ui tiny black button" type="submit">Top Up</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 
 
 </div>

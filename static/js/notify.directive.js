@@ -4,7 +4,7 @@
 (function () {
     var office = angular.module('naijalogosOffice');
 
-    office.directive('notifyBar',function () {
+    office.directive('notifyBar', function () {
         return {
             restrict: 'E',
             templateUrl: '/static/html/notify.html'

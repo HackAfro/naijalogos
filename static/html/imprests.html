@@ -9,20 +9,21 @@
 <div class="ui container" ng-controller="allImprestCtrl">
 
     <div class="ui inverted segment">
-    <div class="ui small inverted breadcrumb">
-        <a class="section" href="#!/home">Home</a>
-        <i class="yellow right chevron icon divider"></i>
-        <a class="section" href="#!/profile">Profile</a>
-        <i class="yellow right chevron icon divider"></i>
-        <div class="active section">Imprests</div>
-    </div>
+        <div class="ui small inverted breadcrumb">
+            <a class="section" href="#!/home">Home</a>
+            <i class="yellow right chevron icon divider"></i>
+            <a class="section" href="#!/profile">Profile</a>
+            <i class="yellow right chevron icon divider"></i>
+            <div class="active section">Imprests</div>
+        </div>
     </div>
 
     <div class="ui divider"></div>
 
     <div class="ui top attached segment"><br>
         <div class="description">
-            Imprests can be filtered by date and by user. Click on the accordion to trigger, then click again to reveal hidden content.
+            Imprests can be filtered by date and by user. Click on the accordion to trigger, then click again to reveal
+            hidden content.
         </div>
         <div class="black ui top attached label">
             <i class="file text icon"></i>
@@ -46,11 +47,15 @@
                 </div>
 
                 <a class="ui item" ng-class="{active:isSelected(1), blue:isSelected(1)}" ng-click="selectTab(1)">
-                    <div class="ui label" ng-class="{blue:isSelected(1), left:isSelected(1), pointing:isSelected(1)}">0</div>
+                    <div class="ui label" ng-class="{blue:isSelected(1), left:isSelected(1), pointing:isSelected(1)}">
+                        0
+                    </div>
                     Date
                 </a>
                 <a class="item" ng-class="{active:isSelected(2), purple:isSelected(2)}" ng-click="selectTab(2)">
-                    <div class="ui label" ng-class="{purple:isSelected(2), left:isSelected(2), pointing:isSelected(2)}">0</div>
+                    <div class="ui label" ng-class="{purple:isSelected(2), left:isSelected(2), pointing:isSelected(2)}">
+                        0
+                    </div>
                     User
                 </a>
             </div>
@@ -88,8 +93,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
@@ -122,8 +131,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
@@ -156,8 +169,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -189,8 +206,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -222,8 +243,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -255,8 +280,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -288,8 +317,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -321,8 +354,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -354,8 +391,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -387,8 +428,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -420,8 +465,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -453,8 +502,12 @@
                             <td style="text-transform: capitalize;" class="blue ui label">{{imprest.user.username}}</td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
@@ -481,7 +534,8 @@
             <div class="ui styled fluid accordion">
                 <div class="title">
                     <i class="dropdown icon"></i>
-                    Israel</div>
+                    Israel
+                </div>
                 <div class="content">
                     <table class="ui unstackable table">
                         <thead>
@@ -494,18 +548,24 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="imprest in imprests | filter: 'israel'">
-                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}</td>
+                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}
+                            </td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
                         <tfoot class="full-width">
                         <tr>
                             <th colspan="4" class="right aligned">
-                                <div class="ui green label">Total: <span> {{totalUser('israel')| currency: '₦'}}</span></div>
+                                <div class="ui green label">Total: <span> {{totalUser('israel')| currency: '₦'}}</span>
+                                </div>
                             </th>
                         </tr>
                         </tfoot>
@@ -514,7 +574,8 @@
 
                 <div class="title">
                     <i class="dropdown icon"></i>
-                    Richard</div>
+                    Richard
+                </div>
                 <div class="content">
                     <table class="ui unstackable table">
                         <thead>
@@ -527,18 +588,24 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="imprest in imprests | filter: 'afro'">
-                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}</td>
+                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}
+                            </td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
                         <tfoot class="full-width">
                         <tr>
                             <th colspan="4" class="right aligned">
-                                <div class="ui green label">Total: <span> {{totalUser('afro')| currency: '₦'}}</span></div>
+                                <div class="ui green label">Total: <span> {{totalUser('afro')| currency: '₦'}}</span>
+                                </div>
                             </th>
                         </tr>
                         </tfoot>
@@ -561,18 +628,24 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="imprest in imprests | filter: 'paul'">
-                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}</td>
+                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}
+                            </td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
                         <tfoot class="full-width">
                         <tr>
                             <th colspan="4" class="right aligned">
-                                <div class="ui green label">Total: <span> {{totalUser('paul')| currency: '₦'}}</span></div>
+                                <div class="ui green label">Total: <span> {{totalUser('paul')| currency: '₦'}}</span>
+                                </div>
                             </th>
                         </tr>
                         </tfoot>
@@ -581,7 +654,8 @@
 
                 <div class="title">
                     <i class="dropdown icon"></i>
-                    Lydia</div>
+                    Lydia
+                </div>
                 <div class="content">
                     <table class="ui unstackable table">
                         <thead>
@@ -594,27 +668,34 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="imprest in imprests | filter: 'lydia'">
-                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}</td>
+                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}
+                            </td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
                         <tfoot class="full-width">
                         <tr>
                             <th colspan="4" class="right aligned">
-                                <div class="ui green label">Total: <span> {{totalUser('lydia')| currency: '₦'}}</span></div>
+                                <div class="ui green label">Total: <span> {{totalUser('lydia')| currency: '₦'}}</span>
+                                </div>
                             </th>
                         </tr>
                         </tfoot>
                     </table>
-                    </div>
+                </div>
 
                 <div class="title">
                     <i class="dropdown icon"></i>
-                    Andre</div>
+                    Andre
+                </div>
                 <div class="content">
                     <table class="ui unstackable table">
                         <thead>
@@ -627,18 +708,24 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="imprest in imprests | filter: 'andre'">
-                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}</td>
+                            <td style="text-transform: capitalize;" class="purple ui label">{{imprest.user.username}}
+                            </td>
                             <td>{{imprest.description}}</td>
                             <td>{{imprest.amount}}</td>
-                            <td class="right aligned positive" ng-if="imprest.is_approved"><i class="checkmark icon"></i> Approved</td>
-                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i class="attention icon"></i> Pending</td>
+                            <td class="right aligned positive" ng-if="imprest.is_approved"><i
+                                    class="checkmark icon"></i> Approved
+                            </td>
+                            <td class="right aligned negative" ng-if="!imprest.is_approved"><i
+                                    class="attention icon"></i> Pending
+                            </td>
                         </tr>
                         </tbody>
 
                         <tfoot class="full-width">
                         <tr>
                             <th colspan="4" class="right aligned">
-                                <div class="ui green label">Total: <span> {{totalUser('andre')| currency: '₦'}}</span></div>
+                                <div class="ui green label">Total: <span> {{totalUser('andre')| currency: '₦'}}</span>
+                                </div>
                             </th>
                         </tr>
                         </tfoot>

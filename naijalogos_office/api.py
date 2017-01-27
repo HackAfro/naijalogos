@@ -39,17 +39,6 @@ class ImprestViewSet(ModelViewSet):
         israel = User.objects.get(username='israel')
         
         try:
-            """data = {
-                        "fcm":{
-                            'notification':{
-                                'title' : '{} raised an imprest'.format(request.user.username.capitalize()),
-                                'body' : '{} - {}'.format(request.data['description'].capitalize(), request.data['amount'])
-                            }
-                        },
-                        "webhook_url": "http://requestb.in/yhag7oyh",
-                        "webhook_level": "INFO"
-                    }
-            self.pusher.notify([u'israel_inbox',u'aba_inbox',u'lydia_inbox'], data)"""
             if request.user != israel:
                 self.pusher.trigger([u'{}_inbox'.format('israel'),u'{}_inbox'.format('lydia'),u'aba_inbox'],u'update',{'message':'{} raised an imprest'.format(request.user.username.capitalize())})
         except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
@@ -181,6 +170,11 @@ class LeaseViewSet(ModelViewSet):
     serializer_class = BillboardSerializer
     permission_classes = permissions.IsAuthenticated,
 
+    def list(self,request):
+        leases = BillboardTracker.objects.filter(start_date__lte=datetime.now())
+        serializer = self.serializer_class(leases,many=True)
+        return Response(serializer.data)
+
     def perform_create(self, serializer):
         instance = serializer.save(contact_person=self.request.user)
 
@@ -234,6 +228,26 @@ class AccountViewSet(ModelViewSet):
     serializer_class = AccountSerializer
     permission_classes = permissions.IsAuthenticated,
 
+    def update(self,request,pk=None):
+        balance = get_object_or_404(self.queryset,pk=pk)
+        data = request.data
+        users = [User.objects.get(username='lydia'),User.objects.get(username='aba'),User.objects.get(username='israel')]
+
+        if int(data['balance']) == 1000:
+            tags = {"action":"balance","actor": 'The'}
+            add_message_for(users=users,level=3,message_text='current available balance is {}'.format(data['balance']), extra_tags=json.dumps(tags),date=datetime.now(),url='/office/balance/1/')
+        elif int(data['balance'] < 1000):
+            tags = {"action":"balance","actor": 'The'}
+            add_message_for(users=users,level=3,message_text='current available balance is lower than 1000', extra_tags=json.dumps(tags),date=datetime.now(),url='/office/balance/1/')
+        
+        serializer = self.serializer_class(balance,data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        if getattr(balance,  '_prefetched_objects_cache',None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)     
+                
 
 class CreditViewSet(ModelViewSet):
     queryset = Credit.objects.all()

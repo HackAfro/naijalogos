@@ -1,5 +1,3 @@
-
-
 (function () {
     'use strict';
 
@@ -23,16 +21,14 @@
 
         function activate() {
             $localForage.getItem('user').then(function (data) {
-                if (data){
+                if (data) {
                     var active = !!data.id
-                    if (active){
+                    if (active) {
                         $location.url('/')
                     }
                 }
             })
         }
-
-
 
 
     }])
