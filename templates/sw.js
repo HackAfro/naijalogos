@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files-v2'
+var fileCache = 'naijalogos-files'
 var dataCache = 'naijalogos-data'
 
 var files = [
@@ -7,7 +7,7 @@ var files = [
 				'https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin',
 				'https://fonts.gstatic.com/s/lato/v11/H2DMvhDLycM56KNuAtbJYA.woff2',
 				'https://fonts.gstatic.com/s/lato/v11/ObQr5XYcoH0WBoUxiaYK3_Y6323mHUZFJMgTvxaG2iE.woff2',
-				'ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-touch.js',
+				'//ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-touch.js',
 				'/static/html/imprests.html',
 				'/static/images/nl.png',
 				'/static/images/web.png',

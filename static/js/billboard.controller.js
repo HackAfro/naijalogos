@@ -15,6 +15,7 @@
 						response.json().then(function (json) {
 							if (networkPending) {
 								$scope.billboards = lease(json)
+								$scope.loading = false
 							}
 						})
 					}

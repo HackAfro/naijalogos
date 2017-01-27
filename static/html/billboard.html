@@ -19,7 +19,7 @@
 
         <div class="ui attached segment">
             <div class="ui stackable grid">
-                <div class="seven wide column">
+                <div class="eight wide column" style="min-height:100px">
                 <div class="ui active centered loader" ng-show="loading"></div>
                     <div class="ui vertical list" ng-hide="loading">
                         <div class="ui item" style="margin-bottom:10px">
@@ -51,20 +51,21 @@
                     <div class="ui vertical divider"></div>
                 </div>
 
-                <div class="eight wide column">
+                <div class="ten wide column" style="min-height:100px">
                     <div class="ui horizontal orange header divider">
                         <i class="history icon"></i>
                         Billboard Timeline
                     </div>
 
-                    <div class="ui active centered loader" ng-show="loading"></div>
-                    <div class="ui feed" ng-hide="{loading:loading}">
-                        <div class="ui item" ng-show="!billboards[num].lease_info.length">
-                            <div class="ui grey header">
-                                <i class="attention icon"></i>
-                                No leases on the billboard.
-                            </div>
+                    <div class="ui active centered loader" style="margin-top:15px; margin-bottom:15px" ng-show="loading"></div>
+                
+                    <div class="ui feed" ng-hide="loading">
+
+                         <div class="ui grey center aligned header" ng-show="!billboards[num].lease_info.length">
+                            <i class="attention icon"></i>
+                            No leases on the billboard.
                         </div>
+                           
                         <div class="event" ng-repeat="lease in billboards[num].lease_info | orderBy : lease.start_date : true">
                             <i class="ui orange up arrow icon" ng-hide="lease.active"></i>
                             <i class="ui green right arrow icon" ng-show="lease.active"></i>
