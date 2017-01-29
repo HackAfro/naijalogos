@@ -47,7 +47,7 @@
         Jobs
     </a>
 </div>
-<div class="pusher">
+<div class="pusher" ng-controller="swipeCtrl" ng-swipe-right="showSideBar()" ng-swipe-left="hideSideBar()">
     <ng-view></ng-view>
 </div>
 
@@ -73,6 +73,7 @@
 <script src="{% static 'js/notify.directive.js' %}"></script>
 <script src="{% static 'js/billboard.controller.js' %}"></script>
 <script src="{% static 'js/menu.directive.js' %}"></script>
+<script src="{% static 'js/swipe.controller.js' %}"></script>
 <script src="{% static 'js/style.js' %}"></script>
 </body>
 </html>
