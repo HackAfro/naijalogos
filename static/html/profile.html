@@ -1,13 +1,9 @@
-<side-bar></side-bar>
 
-<div class="pusher">
+
     <nav-bar></nav-bar>
 
     <div class="ui inverted masthead center aligned segment">
-        <div class="ui black launch right attached fixed button" id="rotate"
-             style="margin-top:35px; position:fixed; left:0;">
-            <i class="content icon"></i>
-        </div>
+        <menu-button></menu-button>
 
         <div class="ui text container" style="margin-top:60px">
             <h3>
@@ -48,7 +44,7 @@
 
             <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
                  style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="!imprests.length">
+                <div class="ui center aligned grid" ng-if="!imprests.length && !loading && imprests">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular attention icon"></i>
@@ -57,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="ui grid">
+                <div class="ui grid" ng-hide="loading">
                     <div class="sixteen wide column"
                          ng-repeat="imprest in imprests | orderBy: imprest.created_at: true | filter: user.username |limitTo: number">
                         <div class="ui divided items">
@@ -98,7 +94,7 @@
 
             <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}"
                  style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="!vendors.length">
+                <div class="ui center aligned grid" ng-if="!vendors.length && !loading && vendors">
                     <div class="column">
                         <h2 class="ui grey center aligned icon header">
                             <i class="circular down arrow icon"></i>
@@ -107,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="ui grid">
+                <div class="ui grid" ng-hide="loading">
                     <div class="sixteen wide column"
                          ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | filter: user.username |limitTo: amount">
                         <div class="ui divided items">
@@ -115,10 +111,17 @@
                                 <div class="content">
                                     <a class="header">{{vendor.vendor_name}}</a>
                                     <div class="right floated meta">
-                                        <span class="right floated date">{{vendor.delivery_date | date}}</span><br>
-                                        <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span
+                                        <span class="right floated date" style="margin-bottom:2px"><span class="ui grey label">{{vendor.delivery_date | date}}</span></span><br>
+                                        <div class="content" ng-if="vendor.outstanding_balance > 0">
+                                           <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span
                                                 class="ui label">{{vendor.current_payment | currency:'₦'}}</span></span><br>
-                                        <span class="right floated category"> = <span class="ui red label">{{vendor.outstanding_balance | currency:'₦'}}</span></span>
+                                            <span class="right floated category"> = <span class="ui red label" style="margin-top:5px">{{vendor.outstanding_balance | currency:'₦'}}</span></span> 
+                                        </div>
+
+                                        <div class="content" ng-if="vendor.outstanding_balance < 1">
+                                             <span class="right floated category"><span class="ui green label" style="margin-top:2px">{{vendor.current_payment | currency:'₦'}}</span></span>
+                                        </div>
+                                        
                                     </div>
 
                                     <div class="meta">
@@ -132,7 +135,7 @@
                                     </div>
 
                                     <div class="extra">
-                                        <div class="right floated ui blue label">{{vendor.quantity}} Units</div>
+                                        <div class="ui label">{{vendor.quantity}} Units</div>
                                     </div>
 
                                     <div class="extra">
@@ -161,22 +164,32 @@
 
         </div>
         <div class="item">
-            <div class="ui middle center aligned grid" ng-show="isEditing">
+            <div class="ui middle centered grid" ng-show="isEditing">
                 <div class="column">
-                    <form class="ui inverted form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()"
-                          novalidate>
+                    <form class="ui form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()"
+                          ng-class="{loading:loading}" novalidate>
                         <h3 class="ui grey header">Change Password</h3>
-                        <div class="field">
-                            <label class="ui blue label">New password</label>
+                        <div class="ui negative message" ng-if="passForm.confirm.$touched && user.password !== new.confPass">
+                            <i class="ui red close icon"></i>
+                            Your Passwords don't match
+                        </div>
+
+                        <div class="ui positive message" ng-if="passForm.confirm.$touched && user.password === new.confPass">
+                            <i class="ui green checkmark icon"></i>
+                            Your passwords match
+                        </div>
+
+                        <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
+                            <label>New password</label>
                             <input type="password" placeholder="Password" ng-model="user.password" required>
                         </div>
 
-                        <div class="field">
-                            <label class="ui blue label">Confirm Password</label>
-                            <input type="password" placeholder="Confirm Password" ng-model="new.confPass" required>
+                        <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Confirm Password" ng-model="new.confPass" name="confirm" required>
                         </div>
 
-                        <button class="ui blue right floated button" type="submit" ng-click="cancelEditing()">Submit
+                        <button class="ui right floated button" type="submit" ng-class="{green:passForm.$valid && user.password === new.confPass}" ng-disabled="!passForm.$valid && user.password !== new.confPass">Submit
                         </button>
 
                         <button class="ui right floated button" ng-click="cancelEditing()" type="button">Cancel</button>
@@ -187,4 +200,3 @@
     </div>
 
     <notify-bar></notify-bar>
-</div>

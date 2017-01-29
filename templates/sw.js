@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files'
+var fileCache = 'naijalogos-files-v1'
 var dataCache = 'naijalogos-data'
 
 var files = [
@@ -44,7 +44,9 @@ var files = [
 				'/static/js/account.controller.js',
 				'/static/html/accounts.html',
 				'/static/html/billboard.html',
-				'/static/js/billboard.controller.js'
+				'/static/js/billboard.controller.js',
+		        '/static/html/sidebarmenu.html',
+                '/static/js/menu.directive.js'
 			]
 self.addEventListener('install',function (e) {
 	e.waitUntil(

@@ -165,10 +165,26 @@
 
         $scope.new = {}
         $scope.update = function () {
+            $scope.loading = true
+
             if ($scope.new.confPass === $scope.user.password) {
-                $http.put('/auth_api/accounts/' + $scope.user.id + '/', $scope.user)
+                $http.put('/auth_api/accounts/' + $scope.user.id + '/', $scope.user).then(function () {
+                    $scope.loading = false
+                    $("#acc-imprest > p").text("You've successfully updated your profile!")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#acc-imprest").slideUp(500);
+                    });
+                    $scope.cancelEditing()
+                },function () {
+                    $scope.loading = false
+                    $("#acc-imprest > p").text("Error updating your profile. Please try again")
+                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#acc-imprest").slideUp(500);
+                    });
+                })
             }
             $scope.new = {}
+            $scope.user = {}
         }
 
         $scope.limit = 5

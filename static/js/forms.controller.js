@@ -117,7 +117,7 @@
             $scope.loading = true
             var form = {
                 client_name: $scope.billboard.clientName,
-                entry_date: $scope.billboard.entryDate,
+                start_date: $scope.billboard.entryDate,
                 duration: $scope.billboard.duration,
                 location: $scope.billboard.location,
                 amount_due: $scope.billboard.amountDue,
@@ -127,7 +127,7 @@
                 client_mobile: $scope.billboard.mobile,
                 agent: $scope.billboard.agent,
             }
-            $http.post('/office/billboards/', form).then(function () {
+            $http.post('/office/leases/', form).then(function () {
                 $scope.loading = false
                 $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
                 $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {

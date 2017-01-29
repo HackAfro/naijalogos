@@ -54,11 +54,15 @@
 						var end = new Date(leases[j].expiry_date)
 						
 
-						if (today > start && today > end ) {
+						if (today > start && today > end || start > today && end > today) {
 							num++
 						}
 						if (today > start && end > today) {
 							leases[j].active = true
+						}
+
+						if (start > today && end > today) {
+							leases[j].pending = true
 						}
 					}
 					
