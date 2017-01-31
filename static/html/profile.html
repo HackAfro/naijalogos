@@ -55,7 +55,7 @@
 
                 <div class="ui grid" ng-hide="loading">
                     <div class="sixteen wide column"
-                         ng-repeat="imprest in imprests | orderBy: imprest.created_at: true | filter: user.username |limitTo: number">
+                         ng-repeat="imprest in imprests | orderBy: imprest.created_at: true |limitTo: number">
                         <div class="ui divided items">
                             <div class="item">
                                 <div class="content">

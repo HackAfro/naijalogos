@@ -36,6 +36,16 @@
         $scope.isSelected = function (checktab) {
             return $scope.tab === checktab
         }
+
+        $scope.page = 0
+
+        $scope.selectPage = function (page) {
+            $scope.page = page
+        }
+
+        $scope.activePage = function (page) {
+            return $scope.page === page
+        }
         function getVendors() {
             $localForage.getItem('user').then(function (data) {
                 $scope.user = data

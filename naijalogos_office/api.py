@@ -87,7 +87,7 @@ class ImprestViewSet(ModelViewSet):
             except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                 pass
                         
-            tags = {"action":"edited","actor": request.user.username.capitalize(), "target": data['description'].capitalize()}
+            tags = {"action":"edited","actor": request.user.username.capitalize(), "target": imprest.description.capitalize()}
             add_message_for(users=[users[0]],level=3, message_text="edited your imprest",date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))
         
         self.perform_update(serializer)

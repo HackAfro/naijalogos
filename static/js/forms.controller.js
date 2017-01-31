@@ -147,7 +147,10 @@
 
         $scope.addDays = function (days) {
             if (days > 0) {
-                var date = new Date()
+                if ($scope.billboard.entryDate) {
+                    var date = new Date($scope.billboard.entryDate)
+                console.log($scope.billboard.entryDate)
+                console.log(date)
                 date.setDate(date.getDate() + parseInt(days))
                 var strDate = date.toDateString()
                 var day = strDate.slice(8, 10)
@@ -155,6 +158,8 @@
                 var year = strDate.slice(11, 15)
                 var full = year + '-' + month + '-' + day;
                 return full
+                }
+                
             }
             else {
                 var date = new Date()

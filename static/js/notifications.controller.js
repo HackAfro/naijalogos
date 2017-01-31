@@ -263,28 +263,58 @@
         $scope.acceptImprest = function (imprest, feed, index) {
             var imprests;
             if (imprest) {
-                var newImprest = imprest.data
+                if (imprest.id === feed.id) {
+                    var newImprest = imprest.data
 
-                feed.loading = true
-                newImprest.is_approved = true
-                $http.put(feed.url, newImprest)
-                    .then(function () {
-                        $("#acc-imprest > p").text("Imprest accepted!! :)")
-                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                            $("#acc-imprest").slideUp(500);
-                        });
-                        var id = feed.id
-                        $http.post('/api/inbox/' + id + '/read/')
-                        feed.loading = false
-                        $scope.latest.splice(index, 1)
+                    feed.loading = true
+                    newImprest.is_approved = true
+                    $http.put(feed.url, newImprest)
+                        .then(function () {
+                            $("#acc-imprest > p").text("Imprest accepted!! :)")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            
+                            var id = feed.id
+                            
+                            $http.post('/api/inbox/' + id + '/read/')
+                            feed.loading = false
+                            $scope.latest.splice(index, 1)
 
-                    }, function () {
-                        $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
-                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                            $("#acc-imprest").slideUp(500);
-                        });
-                        feed.loading = false
+                            }, function () {
+                                $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                            });
+                            feed.loading = false
+                        })
+                }else{
+                    $http.get(feed.url).then(function (data) {
+                    feed.loading = true
+                    imprests = data.data
+
+                    imprests.is_approved = true
+                    $http.put(feed.url, imprests).then(function () {
+                            $("#acc-imprest > p").text("Imprest accepted!! :)")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            var id = feed.id
+                            $http.post('/api/inbox/' + id + '/read/')
+                            feed.loading = false
+                            $scope.latest.splice(index, 1)
+
+                        },
+                        function () {
+                            $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            feed.loading = false
+                        })
                     })
+                }
+                
             } else {
                 $http.get(feed.url).then(function (data) {
                     feed.loading = true
@@ -317,28 +347,58 @@
         $scope.acceptVendor = function (vendor, feed, index) {
             var data
             if (vendor) {
-                var newVendor = vendor.data
-                feed.loading = true
+                if (vendor.id === feed.id) {
 
-                newVendor.is_approved = true
-                $http.put(feed.url, newVendor)
-                    .then(function () {
-                        $("#acc-imprest > p").text("Vendor remittance form approved!!")
-                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                            $("#acc-imprest").slideUp(500);
-                        });
-                        var id = feed.id
-                        $http.post('/api/inbox/' + id + '/read/')
-                        feed.loading = false
-                        $scope.latest.splice(index, 1)
+                    var newVendor = vendor.data
+                    feed.loading = true
 
-                    }, function () {
-                        $("#acc-imprest > p").text("Error approving form, please try again :(")
-                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                            $("#acc-imprest").slideUp(500);
-                        });
-                        feed.loading = false
+                    newVendor.is_approved = true
+                    $http.put(feed.url, newVendor)
+                        .then(function () {
+                            $("#acc-imprest > p").text("Vendor remittance form approved!!")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            
+                            var id = feed.id
+                            $http.post('/api/inbox/' + id + '/read/')
+                            feed.loading = false
+                            $scope.latest.splice(index, 1)
+
+                        }, function () {
+                            $("#acc-imprest > p").text("Error approving form, please try again :(")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            feed.loading = false
+                        })  
+                }else{
+                    
+                    $http.get(feed.url).then(function (data) {
+                    feed.loading = true
+
+                    data = data.data
+                    data.is_approved = true
+                    $http.put(feed.url, data).then(function () {
+                            $("#acc-imprest > p").text("Vendor remittance form approved!!")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            var id = feed.id
+                            $http.post('/api/inbox/' + id + '/read/')
+                            feed.loading = false
+                            $scope.latest.splice(index, 1)
+
+                        },
+                        function () {
+                            $("#acc-imprest > p").text("Error approving form, please try again :(")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
+                            });
+                            feed.loading = false
+                        })
                     })
+                }
             } else {
                 $http.get(feed.url).then(function (data) {
                     feed.loading = true
