@@ -277,19 +277,6 @@
                                         ng-if="job.percentage > 0">  Completed</span></div>
                             </div>
 
-                            <div class="meta" ng-show="job.handler === user.username">
-                                <a class="link" href="" style="font-size:0.8rem; font-weight:400; color:grey;"
-                                   ng-click="editing=!editing">Edit</a>
-                            </div>
-
-                            <form class="ui mini form" novalidate ng-show="editing" ng-class="{loading:loading}"
-                                  ng-model-options="modelOptions">
-                                <div class="field">
-                                    <label>Percentage</label>
-                                    <input type="tel" style="width:15%" ng-model="job.percentage"
-                                           ng-change="update(job)">
-                                </div>
-                            </form>
 
                             <div class="ui top attached tabular menu">
                                 <a href="" class="item" ng-click="lit=!lit" ng-class="{active:lit}"

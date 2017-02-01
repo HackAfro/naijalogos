@@ -83,6 +83,9 @@
 
         $scope.update = function (job) {
             $scope.loading = true
+
+            job.balance = job.amount_due - job.amount_paid
+            
             $http.put('/office/jobs/' + job.id + '/', job).then(function (data) {
                 var newJob = data.data
 
