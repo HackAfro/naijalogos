@@ -38,7 +38,7 @@
         Billboards
     </a>
 
-    <a href="#!/account" class="item" ng-hide="user && !user.is_staff || !user.username === 'lydia'" ng-click="selectPage(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
+    <a href="#!/account" class="item" ng-show="user && (user.is_staff || user.username === 'lydia')" ng-click="selectPage(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
         <i class="ui money icon" ng-class="{brown:!activePage(4)}"></i>
         Accounts
     </a>

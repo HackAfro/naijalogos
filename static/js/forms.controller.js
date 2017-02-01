@@ -129,7 +129,7 @@
             }
             $http.post('/office/leases/', form).then(function () {
                 $scope.loading = false
-                $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+                $("#acc-imprest > p").text("Billboarb entry success!")
                 $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
                     $("#acc-imprest").slideUp(500);
                 });

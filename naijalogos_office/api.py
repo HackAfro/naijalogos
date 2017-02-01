@@ -131,28 +131,30 @@ class VendorViewSet(ModelViewSet):
         users = [User.objects.get(username='lydia'),User.objects.get(username='aba')]
         self.perform_update(serializer)
         
-        if vendor.user == users[0]:
-
-            try:
-                self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved a vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
-                self.pusher.trigger(u'{}_inbox'.format(vendor.user.username.capitalize()),u'update',{'message':'{} appproved your vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
-            except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
-                pass
+        if request.data['is_approved'] != vendor.is_approved:
             
-            tags = {"action":"accepted","actor": request.user.username, "target": vendor.vendor_name}
-        
-            add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags), date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))            
-            add_message_for(users=[users[0]],level=3, message_text="approved your vendor remittance form for",extra_tags=json.dumps(tags), date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
-        
-        else:
+            if vendor.user == users[0]:
 
-            try:
-               self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
-            except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
-                pass
+                try:
+                    self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved a vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                    self.pusher.trigger(u'{}_inbox'.format(vendor.user.username.capitalize()),u'update',{'message':'{} appproved your vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+                    pass
             
-            tags = {"action":"accepted","actor": request.user.username, "target": vendor.vendor_name}
-            add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
+                tags = {"action":"accepted","actor": request.user.username, "target": vendor.vendor_name}
+        
+                add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags), date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))            
+                add_message_for(users=[users[0]],level=3, message_text="approved your vendor remittance form for",extra_tags=json.dumps(tags), date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
+        
+            else:
+
+                try:
+                    self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+                    pass
+            
+                tags = {"action":"accepted","actor": request.user.username.capitalize(), "target": vendor.vendor_name}
+                add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
         
         
 
@@ -208,7 +210,7 @@ class JobViewSet(ModelViewSet):
         if int(data['percentage']) == 100:
             data['is_complete'] = True
 
-            tags = {"action":"accepted","actor": job.handler.capitalize(), "target": job.client_name.capitalize()}
+            tags = {"action":"completed","actor": job.handler.capitalize(), "target": job.client_name.capitalize()}
             add_message_for(users=User.objects.all(),level=3, message_text="completed a job for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/jobs/{}/'.format(job.id))
         else:
             data['is_complete'] = False

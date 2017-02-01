@@ -301,7 +301,7 @@
 
                     <!--Extra content-->
                     <div class="extra content"
-                         ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance'">
+                         ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -313,11 +313,11 @@
                         <button class="ui red basic mini circular icon button">
                             <i class="close icon"></i>
                         </button>
-
+ 
                     </div>
 
                     <div class="extra content"
-                         ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited'">
+                         ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -334,8 +334,8 @@
 
                     <!---Action Icons-->
                     <div class="extra content" ng-if="feed.tags.action === 'accepted'">
-                        <i class="ui green checkmark icon" ng-if="user.username !== 'lydia'"></i>
-                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia'"
+                        <i class="ui green checkmark icon" ng-if="user.username !== 'lydia' || feed.url.indexOf('m') === -1"></i>
+                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia' && feed.url.indexOf('m') !== -1"
                                 ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i
                                 class="Angle Double Right icon"></i></button>
                     </div>
@@ -354,6 +354,10 @@
 
                     <div class="extra content" ng-if="feed.tags.action === 'balance'">
                         <i class="ui red arrow up icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="feed.tags.action === 'completed'">
+                        <i class="ui green thumbs up icon"></i>
                     </div>
                     <!--End Action Icons-->
 
@@ -381,7 +385,7 @@
         <div class="ui centered feed">
 
             <!--Event-->
-            <div class="event" ng-repeat="message in messages | orderBy: message.message.date:true">
+            <div class="event" ng-repeat="message in messages | orderBy: message.message.date:true |limitTo:100">
                 <div class="label">
                     <img src="/static/images/nl.png">
                 </div>
@@ -588,7 +592,7 @@
 
                     <!---Action Icons-->
                     <div class="extra content" ng-if="message.message.tags.action === 'accepted'">
-                        <i class="ui green checkmark icon"></i>{{accepted}}
+                        <i class="ui green checkmark icon"></i>
                     </div>
 
                     <div class="extra content" ng-if="message.message.tags.action === 'created'">
@@ -605,6 +609,10 @@
 
                     <div class="extra content" ng-if="message.message.tags.action === 'balance'">
                         <i class="ui red arrow up icon"></i>
+                    </div>
+
+                    <div class="extra content" ng-if="message.message.tags.action === 'completed'">
+                        <i class="ui green thumbs up icon"></i>
                     </div>
                     <!--End Action Icons-->
 
