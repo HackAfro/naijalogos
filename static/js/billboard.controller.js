@@ -4,7 +4,7 @@
 	var office = angular.module('naijalogosOffice')
 
 	office.controller('boardCtrl', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
-
+	
 		function get() {
 			var url = '/office/billboards/'
 			$scope.loading = true

@@ -18,9 +18,35 @@
         function get() {
         	var url = '/office/vendors/'
             $scope.loading = true
+            var vendorForms;
+    		var outstanding;
+            
+            if ('caches' in window) {
+				caches.match(url).then(function(response) {
+					if (response) {
+						response.json().then(function(json) {
+							if (networkPending) {
+								vendorForms = json
+								outstanding = []
+								
+								for (var i = 0; i < vendorForms.length; i++) {
+									if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
+										outstanding.push(vendorForms[i])
+									}
+								}
+
+								$scope.outstanding = outstanding
+								$scope.vendorForms = vendorForms
+								$scope.loading = false
+							}
+						})
+					}
+				})
+			}
+            var networkPending = true
         	$http.get(url).then(function (data) {
-        		var vendorForms = data.data
-        		var outstanding = []
+        		vendorForms = data.data
+        		outstanding = []
         		for (var i = 0; i < vendorForms.length; i++) {
         			if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
         				outstanding.push(vendorForms[i])
@@ -29,11 +55,17 @@
 
         		$scope.outstanding = outstanding
         		$scope.vendorForms = vendorForms
+        		networkPending = false
                 $scope.loading = false
         	})
         }
         get()
 
+        $scope.limit = 10
+        
+        $scope.addMore = function() {
+			$scope.limit += 10
+		}
         $scope.update = function (vendorForm)  {
                 $scope.loadingForm = true
                 vendorForm.outstanding_balance = vendorForm.amount_due - vendorForm.current_payment

@@ -177,10 +177,10 @@
                 <div class="ui active medium centered inline text loader" ng-show="loading" style="margin-top:15px">
                     Loading forms
                 </div>
-				<div class="ui feed" ng-hide="loading || (search && search.length)">
-					<div class="event" ng-repeat="vendor in vendorForms | filter: search">
+				<div class="ui feed" ng-hide="loading">
+					<div class="event" ng-repeat="vendor in vendorForms | filter: search | limitTo: limit">
 						
-                        <i class="ui grey tag icon"></i>
+                        <i class="ui grey tag icon" style="margin-right:5px"></i>
 						
 						<div class="content">
 							<div class="summary">
@@ -279,111 +279,15 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="ui divider"></div>
+					<a class="ui link" href="" ng-click="addMore()" ng-show="vendorForms.length">
+						<h6 class="ui header" style="padding-bottom: 20px">
+							<i class="plus icon"></i>
+							Add more
+						</h6>
+					</a>
 				</div>
-                <div class="ui feed" ng-show="!loading && search">
-                    <div class="event" ng-repeat="vendor in vendorForms | filter: search">
-                        <div class="label">
-                            <i class="ui grey tag icon"></i>
-                        </div>
-                        
-                        <div class="content">
-                            <div class="summary">
-                                <a class="user" style="text-transform:capitalize">
-                                    {{vendor.vendor_name}}
-                                </a>
-                                <div class="date" style="color:black">
-                                    {{vendor.job_description | limitTo: 10}} <span ng-if="vendor.job_description.length > 10" style="color:grey">...</span>
-                                </div>
-
-                                - <div class="date">{{vendor.delivery_date | date}}</div>
-
-                                <div class="ui horizontal list">
-                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                        ng-click="show=!show" ng-hide="show"> - view</a>
-                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                        ng-click="show=!show" ng-show="show"> - close </a>
-                                </div>
-                            </div>
-
-                            <div class="description" ng-show="show">
-                                 <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="money icon"></i>
-                                Payment Details
-                            </h6>
-
-                            <!--Pay Details-->
-                            <!--Amount Due-->
-                            <span class="ui label" ng-if="vendor.outstanding_balance > 0">
-                                {{vendor.amount_due | currency: '₦'}}
-                                </span>
-                            <span ng-if="vendor.outstanding_balance > 0">-</span>
-                            <!--Amount Paid-->
-                            <span class="ui label" ng-class="{green:vendor.outstanding_balance < 1}">
-                                     {{vendor.current_payment | currency : '₦'}}
-                                 </span>
-                            <span ng-if="vendor.outstanding_balance > 0">=</span>
-                            <!--Outstanding Balance-->
-                            <span class="ui label" ng-if="vendor.outstanding_balance > 0">
-                                {{vendor.outstanding_balance | currency : '₦'}}
-                                </span>
-                            <!--End Pay Details-->                            
-
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="Payment icon"></i>
-                                Vendor Details
-                            </h6>
-
-                            <!--Job Description-->
-                            <div class="description">
-                                <!--Acc No-->
-                                Acc.no: {{vendor.account_details}}<br>
-
-                                <!---Bank Name-->
-                                <span class="ui label">
-                                    <i class="building icon"></i>
-                                    {{vendor.bank_name}}
-                                </span>
-
-                                <!---Divider-->
-                                <h6 class="ui horizontal divider header">
-                                    <i class="tag icon"></i>
-                                    Job Description
-                                </h6>
-
-                                <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{vendor.job_description}}</span><br>
-
-                                <!---Quantity-->
-                                <span class="ui label">
-                                    <i class="shop icon"></i>
-                                    {{vendor.quantity}} 
-                                    unit<span ng-if="vendor.quantity > 1">s</span>
-                                </span><br>
-
-                                <!---Delivery-->
-                                <span class="ui label" style="margin-top:2px">
-                                    <i class="calendar icon"></i>
-                                    {{vendor.delivery_date}}
-                                </span>
-                           
-                            </div>
-                            </div>
-
-                            <div class="meta">
-                                <a class="like" ng-if="vendor.outstanding_balance < 1">
-                                    <i class="ui green checkmark icon"></i>
-                                    Payment complete
-                                </a>
-                                <a class="like"ng-if="vendor.outstanding_balance > 0">
-                                    <i class="ui red attention icon"></i>
-                                    Outstanding
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 			</div>
 		</div>
 	</div>		

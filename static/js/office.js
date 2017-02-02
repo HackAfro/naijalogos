@@ -32,13 +32,15 @@
 
         function getImprest(argument) {
             var url = '/office/imprests/'
-
+            $scope.loading = true
+            
             if ('caches' in window) {
                 caches.match(url).then(function (response) {
                     if (response) {
                         response.json().then(function (json) {
                             if (networkLoading) {
                                 $scope.imprests = json
+                                $scope.loading = false
                             }
                         })
                     }
@@ -47,6 +49,7 @@
             var networkLoading = true
             $http.get(url).then(function (response) {
                 $scope.imprests = response.data
+                $scope.loading = false
                 networkLoading = false
             })
 
@@ -69,7 +72,22 @@
                 return total
             }
         }
-
+        
+        $('#filter').dropdown()
+        $('#search').dropdown()
+        
+        $scope.limit = 10
+        
+        $scope.addMore = function() {
+			$scope.limit += 5
+		}
+        
+        $scope.search = ''
+        
+        $scope.change = function(user) {
+			$scope.search = user
+		}
+        
         getImprest()
 
         activate()

@@ -34,6 +34,12 @@ class Imprest(models.Model):
     def __str__(self):
         return 'Raised by: {}'.format(self.user)
 
+class Vendor(models.Model):
+    name = models.CharField(max_length=100)
+    bank_name = models.CharField(max_length=100)
+    account_details = models.PositiveIntegerField()
+    mobile = models.CharField(max_length=16)
+    
 
 
 class VendorRemittance(models.Model):
