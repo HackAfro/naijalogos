@@ -23,27 +23,27 @@
         <i class="dashboard icon"></i>
         Dashboard
     </h3>
-    <a class="item" href="#!/imprests" ng-hide="user && !user.is_staff" ng-click="selectPage(1)" ng-class="{active:activePage(1), blue:activePage(1)}">
+    <a class="item" ng-hide="user && !user.is_staff" ng-click="imprests(1)" ng-class="{active:activePage(1), blue:activePage(1)}">
         <i class="ui file outline icon" ng-class="{blue:!activePage(1)}"></i>
         Imprests
     </a>
 
-    <a class="item" ng-hide="user && !user.is_staff" href="#!vendorforms" ng-click="selectPage(2)" ng-class="{active:activePage(2), purple:activePage(2)}">
+    <a class="item" ng-hide="user && !user.is_staff" ng-click="vendors(2)" ng-class="{active:activePage(2), purple:activePage(2)}">
         <i class="ui payment icon" ng-class="{purple:!activePage(2)}"></i>
         V.R.Fs
     </a>
 
-    <a class="item" href="#!billboards" ng-click="selectPage(3)" ng-class="{active:activePage(3), orange:activePage(3)}">
+    <a class="item" ng-click="billboards(3)" ng-class="{active:activePage(3), orange:activePage(3)}">
         <i class="ui tv icon" ng-class="{orange:!activePage(3)}"></i>
         Billboards
     </a>
 
-    <a href="#!/account" class="item" ng-show="user && (user.is_staff || user.username === 'lydia')" ng-click="selectPage(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
+    <a class="item" ng-show="user && user.is_staff" ng-click="accounts(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
         <i class="ui money icon" ng-class="{brown:!activePage(4)}"></i>
         Accounts
     </a>
 
-    <a href="#!/jobs" class="item" ng-click="selectPage(5)" ng-class="{active:activePage(5), teal:activePage(5)}">
+    <a class="item" ng-click="jobs(5)" ng-class="{active:activePage(5), teal:activePage(5)}">
         <i class="ui briefcase icon" ng-class="{teal:!activePage(5)}"></i>
         Jobs
     </a>
