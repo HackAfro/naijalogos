@@ -312,6 +312,11 @@
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
+            
+            $('html,body').animate({
+				scrollTop: 1005.4166870117188
+				
+			},'slow')
 
         }
         $scope.isEditingImprest = function () {
@@ -319,6 +324,12 @@
             $scope.editingVendor = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
+            
+            
+			$('html,body').animate({
+				scrollTop: 1005.4166870117188
+				
+			},'slow')
         }
 
         $scope.isEditingBillboard = function () {
@@ -326,6 +337,11 @@
             $scope.editingVendor = false;
             $scope.editingImprest = false;
             $scope.editingJob = false
+            
+            $('html,body').animate({
+				scrollTop: 1005.4166870117188
+				
+			},'slow')
         }
 
         $scope.isEditingJob = function () {
@@ -333,6 +349,11 @@
             $scope.editingVendor = false;
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
+            
+            $('html,body').animate({
+				scrollTop: 1005.4166870117188
+				
+			},'slow')
         }
 
         $scope.cancelEditing = function () {
@@ -340,6 +361,11 @@
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
+            
+            $('html,body').animate({
+				scrollTop: 1005.4166870117188
+				
+			})
 
         }
     }])

@@ -20,15 +20,15 @@ from django.contrib.auth.models import User
 from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark, Billboard
 from .serializers import VendorRemittanceSerializer, ImprestSerializer, BoardSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer
 
+pusher = Pusher(app_id=settings.PUSHER_APP_ID,
+                        key=settings.PUSHER_KEY,
+                        secret=settings.PUSHER_SECRET)
+
 
 class ImprestViewSet(ModelViewSet):
     queryset = Imprest.objects.all()
     serializer_class = ImprestSerializer
     permission_classes = permissions.IsAuthenticated,
-
-    pusher = Pusher(app_id=settings.PUSHER_APP_ID,
-                        key=settings.PUSHER_KEY,
-                        secret=settings.PUSHER_SECRET)
     
 
     def create(self, request, *args, **kwargs):
@@ -40,7 +40,7 @@ class ImprestViewSet(ModelViewSet):
         
         try:
             if request.user != israel:
-                self.pusher.trigger([u'{}_inbox'.format('israel'),u'{}_inbox'.format('lydia'),u'aba_inbox'],u'update',{'message':'{} raised an imprest'.format(request.user.username.capitalize())})
+                pusher.trigger([u'{}_inbox'.format('israel'),u'{}_inbox'.format('lydia'),u'aba_inbox'],u'update',{'message':'{} raised an imprest'.format(request.user.username.capitalize())})
         except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ConnectTimeout,requests.exceptions.ReadTimeout) as e:
             pass
         
@@ -62,8 +62,8 @@ class ImprestViewSet(ModelViewSet):
             if users[1] == imprest.user:
 
                 try:
-                    self.pusher.trigger(u'lydia_inbox',u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
-                    self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
+                    pusher.trigger(u'lydia_inbox',u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
+                    pusher.trigger(u'aba_inbox',u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
                 except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                     pass
                 
@@ -72,8 +72,8 @@ class ImprestViewSet(ModelViewSet):
             else:
 
                 try:
-                    self.pusher.trigger([u'lydia_inbox',u'aba_inbox'],u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
-                    self.pusher.trigger(u'{}_inbox'.format(imprest.user.username),u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
+                    pusher.trigger([u'lydia_inbox',u'aba_inbox'],u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
+                    pusher.trigger(u'{}_inbox'.format(imprest.user.username),u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
                 except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                     pass
                 
@@ -83,7 +83,7 @@ class ImprestViewSet(ModelViewSet):
         else:
 
             try:
-                self.pusher.trigger(u'{}_inbox'.format(imprest.user.username.capitalize()),u'update',{'message':'{} edited your imprest - {}'.format(request.user.username.capitalize(),data['description'])})
+                pusher.trigger(u'{}_inbox'.format(imprest.user.username.capitalize()),u'update',{'message':'{} edited your imprest - {}'.format(request.user.username.capitalize(),data['description'])})
             except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                 pass
                         
@@ -105,10 +105,7 @@ class VendorViewSet(ModelViewSet):
     queryset = VendorRemittance.objects.all()
     serializer_class = VendorRemittanceSerializer
     permission_classes = permissions.IsAuthenticated,
-    pusher = Pusher(app_id=settings.PUSHER_APP_ID,
-                        key=settings.PUSHER_KEY,
-                        secret=settings.PUSHER_SECRET)
-
+    
     def create(self, request, *args, **kwargs):
 
         serializer = self.get_serializer(data=request.data)
@@ -117,7 +114,7 @@ class VendorViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         try:
-            self.pusher.trigger([u'israel_inbox',u'aba_inbox'],u'update',{'message':'{} created a new vendor remittance form for - {}'.format(request.user.username.capitalize(), request.data['vendor_name'].capitalize())})
+            pusher.trigger([u'israel_inbox',u'aba_inbox'],u'update',{'message':'{} created a new vendor remittance form for - {}'.format(request.user.username.capitalize(), request.data['vendor_name'].capitalize())})
         except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
             pass
         
@@ -136,8 +133,8 @@ class VendorViewSet(ModelViewSet):
             if vendor.user == users[0]:
 
                 try:
-                    self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved a vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
-                    self.pusher.trigger(u'{}_inbox'.format(vendor.user.username.capitalize()),u'update',{'message':'{} appproved your vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                    pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved a vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                    pusher.trigger(u'{}_inbox'.format(vendor.user.username.capitalize()),u'update',{'message':'{} appproved your vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
                 except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                     pass
             
@@ -149,7 +146,7 @@ class VendorViewSet(ModelViewSet):
             else:
 
                 try:
-                    self.pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
+                    pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
                 except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                     pass
             
@@ -202,13 +199,39 @@ class JobViewSet(ModelViewSet):
     queryset = JobTracker.objects.all()
     serializer_class = JobSerializer
     permission_classes = permissions.IsAuthenticated,
+    
+    def create(self, request, *args, **kwargs):
+        data = request.data 
+        print(data)
+        if int(data['percentage']) == 100:
+            data['is_complete'] = True
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        users = ['israel','afro','lydia','andre','paul','aba']
+        
+        try:
+            pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} started a job for {}'.format(data['handler'], request.data['client_name'].capitalize())})
+        except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+            pass
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
 
     def update(self,request, pk=None):
         job = get_object_or_404(self.queryset,pk=pk)
         data = request.data 
+        users = ['israel','afro','lydia','andre','paul','aba']
 
         if int(data['percentage']) == 100:
             data['is_complete'] = True
+            
+            try:
+                 pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} completed a job for {}'.format(data['handler'], request.data['client_name'].capitalize())})
+            except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+                pass
 
             tags = {"action":"completed","actor": job.handler.capitalize(), "target": job.client_name.capitalize()}
             add_message_for(users=User.objects.all(),level=3, message_text="completed a job for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/jobs/{}/'.format(job.id))
@@ -219,6 +242,7 @@ class JobViewSet(ModelViewSet):
         serializer = self.serializer_class(job,data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+        
         if getattr(job,  '_prefetched_objects_cache',None):
             instance._prefetched_objects_cache = {}
 
@@ -234,14 +258,26 @@ class AccountViewSet(ModelViewSet):
         balance = get_object_or_404(self.queryset,pk=pk)
         data = request.data
         users = [User.objects.get(username='lydia'),User.objects.get(username='aba'),User.objects.get(username='israel')]
-
+        inboxes = ['israel','lydia','aba']
+        
         if int(data['balance']) == 1000:
             tags = {"action":"balance","actor": 'The'}
             add_message_for(users=users,level=3,message_text='current available balance is {}'.format(data['balance']), extra_tags=json.dumps(tags),date=datetime.now(),url='/office/balance/1/')
+            
+            try:
+                 pusher.trigger([u'{}_inbox'.format(inbox) for inbox in inboxes],u'update',{'The current available balance is {}'.format(data['balance'])})
+            except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+                pass
+            
         elif int(data['balance'] < 1000):
             tags = {"action":"balance","actor": 'The'}
             add_message_for(users=users,level=3,message_text='current available balance is lower than 1000', extra_tags=json.dumps(tags),date=datetime.now(),url='/office/balance/1/')
         
+            try:
+                 pusher.trigger([u'{}_inbox'.format(inbox) for inbox in inboxes],u'update',{'The current available balance is lower than 1000'})
+            except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
+                pass
+            
         serializer = self.serializer_class(balance,data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)

@@ -21,7 +21,7 @@
             </div>
 
             <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()"
-                 ng-show="user.username === 'lydia' || user.username === 'israel'">
+                 ng-show="user.is_staff">
                 <i class="payment icon"></i>
                 Top Up
             </div>
@@ -105,7 +105,7 @@
 
                 <div class="ui grid" ng-hide="loading">
                     <div class="sixteen wide column"
-                         ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | filter: user.username |limitTo: amount">
+                         ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | limitTo: amount">
                         <div class="ui divided items">
                             <div class="item">
                                 <div class="content">

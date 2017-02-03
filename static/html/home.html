@@ -74,10 +74,10 @@
                     Fill the form to raise an imprest. Your form will be sent for approval
                 </div>
             </div>
-            <div class="ui bottom purple attached button" ng-click="isEditingImprest()">
+            <button class="ui bottom purple attached button" ng-click="isEditingImprest()" id="imprestBut">
                 <i class="arrow up icon"></i>
                 Raise Imprest
-            </div>
+            </button>
         </div>
 
         <div class="card">
@@ -88,7 +88,7 @@
                     an ongoing request
                 </div>
             </div>
-            <div class="ui bottom attached button" ng-click="isEditingVendor()">
+            <div class="ui bottom attached button" ng-click="isEditingVendor()" id="vendorBut">
                 <i class="pencil icon"></i>
                 Vendor Remittance Form
             </div>
@@ -101,7 +101,7 @@
                     Input the details of an ongoing job to monitor the progress
                 </div>
             </div>
-            <div class="ui blue bottom attached button" ng-click="isEditingJob()">
+            <div class="ui blue bottom attached button" ng-click="isEditingJob()" id="jobBut">
                 <i class="briefcase icon"></i>
                 Track Job
             </div>
@@ -115,14 +115,14 @@
                 Input the details of leased billboards and get notified once the lease expires
             </div>
         </div>
-        <div class="ui black bottom attached button" ng-click="isEditingBillboard()">
+        <div class="ui black bottom attached button" ng-click="isEditingBillboard()" id="billBut">
             <i class="tv icon"></i>
             Lease Billboard
         </div>
     </div>
 
 
-    <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px">
+    <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px" id="imprests">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Raise Imprest</h2>
@@ -138,10 +138,12 @@
                     <label>Amount</label>
                     <input type="number" placeholder="Amount" ng-model="imprest.amount" name="amount" required>
                 </div>
-
+				
                 <button class="ui button right floated" type="submit" ng-disabled="!imForm.$valid" ng-class="{positive:imForm
                 .$valid }">Submit
                 </button>
+                <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
+                
             </form>
 
 
@@ -154,7 +156,7 @@
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Create A Vendor Remittance Form </h2>
 
-            <form class="ui form" ng-submit="addVendor() && veForm.$valid" name="veForm" novalidate ng-class="{loading:loading}">
+            <form class="ui form" ng-submit="addVendor() && veForm.$valid" name="veForm" novalidate ng-class="{loading:loading}" id="veForm">
                 <h4 class="ui dividing header">Vendor Details</h4>
                 <div class="field" ng-class="{error:veForm.vendor_name.$touched && veForm.vendor_name.$invalid}">
                     <label>Name</label>
@@ -234,10 +236,12 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <button class="ui button right floated" type="submit" ng-disabled="!veForm.$valid" ng-class="{positive:veForm
                 .$valid }">Submit
                 </button>
+                <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
+                
             </form>
 
 
@@ -346,10 +350,11 @@
                            ng-model="billboard.balance=billboard.amountDue-billboard.amountPaid" required>
                 </div>
 
-
                 <button class="ui button right floated" type="submit" ng-disabled="!biForm.$valid" ng-class="{positive:biForm
                 .$valid }">Submit
                 </button>
+                <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
+                
             </form>
         </div>
     </div>
@@ -360,7 +365,7 @@
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui blue header">Enter Job Details</h2>
 
-            <form class="ui form" ng-submit="create() && jobForm.$valid" ng-class="{loading:loading}" name="jobForm" novalidate>
+            <form class="ui form" ng-submit="create() && jobForm.$valid" ng-class="{loading:loading}" name="jobForm" id="jForm" novalidate>
                 <h4 class="ui dividing header">Client Details</h4>
                 <div class="field">
                     <div class="two fields">
@@ -433,9 +438,10 @@
                     <input type="number" placeholder="Outstanding Balance"
                            ng-model="job.balance=job.amountDue-job.amountPaid" name="balance" required>
                 </div>
-
+                
                 <button class="ui button right floated" type="submit" ng-disabled="!jobForm.$valid" ng-class="{positive:jobForm
                 .$valid }">Submit</button>
+                <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
             </form>
         </div>
     </div>

@@ -122,7 +122,7 @@
 
 
                             <!---Edit Link-->
-                            <div class="meta" ng-show="user.is_staff">
+                            <div class="meta" ng-show="user.username === 'israel'">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
                                    ng-click="editing=!editing">Edit</a>
                             </div>
@@ -208,7 +208,7 @@
                             </div>
 
                             <!---Edit Link-->
-                            <div class="meta" ng-show="user.is_staff">
+                            <div class="meta" ng-show="user.username === 'israel'">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
                                    ng-click="editingVen=!editingVen">Edit</a>
                             </div>
@@ -301,7 +301,7 @@
 
                     <!--Extra content-->
                     <div class="extra content"
-                         ng-if="user.is_staff && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
+                         ng-if="user.username === 'israel' && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -317,7 +317,7 @@
                     </div>
 
                     <div class="extra content"
-                         ng-if="user.is_staff && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
+                         ng-if="user.username === 'israel' && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
                         <button class="ui green basic mini circular icon button"
@@ -340,7 +340,7 @@
                                 class="Angle Double Right icon"></i></button>
                     </div>
 
-                    <div class="extra content" ng-if="!user.is_staff && feed.tags.action === 'created'">
+                    <div class="extra content" ng-if="feed.tags.action === 'created'">
                         <i class="ui blue text file icon"></i>
                     </div>
 
@@ -469,7 +469,7 @@
                             <br>
 
                             <div class="meta"
-                                 ng-show="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+                                 ng-show="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
                                    ng-click="editing=!editing">Edit</a>
                             </div>
@@ -489,7 +489,7 @@
                             </form>
 
                             <div class="extra content"
-                                 ng-if="user.is_staff && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+                                 ng-if="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
 
                                 <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"
@@ -571,7 +571,7 @@
                             </div>
 
                             <div class="extra content"
-                                 ng-if="user.is_staff && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
+                                 ng-if="user.username === 'israel' && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
 
                                 <!---Accept Button-->
                                 <button class="ui green basic mini circular icon button"

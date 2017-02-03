@@ -3,8 +3,20 @@
 
     var office = angular.module('naijalogosOffice');
 
-    office.controller('jobsController', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
+    office.controller('jobsController', ['$scope', '$http', '$localForage', '$location','Pusher', function ($scope, $http, $localForage, $location,Pusher) {
+    	
+    	$localForage.getItem('user').then(function (data) {
+            $scope.user = data
 
+            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
+
+                $("#acc-imprest > p").text(item.message)
+                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
+                    $("#acc-imprest").slideUp(1000);
+                })
+            })
+        });
+    	
         function getJobs() {
             var url = '/office/jobs/'
             $scope.getting = true

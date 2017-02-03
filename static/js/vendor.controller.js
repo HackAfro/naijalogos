@@ -4,13 +4,30 @@
 	var office = angular.module('naijalogosOffice');
 
 	office.controller('vendorFormCtrl', ['$scope','$localForage','$http','$location','Pusher', function($scope,$localForage,$http,$location,Pusher){
+		
+		$localForage.getItem('user').then(function (data) {
+            $scope.user = data
+
+            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
+
+                $("#acc-imprest > p").text(item.message)
+                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
+                    $("#acc-imprest").slideUp(1000);
+                })
+            })
+        });
+		
 		activate()
         function activate() {
             $localForage.getItem('user').then(function (data) {
                 if (!data) {
                     $location.url('/login')
-                }else{
+                }
+                else {
                 	$scope.user = data
+                    if (!data.is_staff) {
+                        $location.url('/')
+                    }
                 }
             })
         }
@@ -87,25 +104,6 @@
         $scope.modelOptions = {
             debounce: 1000
         };
-
-        $scope.check = function (word) {
-            var found = 0
-            $scope.searching = true
-            for (var i = 0; i < $scope.vendorForms.length; i++) {
-                if($scope.vendorForms[i].job_description.includes(word)){
-                    found++
-                } 
-                if ($scope.vendorForms[i].vendor_name.includes(word)) {
-                    found++
-                }
-                if ($scope.vendorForms[i].bank_name.includes(word)) {
-                    found++
-                }
-            }
-            $scope.found = found
-            $scope.searching = true
-            $scope.done = true
-        }
 
 
 	}])

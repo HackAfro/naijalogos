@@ -37,10 +37,17 @@ body > .grid {
 #balLoader:before{
     left: 20%
 }
-.black{
-    color: grey;
+
+.change{
+	transition: font-size 0.4s;
 }
-.black:hover{
+.blur{
+    color: grey;
+    font-size: 1.5rem;
+    
+  
+}
+.blur:hover{
     color: grey;
 }
 input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button {

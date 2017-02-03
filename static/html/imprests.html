@@ -110,8 +110,13 @@
 				
 				<div class="ui centered inline active medium loader" ng-show="loading"></div>
 				
+				<h5 class="ui header" ng-if="filtered.length === 0">
+					<i class="red attention icon"></i>
+					Nothing matches your search
+				</h5>
+				
 				<div class="ui feed" ng-hide="loading">
-					<div class="event" ng-repeat="imprest in imprests | filter: search | limitTo:limit | orderBy: imprest.created_at:true">
+					<div class="event" ng-repeat="imprest in imprests | filter: search | limitTo:limit as filtered">
 						<div class="label">
 							<i class="tag icon"></i>
 						</div>
@@ -154,7 +159,14 @@
 					
 					<div class="ui divider"></div>
 					
-					<a class="ui link" href="" ng-click="addMore()" ng-show="imprests.length > limit">
+					<a class="ui link" href="" ng-click="addMore()" ng-hide="search.length || imprests.length < limit">
+						<h6 class="ui header"  style="padding-bottom: 20px">
+							<i class="plus icon"></i>
+							Add more
+						</h6>
+					</a>
+					
+					<a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
 						<h6 class="ui header"  style="padding-bottom: 20px">
 							<i class="plus icon"></i>
 							Add more

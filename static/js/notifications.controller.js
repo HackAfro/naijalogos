@@ -25,12 +25,12 @@
                 function read() {
                     console.log('reading')
                     for (var i = 0; i < $scope.latest.length; i++) {
-                        if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff || $scope.user.username === 'lydia')) {
+                        if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff)) {
                             if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
                                 $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                             }
                             else {
-                                if ($scope.latest[i].tags.action === 'created' && !$scope.user.is_staff) {
+                                if ($scope.latest[i].tags.action === 'created' && $scope.user.username !== 'israel') {
                                     $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                                 }
                             }

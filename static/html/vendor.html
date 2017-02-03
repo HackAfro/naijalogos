@@ -177,8 +177,14 @@
                 <div class="ui active medium centered inline text loader" ng-show="loading" style="margin-top:15px">
                     Loading forms
                 </div>
+                
+                <h5 class="ui header" ng-if="filtered.length === 0">
+					<i class="red attention icon"></i>
+					Nothing matches your search
+				</h5>
+				
 				<div class="ui feed" ng-hide="loading">
-					<div class="event" ng-repeat="vendor in vendorForms | filter: search | limitTo: limit">
+					<div class="event" ng-repeat="vendor in vendorForms | filter: search | limitTo: limit as filtered">
 						
                         <i class="ui grey tag icon" style="margin-right:5px"></i>
 						
@@ -281,8 +287,15 @@
 					</div>
 					
 					<div class="ui divider"></div>
-					<a class="ui link" href="" ng-click="addMore()" ng-show="vendorForms.length">
-						<h6 class="ui header" style="padding-bottom: 20px">
+					<a class="ui link" href="" ng-click="addMore()" ng-hide="search.length || vendorForms.length < limit">
+						<h6 class="ui header"  style="padding-bottom: 20px">
+							<i class="plus icon"></i>
+							Add more
+						</h6>
+					</a>
+					
+					<a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
+						<h6 class="ui header"  style="padding-bottom: 20px">
 							<i class="plus icon"></i>
 							Add more
 						</h6>

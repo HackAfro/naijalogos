@@ -5,10 +5,10 @@
 (function () {
     'use strict'
 
-    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch']);
+    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch','ngAnimate']);
 
     office.config(['PusherServiceProvider', function (PusherServiceProvider) {
-        PusherServiceProvider.setToken("6cfd92c53d2b858e9196")
+        PusherServiceProvider.setToken("1e6cf382786b2218bb7b")
     }
     ]);
 
@@ -28,9 +28,9 @@
         }
     })
 
-    office.controller('allImprestCtrl', ['$http', '$scope', '$location', '$localForage', 'timeFilter', function ($http, $scope, $location, $localForage, timeFilter) {
+    office.controller('allImprestCtrl', ['Pusher','$http', '$scope', '$location', '$localForage', 'timeFilter', function (Pusher,$http, $scope, $location, $localForage, timeFilter) {
 
-        function getImprest(argument) {
+        function getImprest() {
             var url = '/office/imprests/'
             $scope.loading = true
             
@@ -39,7 +39,8 @@
                     if (response) {
                         response.json().then(function (json) {
                             if (networkLoading) {
-                                $scope.imprests = json
+                                var imprests = json
+                                $scope.imprests = imprests.reverse()
                                 $scope.loading = false
                             }
                         })
@@ -48,7 +49,7 @@
             }
             var networkLoading = true
             $http.get(url).then(function (response) {
-                $scope.imprests = response.data
+                $scope.imprests = response.data.reverse()
                 $scope.loading = false
                 networkLoading = false
             })
@@ -79,10 +80,9 @@
         $scope.limit = 10
         
         $scope.addMore = function() {
-			$scope.limit += 5
+			$scope.limit += 10
 		}
         
-        $scope.search = ''
         
         $scope.change = function(user) {
 			$scope.search = user
