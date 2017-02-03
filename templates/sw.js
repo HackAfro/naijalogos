@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files-v4'
+var fileCache = 'naijalogos-files-v5'
 var dataCache = 'naijalogos-data'
 
 var files = [
@@ -48,7 +48,8 @@ var files = [
                 '/static/js/swipe.controller.js',
                 '/static/html/vendor.html',
                 '/static/js/vendor.controller.js',
-                '/static/js/sidebar.controller.js'
+                '/static/js/sidebar.controller.js',
+                '/static/js/angular-animate.js'
 			]
 self.addEventListener('install',function (e) {
 	e.waitUntil(

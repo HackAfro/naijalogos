@@ -38,7 +38,7 @@
         Billboards
     </a>
 
-    <a href="#!/account" class="item" ng-show="user && user.is_staff" ng-click="selectPage(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
+    <a href="#!/account" class="item" ng-show="user && (user.is_staff || user.username === 'lydia')" ng-click="selectPage(4)" ng-class="{active:activePage(4), brown:activePage(4)}">
         <i class="ui money icon" ng-class="{brown:!activePage(4)}"></i>
         Accounts
     </a>
@@ -53,8 +53,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-touch.js"></script>
+<script src="{% static 'js/angular-animate.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-pusher/0.0.14/angular-pusher.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>   
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
