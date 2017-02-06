@@ -13,9 +13,9 @@
             $timeout(get, 5000)
         }
 
-        $timeout(get, 5000)
+        $timeout(get, 5000);
 
-        $scope.page = 0
+        $scope.page = 0;
 
 
         $scope.activePage = function (page) {
@@ -36,7 +36,7 @@
 
         $scope.billboards = function (page) {
             $scope.page = page
-            $location.url('/vendorforms')
+            $location.url('/billboards')
             $('.ui.left.sidebar').sidebar('hide')
         }
 
