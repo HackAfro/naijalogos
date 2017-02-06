@@ -8,7 +8,7 @@
     var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch','ngAnimate']);
 
     office.config(['PusherServiceProvider', function (PusherServiceProvider) {
-        PusherServiceProvider.setToken("6cfd92c53d2b858e9196");
+        PusherServiceProvider.setToken("1e6cf382786b2218bb7b");
     }
     ]);
     
