@@ -3,22 +3,16 @@
 
     var office = angular.module('naijalogosOffice');
 
-    office.controller('balanceCtrl', ['$scope', '$http', '$localForage', '$location','Pusher', function ($scope, $http, $localForage, $location,Pusher) {
+    office.controller('balanceCtrl', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
     	
     	$localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
     	
-        function get() {
-            $scope.balLoading = true
+    	$scope.balLoading = true
+    	
+    	setTimeout(() => {
+    	  
             var url = '/office/balance/'
 
             if ('caches' in window) {
@@ -41,9 +35,9 @@
                 networkPending = false
                 $scope.balLoading = false
             })
-        }
 
-        get()
+		}, 1000);
+    	
 
         activate()
         function activate() {
@@ -58,9 +52,9 @@
 
             })
         }
-
-        function getCredit() {
-            $scope.feedLoading = true
+        
+        setTimeout(() => {
+        	$scope.feedLoading = true
             var url = '/office/credits/'
 
             if ('caches' in window) {
@@ -86,9 +80,9 @@
                 networkPending = false
                 $scope.feedLoading = false
             })
-        }
 
-        getCredit()
+		}, 1000);
+        
 
         $scope.detail = {}
 

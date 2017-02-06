@@ -6,14 +6,6 @@
     office.controller('profileCtrl', ['$http', '$scope', '$localForage', '$location', function ($http, $scope, $localForage, $location) {
         $localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
 
         $scope.tab = 1;
@@ -46,8 +38,9 @@
         $scope.activePage = function (page) {
             return $scope.page === page
         }
-        function getVendors() {
-            $localForage.getItem('user').then(function (data) {
+        
+        setTimeout(() => {
+        	$localForage.getItem('user').then(function (data) {
                 $scope.user = data
                 var url = '/office/vendors/'
 
@@ -92,10 +85,9 @@
                     $scope.loading = false
                 })
             })
-        }
 
-        getVendors()
-
+		}, 1000);
+        
 
         activate()
         function activate() {
@@ -107,8 +99,8 @@
         }
 
         $scope.loading = true
-
-        function getImprests() {
+        
+        setTimeout(() => {
 
             $localForage.getItem('user').then(function (data) {
                 $scope.user = data
@@ -159,10 +151,9 @@
                 })
             })
 
-        }
 
-        getImprests()
-
+		}, 1000);
+        
         $scope.isEditing = false;
 
         $scope.editing = function () {

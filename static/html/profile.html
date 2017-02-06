@@ -1,7 +1,4 @@
-
-
-    <nav-bar></nav-bar>
-
+<nav-bar></nav-bar>
     <div class="ui inverted masthead center aligned segment">
         <menu-button></menu-button>
 
@@ -42,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="ui bottom attached segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
+            <div class="ui bottom attached segment impSeg" ng-show="isSelected(1)" ng-class="{loading:loading}"
                  style="min-height:100px">
                 <div class="ui center aligned grid" ng-if="!imprests.length && !loading && imprests">
                     <div class="column">
@@ -53,8 +50,8 @@
                     </div>
                 </div>
 
-                <div class="ui grid" ng-hide="loading">
-                    <div class="sixteen wide column"
+                <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
+                    <div class="sixteen wide column imprest"
                          ng-repeat="imprest in imprests | orderBy: imprest.created_at: true |limitTo: number">
                         <div class="ui divided items">
                             <div class="item">
@@ -103,8 +100,8 @@
                     </div>
                 </div>
 
-                <div class="ui grid" ng-hide="loading">
-                    <div class="sixteen wide column"
+                <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
+                    <div class="sixteen wide column vendor"
                          ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | limitTo: amount">
                         <div class="ui divided items">
                             <div class="item">

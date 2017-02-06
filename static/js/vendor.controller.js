@@ -7,14 +7,6 @@
 		
 		$localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
 		
 		activate()
@@ -31,52 +23,53 @@
                 }
             })
         }
-
-        function get() {
-        	var url = '/office/vendors/'
-            $scope.loading = true
-            var vendorForms;
-    		var outstanding;
-            
-            if ('caches' in window) {
-				caches.match(url).then(function(response) {
-					if (response) {
-						response.json().then(function(json) {
-							if (networkPending) {
-								vendorForms = json
-								outstanding = []
-								
-								for (var i = 0; i < vendorForms.length; i++) {
-									if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
-										outstanding.push(vendorForms[i])
+		
+		$scope.loading = true
+		
+		setTimeout(() => {
+			var url = '/office/vendors/'
+	            var vendorForms;
+	    		var outstanding;
+	            
+	            if ('caches' in window) {
+					caches.match(url).then(function(response) {
+						if (response) {
+							response.json().then(function(json) {
+								if (networkPending) {
+									vendorForms = json
+									outstanding = []
+									
+									for (var i = 0; i < vendorForms.length; i++) {
+										if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
+											outstanding.push(vendorForms[i])
+										}
 									}
+
+									$scope.outstanding = outstanding
+									$scope.vendorForms = vendorForms
+									$scope.loading = false
 								}
+							})
+						}
+					})
+				}
+	            var networkPending = true
+	        	$http.get(url).then(function (data) {
+	        		vendorForms = data.data
+	        		outstanding = []
+	        		for (var i = 0; i < vendorForms.length; i++) {
+	        			if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
+	        				outstanding.push(vendorForms[i])
+	        			}
+	        		}
 
-								$scope.outstanding = outstanding
-								$scope.vendorForms = vendorForms
-								$scope.loading = false
-							}
-						})
-					}
-				})
-			}
-            var networkPending = true
-        	$http.get(url).then(function (data) {
-        		vendorForms = data.data
-        		outstanding = []
-        		for (var i = 0; i < vendorForms.length; i++) {
-        			if(vendorForms[i].amount_due !== vendorForms[i].current_payment){
-        				outstanding.push(vendorForms[i])
-        			}
-        		}
+	        		$scope.outstanding = outstanding
+	        		$scope.vendorForms = vendorForms
+	        		networkPending = false
+	                $scope.loading = false
+	        	})
 
-        		$scope.outstanding = outstanding
-        		$scope.vendorForms = vendorForms
-        		networkPending = false
-                $scope.loading = false
-        	})
-        }
-        get()
+		}, 2000);
 
         $scope.limit = 10
         

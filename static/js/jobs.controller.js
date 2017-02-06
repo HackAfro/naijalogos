@@ -3,76 +3,68 @@
 
     var office = angular.module('naijalogosOffice');
 
-    office.controller('jobsController', ['$scope', '$http', '$localForage', '$location','Pusher', function ($scope, $http, $localForage, $location,Pusher) {
+    office.controller('jobsController', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
     	
     	$localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
+    	$scope.getting = true
     	
-        function getJobs() {
-            var url = '/office/jobs/'
-            $scope.getting = true
-            var complete = 0;
-            var incomplete = 0;
+    	setTimeout(() => {
+    		var url = '/office/jobs/'
+                
+                var complete = 0;
+                var incomplete = 0;
 
-            if ('caches' in window) {
-                caches.match(url).then(function (data) {
-                    if (data) {
-                        data.json().then(function (json) {
-                            if (networkPending) {
-                                var jobs = json
+                if ('caches' in window) {
+                    caches.match(url).then(function (data) {
+                        if (data) {
+                            data.json().then(function (json) {
+                                if (networkPending) {
+                                    var jobs = json
 
-                                for (var i = 0; i < jobs.length; i++) {
-                                    if (jobs[i].is_complete === true) {
-                                        complete++
-                                    } else {
-                                        incomplete++
+                                    for (var i = 0; i < jobs.length; i++) {
+                                        if (jobs[i].is_complete === true) {
+                                            complete++
+                                        } else {
+                                            incomplete++
+                                        }
                                     }
+
+                                    $scope.complete = complete;
+                                    $scope.incomplete = incomplete;
+
+                                    $scope.jobs = jobs.reverse()
+                                    $scope.getting = false
                                 }
-
-                                $scope.complete = complete;
-                                $scope.incomplete = incomplete;
-
-                                $scope.jobs = jobs.reverse()
-                                $scope.getting = false
-                            }
-                        })
-                    }
-                })
-            }
-
-            var networkPending = true
-            $http.get(url).then(function (data) {
-                var jobs = data.data
-                complete = 0;
-                incomplete = 0;
-
-                for (var i = 0; i < jobs.length; i++) {
-                    if (jobs[i].is_complete === true) {
-                        complete++
-                    } else {
-                        incomplete++
-                    }
+                            })
+                        }
+                    })
                 }
 
-                $scope.complete = complete;
-                $scope.incomplete = incomplete;
+                var networkPending = true
+                $http.get(url).then(function (data) {
+                    var jobs = data.data
+                    complete = 0;
+                    incomplete = 0;
 
-                $scope.jobs = jobs.reverse()
-                networkPending = false
-                $scope.getting = false
-            })
-        }
+                    for (var i = 0; i < jobs.length; i++) {
+                        if (jobs[i].is_complete === true) {
+                            complete++
+                        } else {
+                            incomplete++
+                        }
+                    }
 
-        getJobs()
+                    $scope.complete = complete;
+                    $scope.incomplete = incomplete;
+
+                    $scope.jobs = jobs.reverse()
+                    networkPending = false
+                    $scope.getting = false
+                })
+
+		}, 2000);
 
         activate()
         function activate() {

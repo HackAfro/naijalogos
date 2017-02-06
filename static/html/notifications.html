@@ -1,5 +1,4 @@
 <nav-bar></nav-bar>
-
 <div class="ui masthead center aligned segment" style="background:transparent">
     <div class="ui black fixed extra large circular icon button" id="rotate"
         style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent" ng-controller="profileCtrl">
@@ -37,10 +36,10 @@
         </h2>
 
         <!---Feed-->
-        <div class="ui centered feed">
+        <div class="ui centered feed" style="overflow: hidden;">
 
             <!--Event-->
-            <div class="event" ng-repeat="feed in latest">
+            <div class="event inbox" ng-repeat="feed in latest">
                 <div class="label">
                     <img src="/static/images/nl.png">
                 </div>
@@ -105,14 +104,15 @@
                     </div>
 
                     <!--Extra Content-->
-                    <div class="extra content" ng-show="show">
+                    <div style="overflow: hidden;">
+                    <div class="extra content data" ng-if="show">
 
                         <!--Loader-->
                         <div class="ui mini centered inline loader" ng-class="{active:feed.conLoading}"></div>
                         <!---EndLoader-->
 
                         <!--Imprest Description-->
-                        <div class="description" ng-if="details && !conLoading && details.id === feed.id ">
+                        <div class="description data" ng-if="details && !conLoading && details.id === feed.id ">
 
                             <span>{{details.data.description}}</span><br>
                             <div class="meta">
@@ -298,6 +298,7 @@
                         </div>
 
                     </div>
+                    </div>
 
                     <!--Extra content-->
                     <div class="extra content"
@@ -340,7 +341,7 @@
                                 class="Angle Double Right icon"></i></button>
                     </div>
 
-                    <div class="extra content" ng-if="feed.tags.action === 'created'">
+                    <div class="extra content" ng-if="user.username !== 'israel' && feed.tags.action === 'created'">
                         <i class="ui blue text file icon"></i>
                     </div>
 

@@ -9,44 +9,50 @@
     office.controller('notificationCtrl', ['$scope', '$http', '$localForage', '$location', 'Pusher', function ($scope, $http, $localForage, $location, Pusher) {
         $localForage.getItem('user').then(function (data) {
             $scope.user = data
-
+            
             $scope.loading = true
-            var url = '/api/inbox/'
-            $http.get(url).then(function (data) {
+            
+            setTimeout(() => {
 
-                var latest = data.data
-                for (var j = 0; j < latest.length; j++) {
-                    latest[j].tags = JSON.parse(latest[j].tags)
-                }
-                $scope.latest = latest.reverse()
-                $scope.loading = false
+                
+                var url = '/api/inbox/'
+                $http.get(url).then(function (data) {
 
-                read() 
-                function read() {
-                    console.log('reading')
-                    for (var i = 0; i < $scope.latest.length; i++) {
-                        if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff)) {
-                            if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
-                                $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
-                            }
-                            else {
-                                if ($scope.latest[i].tags.action === 'created' && $scope.user.username !== 'israel') {
+                    var latest = data.data
+                    for (var j = 0; j < latest.length; j++) {
+                        latest[j].tags = JSON.parse(latest[j].tags)
+                    }
+                    $scope.latest = latest.reverse()
+                    $scope.loading = false
+
+                    read() 
+                    function read() {
+                        console.log('reading')
+                        for (var i = 0; i < $scope.latest.length; i++) {
+                            if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff)) {
+                                if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
                                     $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                                 }
+                                else {
+                                    if ($scope.latest[i].tags.action === 'created' && $scope.user.username !== 'israel') {
+                                        $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
+                                    }
+                                }
+                            } else {
+                                $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                             }
-                        } else {
-                            $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                         }
                     }
-                }
 
 
-            }, function (err) {
-                console.log(err)
-                $scope.latest = []
-                $scope.loading = false
-            })
+                }, function (err) {
+                    console.log(err)
+                    $scope.latest = []
+                    $scope.loading = false
+                })
 
+
+			}, 2000);
             Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
                 $scope.loading = true
                 $http.get('/api/inbox/').then(function (data) {
@@ -56,10 +62,6 @@
                     }
                     $scope.latest = latest.reverse()
                     $scope.loading = false
-                })
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
                 })
             })
         });
@@ -83,41 +85,41 @@
             return $scope.tab === checktab
         }
 
+        
+        setTimeout(() => {
+        	var url = '/office/messages/'
 
-        function getMessages() {
-            var url = '/office/messages/'
+                if ('caches' in window) {
+                    caches.match(url).then(function (response) {
+                        if (response) {
 
-            if ('caches' in window) {
-                caches.match(url).then(function (response) {
-                    if (response) {
-
-                        response.json().then(function (json) {
-                            if (pendingNetwork) {
-                                var messages = json
-                                for (var i = 0; i < messages.length; i++) {
-                                    messages[i].message.tags = JSON.parse(messages[i].message.tags)
+                            response.json().then(function (json) {
+                                if (pendingNetwork) {
+                                    var messages = json
+                                    for (var i = 0; i < messages.length; i++) {
+                                        messages[i].message.tags = JSON.parse(messages[i].message.tags)
+                                    }
+                                    $scope.messages = messages
                                 }
-                                $scope.messages = messages
-                            }
 
-                        })
+                            })
 
 
-                    }
-                })
-            }
-            var pendingNetwork = true
-            $http.get('/office/messages/').then(function (data) {
-                var messages = data.data
-                for (var i = 0; i < messages.length; i++) {
-                    messages[i].message.tags = JSON.parse(messages[i].message.tags)
+                        }
+                    })
                 }
-                $scope.messages = messages
-                pendingNetwork = false
-            })
-        }
+                var pendingNetwork = true
+                $http.get('/office/messages/').then(function (data) {
+                    var messages = data.data
+                    for (var i = 0; i < messages.length; i++) {
+                        messages[i].message.tags = JSON.parse(messages[i].message.tags)
+                    }
+                    $scope.messages = messages
+                    pendingNetwork = false
+                })
 
-        getMessages()
+		}, 2000);
+        
 
         $scope.view = function (feed) {
             if (feed.url.indexOf('v') === -1) {

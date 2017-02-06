@@ -9,14 +9,6 @@
     office.controller('imprestCtrl', ['$http', '$scope', '$localForage', '$location', 'Pusher', function ($http, $scope, $localForage, $location, Pusher) {
         $localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
 
 
@@ -219,9 +211,10 @@
         $scope.job = {}
         $scope.loading = false
         $scope.jobList = []
-
-        function recentJob() {
-            $scope.loading = true
+        
+        $scope.loading = true
+        
+        setTimeout(() => {            
             var url = '/office/jobs/'
 
             if ('caches' in window) {
@@ -254,9 +247,9 @@
                 $scope.loading = false
             })
 
-        }
 
-        recentJob()
+		}, 2000);
+
 
         $scope.create = function (editing) {
 

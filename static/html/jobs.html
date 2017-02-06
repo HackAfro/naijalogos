@@ -1,5 +1,4 @@
 <nav-bar></nav-bar>
-
 <div class="ui inverted center aligned masthead segment">
     <menu-button></menu-button>
     
@@ -97,7 +96,7 @@
                             </div>
 
                             <div class="ui black progress" data-percent="{{job.percentage}}" id="example1">
-                                <div class="bar" style="width: {{job.percentage}}%">
+                                <div class="bar" style="width: {{job.percentage}}%; transition:0.6s">
                                     <div class="progress"></div>
                                 </div>
                                 <div class="label">{{ job.percentage }}%<span
@@ -179,7 +178,7 @@
                                     No Remarks
                                 </h5>
                                 <div class="ui feed">
-                                    <div class="event"
+                                    <div class="event remark"
                                          ng-repeat="remark in job.remarks | limitTo:5 | orderBy:remark.id:true">
 
                                         <i class="ui teal pencil icon"></i>

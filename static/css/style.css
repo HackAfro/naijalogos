@@ -43,7 +43,7 @@ body > .grid {
 }
 .blur{
     color: grey;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     
   
 }
@@ -57,3 +57,129 @@ input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-in
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+.remark{
+	transition: 0.4s;
+}
+
+.remark.ng-enter{
+	opacity: 0;
+	transform: translateY(10px);
+}
+
+.remark.ng-enter.ng-enter-active{
+	opactity:1;
+	transform: translateY(0);
+}
+
+
+.credit,.imprest,.vendor,.inbox,.data{
+	transition: 0.5s linear;
+}
+
+.ng-enter-prepare{
+	opacity: 0;
+}
+
+.credit.ng-enter,.imprest.ng-enter,.vendor.ng-enter,.inbox.ng-enter{
+	opacity: 0;
+	transform: translateY(50px);
+}
+
+.credit.ng-enter.ng-enter-active,.imprest.ng-enter.ng-enter-active,.vendor.ng-enter.ng-enter-active,.inbox.ng-enter.ng-enter-active{
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.credit.ng-enter-stagger,.imprest.ng-enter-stagger,.vendor.ng-enter-stagger{
+	transition-delay: 0.3s;
+	transition-duration:0;
+}
+
+.data.ng-enter{
+	opacity: 0;
+	transform: translateY(-20px);
+}
+
+.data.ng-enter.ng-enter-active{
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.data.ng-leave{
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.data.ng-leave.ng-leave-active{
+	transform: translateY(-20px);
+	opacity: 0;
+}
+
+
+.link.ng-hide{
+	transition: 0.5s;
+	opacity: 0;
+}
+
+.inbox.ng-leave{
+	opacity: 1;
+}
+
+.inbox.ng-leave.ng-leave-active{
+	transform: translateX(-100px);
+	opacity: 0;
+	
+}
+
+
+html{ overflow-y:hidden; }
+
+.view.ng-leave 	{
+	width:100%; 
+	position: absolute;
+	 }
+.view.ng-enter 	{
+	width:100%;
+	position:  absolute;
+	 }
+
+.view.ng-leave        {
+    -webkit-animation:slideOutLeft 0.5s both linear;
+	-moz-animation:slideOutLeft 0.5s both linear;
+	animation:slideOutLeft 0.5s both linear;   
+}
+.view.ng-enter 		{  
+    -webkit-animation:slideInRight 0.5s both ease-in;
+	-moz-animation:slideInRight 0.5s both ease-in;
+	animation:slideInRight 0.5s both ease-in;    
+}
+
+@keyframes slideOutLeft {
+	from {opacity:1; }
+	to 		{ transform: translateX(-100%); opacity:0;}
+}
+
+@-moz-keyframes slideOutLeft {	
+	from {opacity:1;}
+	to 		{ -moz-transform: translateX(-100%); opacity:0;}
+}
+
+@-webkit-keyframes slideOutLeft {
+	from {opacity:1;}
+	to 		{ -webkit-transform: translateX(-100%); opacity:0;}
+}
+
+@keyframes slideInRight {
+	from 	{ transform:translateX(100%); }
+	to 		{ transform: translateX(0); }
+}
+@-moz-keyframes slideInRight {
+	from 	{ -moz-transform:translateX(100%); }
+	to 		{ -moz-transform: translateX(0); }
+}
+@-webkit-keyframes slideInRight {
+	from 	{ -webkit-transform:translateX(100%); }
+	to 		{ -webkit-transform: translateX(0); }
+}
+

@@ -3,24 +3,18 @@
 
 	var office = angular.module('naijalogosOffice')
 
-	office.controller('boardCtrl', ['$scope', '$http', '$localForage', '$location','Pusher', function ($scope, $http, $localForage, $location,Pusher) {
+	office.controller('boardCtrl', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
 		
 		$localForage.getItem('user').then(function (data) {
             $scope.user = data
-
-            Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
-
-                $("#acc-imprest > p").text(item.message)
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
-                })
-            })
         });
 		
-		function get() {
-			var url = '/office/billboards/'
-			$scope.loading = true
+		$scope.loading = true
+		
+		setTimeout(() => {
 
+			var url = '/office/billboards/'
+			
 			if ('caches' in window) {
 				caches.match(url).then(function (response) {
 					if (response) {
@@ -46,9 +40,9 @@
 			}, function () {
 				$scope.loading = false
 			})
-		}
 
-		get()
+		}, 1000);
+
 
 		function lease(billboards) {
 			var date = new Date()
