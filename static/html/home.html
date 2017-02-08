@@ -1,71 +1,76 @@
 <nav-bar></nav-bar>
+
 <div class="ui masthead center aligned segment" style="background:transparent">
     <div class="ui black fixed extra large circular icon button" id="rotate"
-        style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent" ng-controller="profileCtrl">
+         style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent">
         <i class="ui black content icon"></i>
     </div>
 </div>
 
 <div class="ui container" ng-controller="homeCtrl" id="home">
 
-    <h1 class="ui centered header" style="margin-top: 100px">
-        Welcome <span style="text-transform: capitalize">{{user.username}}</span>, what are you doing today?
+    <h1 class="ui centered header animated lightSpeedIn" style="margin-top: 100px">
+        Welcome <span style="text-transform: capitalize">{{ user.username }}</span>, what are you doing today?
     </h1>
+    
+    
+	<div ng-controller="jobCtrl" ng-show="jobList.length === 1" class="jobs" style="margin-bottom: 10px">
+	
+		<div class="ui horizontal divider header">
+        	<i class="briefcase icon"></i>
+        	Recent Jobs
+   	 	</div>
 
-    <div class="ui horizontal divider header" ng-controller="jobCtrl" ng-show="jobList.length === 1">
-        <i class="briefcase icon"></i>
-        Recent Jobs
-    </div>
+    	<div class="ui centered grid">
+        	<div class="sixteen wide column">
+            	<h5 class="ui top attached inverted header">
+                	<i class="tag icon"></i>
+                	Current Job
+            	</h5>
 
-    <div class="ui centered grid" ng-controller="jobCtrl" ng-show="jobList.length === 1">
-        <div class="sixteen wide column">
-            <h5 class="ui top attached inverted header">
-                <i class="tag icon"></i>
-                Current Job
-            </h5>
+           		<div class="ui fluid attached raised segment" ng-class="{loading:loading}">
+                	<div class="item" ng-repeat="latestJob in jobList | limitTo:1">
+                    	<div class="content">
+                        	<h3 class="ui teal header">{{ latestJob.client_name }}</h3>
+                    	</div>
 
-            <div class="ui fluid attached raised segment" ng-class="{loading:loading}">
-                <div class="item" ng-repeat="latestJob in jobList | limitTo:1">
-                    <div class="content">
-                        <h3 class="ui teal header">{{latestJob.client_name}}</h3>
-                    </div>
+                    	<div class="right floated meta">
+                        	<span class="ui brown label">+234{{ latestJob.client_no | limitTo : 40 : 1}}</span>
+                    	</div>
 
-                    <div class="right floated meta">
-                        <span class="ui brown label">+234{{latestJob.client_no | limitTo : 40 : 1}}</span>
-                    </div>
+                    	<div class="description" style="margin-top:10px">
+                        	<p>{{ latestJob.job_description }}</p>
+                    	</div>
 
-                    <div class="description" style="margin-top:10px">
-                        <p>{{latestJob.job_description}}</p>
-                    </div>
-
-                    <div class="ui teal progress" data-percent="{{latestJob.percentage}}" id="example1">
-                        <div class="bar" style="width: {{latestJob.percentage}}%">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="label">{{ latestJob.percentage }}% <span
+                    	<div class="ui teal progress" data-percent="{{ latestJob.percentage }}" id="example1">
+                        	<div class="bar" style="width: {{ latestJob.percentage }}%">
+                            	<div class="progress"></div>
+                        	</div>
+                        	<div class="label">{{ latestJob.percentage }}% <span
                                 ng-if="latestJob.percentage > 0">Completed</span></div>
-                    </div>
-                    <div class="extra">
-                        by: <span class="ui label" style="text-transform:capitalize">{{latestJob.handler}}</span>
-                        <a class="ui right floated teal mini button" tabindex="0" href="#!/jobs">
-                            All Jobs
-                            <i class="right arrow icon"></i>
-                        </a>
-                    </div>
-
-
-                </div>
+                    	</div>
+                    	
+                    	<div class="extra">
+                        	by: <span class="ui label" style="text-transform:capitalize">{{ latestJob.handler }}</span>
+                        	<a class="ui right floated teal mini button" tabindex="0" href="#!/jobs">
+                            	All Jobs
+                            	<i class="right arrow icon"></i>
+                        	</a>
+                    	</div>
+	                </div>
             </div>
         </div>
     </div>
 
-    <div class="ui horizontal divider header" ng-controller="jobCtrl" ng-show="jobList.length === 1">
+    <div class="ui horizontal divider header">
         <i class="file icon"></i>
         Forms
     </div>
-
-
-    <div class="ui centered cards">
+		
+	</div>
+	
+	
+        <div class="ui centered cards">
         <div class="card">
             <div class="content">
                 <div class="header">Raise Imprest</div>
@@ -96,7 +101,7 @@
         <div class="card">
             <div class="content">
                 <div class="header">Job Tracker</div>
-                <div class ="description">
+                <div class="description">
                     Input the details of an ongoing job to monitor the progress
                 </div>
             </div>
@@ -121,28 +126,31 @@
     </div>
 
 
-    <div class="ui centered grid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px" id="imprests">
+    <div class="ui centered grid imGrid" ng-show="editingImprest" ng-controller="imprestCtrl" style="margin-top: 15px"
+         id="imprests">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Raise Imprest</h2>
 
-            <form class="ui form" ng-submit="addImprest() && imForm.$valid" id="imForm" name="imForm" ng-class="{loading:loading}" novalidate>
+            <form class="ui form" ng-submit="addImprest() && imForm.$valid" id="imForm" name="imForm"
+                  ng-class="{loading:loading}" novalidate>
                 <div class="field" ng-class="{error:imForm.description.$invalid && imForm.description.$touched}">
                     <label>Description</label>
-                    <textarea placeholder="Description...." ng-model="imprest.description" name="description" required></textarea>
+                    <textarea placeholder="Description...." ng-model="imprest.description" name="description"
+                              required></textarea>
                 </div>
 
                 <div class="field" ng-class="{error:imForm.amount.$invalid && imForm.amount.$touched}">
-                
+
                     <label>Amount</label>
                     <input type="number" placeholder="Amount" ng-model="imprest.amount" name="amount" required>
                 </div>
-				
+
                 <button class="ui button right floated" type="submit" ng-disabled="!imForm.$valid" ng-class="{positive:imForm
                 .$valid }">Submit
                 </button>
                 <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
-                
+
             </form>
 
 
@@ -150,20 +158,23 @@
     </div>
 
 
-    <div class="ui centered grid" ng-show="editingVendor" style="margin-top: 15px" ng-controller="vendorCtrl">
+    <div class="ui centered grid imGrid" ng-show="editingVendor" style="margin-top: 15px" ng-controller="vendorCtrl">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui purple header">Create A Vendor Remittance Form </h2>
 
-            <form class="ui form" ng-submit="addVendor() && veForm.$valid" name="veForm" novalidate ng-class="{loading:loading}" id="veForm">
+            <form class="ui form" ng-submit="addVendor() && veForm.$valid" name="veForm" novalidate
+                  ng-class="{loading:loading}" id="veForm">
                 <h4 class="ui dividing header">Vendor Details</h4>
                 <div class="field" ng-class="{error:veForm.vendor_name.$touched && veForm.vendor_name.$invalid}">
                     <label>Name</label>
-                    <input placeholder="Vendor name" type="text" name="vendor_name" ng-model="vendor.vendorName" required>
+                    <input placeholder="Vendor name" type="text" name="vendor_name" ng-model="vendor.vendorName"
+                           required>
                 </div>
 
                 <h4 class="ui dividing header">Bank Details</h4>
-                <div class="field" ng-class="{error:veForm.account_details.$touched && veForm.account_details.$invalid}">
+                <div class="field"
+                     ng-class="{error:veForm.account_details.$touched && veForm.account_details.$invalid}">
                     <div class="two fields">
                         <div class="field">
                             <label>Account Number</label>
@@ -173,13 +184,15 @@
 
                         <div class="field" ng-class="{error:veForm.bank_name.$touched && veForm.bank_name.$invalid}">
                             <label>Bank Name</label>
-                            <input type="text" placeholder="Bank Name" name="bank_name" ng-model="vendor.bankName" required>
+                            <input type="text" placeholder="Bank Name" name="bank_name" ng-model="vendor.bankName"
+                                   required>
                         </div>
                     </div>
                 </div>
 
                 <h4 class="ui dividing header">Job Details</h4>
-                <div class="field" ng-class="{error:veForm.job_description.$touched && veForm.job_description.$invalid}">
+                <div class="field"
+                     ng-class="{error:veForm.job_description.$touched && veForm.job_description.$invalid}">
                     <label>Job description</label>
                     <textarea placeholder="Description...." name="job_description"
                               ng-model="vendor.jobDescription" required></textarea>
@@ -189,12 +202,14 @@
                     <div class="two fields">
                         <div class="field" ng-class="{error:veForm.quantity.$touched && veForm.quantity.$invalid}">
                             <label>Qty</label>
-                            <input type="number" placeholder="Quantity" name="quantity" ng-model="vendor.quantity" required>
+                            <input type="number" placeholder="Quantity" name="quantity" ng-model="vendor.quantity"
+                                   required>
                         </div>
 
                         <div class="field" ng-class="{error:veForm.currency.$touched && veForm.currency.$invalid}">
                             <label>Currency</label>
-                            <select class="ui fluid simple dropdown" name="currency" ng-model="vendor.currency" required>
+                            <select class="ui fluid simple dropdown" name="currency" ng-model="vendor.currency"
+                                    required>
                                 <option value="">Currency</option>
                                 <option value="NGN"><i class="ng flag"></i>NGN</option>
                                 <option value="USD"><i class="us flag"></i>USD</option>
@@ -208,7 +223,8 @@
                     <div class="two fields">
                         <div class="field" ng-class="{error:veForm.amount_due.$touched && veForm.amount_due.$invalid}">
                             <label>Amount Due</label>
-                            <input type="number" placeholder="Amount Due.." name="amount_due" ng-model="vendor.amountDue" required>
+                            <input type="number" placeholder="Amount Due.." name="amount_due"
+                                   ng-model="vendor.amountDue" required>
                         </div>
 
                         <div class="field">
@@ -221,13 +237,15 @@
 
                 <div class="field">
                     <div class="two fields">
-                        <div class="field" ng-class="{error:veForm.current_payment.$touched && veForm.current_payment.$invalid}">
+                        <div class="field"
+                             ng-class="{error:veForm.current_payment.$touched && veForm.current_payment.$invalid}">
                             <label>Current Payment</label>
                             <input type="tel" placeholder="Amount Paid.." name="current_payment"
                                    ng-model="vendor.currentPayment" required>
                         </div>
 
-                        <div class="field" ng-class="{error:veForm.outstanding_balance.$touched && veForm.outstanding_balance.$invalid}">
+                        <div class="field"
+                             ng-class="{error:veForm.outstanding_balance.$touched && veForm.outstanding_balance.$invalid}">
                             <label>Outstanding Balance</label>
                             <input type="tel" placeholder="Balance.."
                                    ng-model="vendor.outstandingBalance = vendor.amountDue - vendor.currentPayment"
@@ -235,28 +253,30 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <button class="ui button right floated" type="submit" ng-disabled="!veForm.$valid" ng-class="{positive:veForm
                 .$valid }">Submit
                 </button>
                 <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
-                
+
             </form>
 
 
         </div>
     </div>
 
-    <div class="ui centered grid" ng-show="editingBillboard" style="margin-top: 15px" ng-controller="billboardCtrl">
+    <div class="ui centered grid imGrid" ng-show="editingBillboard" style="margin-top: 15px" ng-controller="billboardCtrl">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui grey header">Lease A Billboard</h2>
 
-            <form class="ui form" ng-submit="create() && biForm.$valid" id="biForm" name="biForm" ng-class="{loading:loading}" novalidate>
+            <form class="ui form" ng-submit="create() && biForm.$valid" id="biForm" name="biForm"
+                  ng-class="{loading:loading}" novalidate>
                 <h4 class="ui dividing header">Client Details</h4>
                 <div class="field">
                     <div class="two fields">
-                        <div class="field" ng-class="{error:biForm.client_name.$touched && biForm.client_name.$invalid}">
+                        <div class="field"
+                             ng-class="{error:biForm.client_name.$touched && biForm.client_name.$invalid}">
                             <label>Name</label>
                             <input placeholder="Client name" type="text" name="client_name"
                                    ng-model="billboard.clientName" required>
@@ -264,7 +284,8 @@
 
                         <div class="field" ng-class="{error:biForm.Mobile.$touched && biForm.Mobile.$invalid}">
                             <label>Mobile</label>
-                            <input type="tel" name="Mobile" placeholder="0802xxxxxxx" ng-model="billboard.mobile" required>
+                            <input type="tel" name="Mobile" placeholder="0802xxxxxxx" ng-model="billboard.mobile"
+                                   required>
                         </div>
                     </div>
 
@@ -298,7 +319,8 @@
                             </select>
                         </div>
 
-                        <div class="field" ng-class="{error:biForm.expiry_date.$touched && biForm.expiry_date.$invalid}">
+                        <div class="field"
+                             ng-class="{error:biForm.expiry_date.$touched && biForm.expiry_date.$invalid}">
                             <label>Expiry Date</label>
                             <input type="text" placeholder="YYYY-MM-DD" name="expiry_date"
                                    ng-model="billboard.expiryDate = addDays(billboard.duration)">
@@ -322,7 +344,8 @@
 
                         <div class="field" ng-class="{error:biForm.agent.$touched && biForm.agent.$invalid}">
                             <label>Agent</label>
-                            <input type="text" ng-model="billboard.agent" placeholder="Installation Agent" name="agent" required>
+                            <input type="text" ng-model="billboard.agent" placeholder="Installation Agent" name="agent"
+                                   required>
                         </div>
                     </div>
                 </div>
@@ -332,10 +355,12 @@
                     <div class="two fields">
                         <div class="field" ng-class="{error:biForm.amount_due.$touched && biForm.amount_due.$invalid}">
                             <label>Amount Due</label>
-                            <input type="number" placeholder="Amount Due" name="amount_due" ng-model="billboard.amountDue" required>
+                            <input type="number" placeholder="Amount Due" name="amount_due"
+                                   ng-model="billboard.amountDue" required>
                         </div>
 
-                        <div class="field" ng-class="{error:biForm.amount_paid.$touched && biForm.amount_paid.$invalid}">
+                        <div class="field"
+                             ng-class="{error:biForm.amount_paid.$touched && biForm.amount_paid.$invalid}">
                             <label>Amount Paid</label>
                             <input type="number" placeholder="Amount Paid" name="amount_paid"
                                    ng-model="billboard.amountPaid" required>
@@ -343,7 +368,8 @@
                     </div>
                 </div>
 
-                <div class="field" ng-class="{error:biForm.outstanding_balance.$touched && biForm.outstanding_balance.$invalid}">
+                <div class="field"
+                     ng-class="{error:biForm.outstanding_balance.$touched && biForm.outstanding_balance.$invalid}">
                     <label>Outstanding Balance</label>
                     <input type="tel" placeholder="Outstanding Balance" name="outstanding_balance"
                            ng-model="billboard.balance=billboard.amountDue-billboard.amountPaid" required>
@@ -353,24 +379,27 @@
                 .$valid }">Submit
                 </button>
                 <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
-                
+
             </form>
         </div>
     </div>
 
 
-    <div class="ui centered grid" ng-show="editingJob" style="margin-top: 15px" ng-controller="jobCtrl">
+    <div class="ui centered grid imGrid" ng-show="editingJob" style="margin-top: 15px" ng-controller="jobCtrl">
 
         <div class="ui four column grid" style="background: #d0d0d0">
             <h2 class="ui blue header">Enter Job Details</h2>
 
-            <form class="ui form" ng-submit="create() && jobForm.$valid" ng-class="{loading:loading}" name="jobForm" id="jForm" novalidate>
+            <form class="ui form" ng-submit="create() && jobForm.$valid" ng-class="{loading:loading}" name="jobForm"
+                  id="jForm" novalidate>
                 <h4 class="ui dividing header">Client Details</h4>
                 <div class="field">
                     <div class="two fields">
-                        <div class="field" ng-class="{error:jobForm.client_name.$touched && jobForm.client_name.$invalid}">
+                        <div class="field"
+                             ng-class="{error:jobForm.client_name.$touched && jobForm.client_name.$invalid}">
                             <label>Client Name</label>
-                            <input placeholder="Client name" type="text" ng-model="job.clientName" name="client_name" required>
+                            <input placeholder="Client name" type="text" ng-model="job.clientName" name="client_name"
+                                   required>
                         </div>
 
                         <div class="field" ng-class="{error:jobForm.mobile.$touched && jobForm.mobile.$invalid}">
@@ -382,7 +411,8 @@
 
                 <div class="field" ng-class="{error:jobForm.contact.$touched && jobForm.contact.$invalid}">
                     <label>Client Contact Person</label>
-                    <input type="text" ng-model="job.clientContactPerson" placeholder="Contact Person" name="contact" required>
+                    <input type="text" ng-model="job.clientContactPerson" placeholder="Contact Person" name="contact"
+                           required>
                 </div>
 
                 <h4 class="ui dividing header">Job Details</h4>
@@ -400,7 +430,8 @@
 
                         </div>
 
-                        <div class="field" ng-class="{error:jobForm.percentage.$touched && jobForm.percentage.$invalid}">
+                        <div class="field"
+                             ng-class="{error:jobForm.percentage.$touched && jobForm.percentage.$invalid}">
                             <label>Job Percentage</label>
                             <input type="number" ng-model="job.percentage" placeholder="%.." name="percentage" required>
                         </div>
@@ -414,20 +445,25 @@
 
                 <div class="field" ng-class="{error:jobForm.description.$touched && jobForm.description.$invalid}">
                     <label>Job Description</label>
-                    <textarea placeholder="Job Description....." ng-model="job.jobDescription" name="description" required></textarea>
+                    <textarea placeholder="Job Description....." ng-model="job.jobDescription" name="description"
+                              required></textarea>
                 </div>
 
                 <h4 class="ui dividing header">Payment Details</h4>
                 <div class="field">
                     <div class="two fields">
-                        <div class="field" ng-class="{error:jobForm.amount_due.$touched && jobForm.amount_due.$invalid}">
+                        <div class="field"
+                             ng-class="{error:jobForm.amount_due.$touched && jobForm.amount_due.$invalid}">
                             <label>Amount Due</label>
-                            <input type="number" placeholder="Amount Due" ng-model="job.amountDue" name="amount_due" required>
+                            <input type="number" placeholder="Amount Due" ng-model="job.amountDue" name="amount_due"
+                                   required>
                         </div>
 
-                        <div class="field" ng-class="{error:jobForm.amount_paid.$touched && jobForm.amount_paid.$invalid}">
+                        <div class="field"
+                             ng-class="{error:jobForm.amount_paid.$touched && jobForm.amount_paid.$invalid}">
                             <label>Amount Paid</label>
-                            <input type="number" placeholder="Amount Paid" ng-model="job.amountPaid" name="amount_paid" required>
+                            <input type="number" placeholder="Amount Paid" ng-model="job.amountPaid" name="amount_paid"
+                                   required>
                         </div>
                     </div>
                 </div>
@@ -437,14 +473,15 @@
                     <input type="number" placeholder="Outstanding Balance"
                            ng-model="job.balance=job.amountDue-job.amountPaid" name="balance" required>
                 </div>
-                
+
                 <button class="ui button right floated" type="submit" ng-disabled="!jobForm.$valid" ng-class="{positive:jobForm
-                .$valid }">Submit</button>
+                .$valid }">Submit
+                </button>
                 <button class="ui button right floated" type="button" ng-click="cancelEditing()">Cancel</button>
             </form>
         </div>
     </div>
-	
+
     <notify-bar></notify-bar>
 </div>
 

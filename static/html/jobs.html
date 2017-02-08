@@ -1,7 +1,7 @@
 <nav-bar></nav-bar>
 <div class="ui inverted center aligned masthead segment">
     <menu-button></menu-button>
-    
+
     <h2 class="ui teal center aligned icon header" style="margin-top: 60px">
         <i class="circular briefcase icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
         Job Orders
@@ -33,19 +33,19 @@
                 </div>
 
                 <a href="" class="item" ng-class="{active:isSelected(1), grey:isSelected(1)}" ng-click="selectTab(1)">
-                    <span class="ui label">{{incomplete}}</span>
+                    <span class="ui label">{{ incomplete }}</span>
                     Ongoing
                 </a>
 
                 <a href="" class="item" ng-class="{active:isSelected(2), grey:isSelected(2)}" ng-click="selectTab(2)">
-                    <span class="ui label">{{complete}}</span>
+                    <span class="ui label">{{ complete }}</span>
                     Completed
                 </a>
             </div>
         </div>
 
 
-        <div class="sixteen wide column" style="max-width:550px" ng-show="isSelected(1)">
+        <div class="sixteen wide column on" style="max-width:550px" ng-show="isSelected(1)">
             <h4 class="ui top attached header" style="background:teal; color:white">
                 <i class="hourglass start icon"></i>
                 Ongoing Jobs
@@ -64,51 +64,55 @@
                     <div class="sixteen wide column" ng-repeat="job in jobs | filter : job.is_complete === false">
                         <div class="item">
                             <div class="content">
-                                <a class="ui teal header">{{job.client_name}}</a><br>
-                                <span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 1}}</span><br>
+                                <a class="ui teal header">{{ job.client_name }}</a><br>
+                                <span class="ui grey label"
+                                      style="margin-top:5px; margin-bottom:5px">+234{{ job.client_no | limitTo : 40 : 1}}</span><br>
 
-                                by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
+                                by: <span class="ui label" style="text-transform:capitalize">{{ job.handler }}</span>
 
                                 <div class="right floated meta"
                                      style="float: right; margin-right: 0; margin-left: .25em;" ng-if="job.balance > 0">
             					
                 				<span class="right floated">
-                					<span class="ui label">{{job.amount_due | currency:'₦'}} </span>- <span
-                                        class="ui label">{{job.amount_paid | currency:'₦'}}</span>
+                					<span class="ui label">{{ job.amount_due | currency:'₦'}} </span>- <span
+                                        class="ui label">{{ job.amount_paid | currency:'₦'}}</span>
                 				</span><br>
 
 
                                     <span class="right floated ui blue label" style="float:right; margin-top:5px">
-                					= {{job.balance | currency:'₦'}}
+                					= {{ job.balance | currency:'₦'}}
                 				</span>
                                 </div>
 
                                 <div class="right floated meta"
                                      style="float: right; margin-right: 0; margin-left: .25em;"
                                      ng-if="job.balance === 0">
-                                    <span class="right floated"><span class="ui green label">{{job.amount_paid | currency:'₦'}}</span></span>
+                                    <span class="right floated"><span
+                                            class="ui green label">{{ job.amount_paid | currency:'₦'}}</span></span>
                                 </div>
                             </div>
 
 
                             <div class="description" style="margin-top:10px">
-                                <p>{{job.job_description}}</p>
+                                <p>{{ job.job_description }}</p>
                             </div>
 
-                            <div class="ui black progress" data-percent="{{job.percentage}}" id="example1">
-                                <div class="bar" style="width: {{job.percentage}}%; transition:0.6s">
+                            <div class="ui black progress" data-percent="{{ job.percentage }}" id="example1">
+                                <div class="bar" style="width: {{ job.percentage }}%; transition:0.6s">
                                     <div class="progress"></div>
                                 </div>
                                 <div class="label">{{ job.percentage }}%<span
                                         ng-if="job.percentage > 0">  Completed</span></div>
                             </div>
 
-                            <div class="meta" ng-show="job.handler === user.username || user.username === 'lydia' || user.is_staff">
+                            <div class="meta"
+                                 ng-show="job.handler === user.username || user.username === 'lydia' || user.is_staff">
                                 <a class="link" href="" style="font-size:0.8rem; font-weight:400; color:grey;"
                                    ng-click="editing=!editing">Edit</a>
                             </div>
-
-                            <form class="ui mini form" novalidate ng-show="editing" ng-class="{loading:loading}"
+							
+							<div style="overflow: hidden;">
+                            <form class="ui mini form jobForm" novalidate ng-show="editing" ng-class="{loading:loading}"
                                   ng-model-options="modelOptions">
                                 <div class="ui horizontal header divider">Client Details</div>
                                 <div class="field">
@@ -166,13 +170,13 @@
 
                                 <button class="right floated ui mini button" ng-click="editing=!editing">Close</button>
                             </form>
-
+							</div>
                             <div class="ui top attached tabular menu">
-                                <a href="" class="item" ng-click="lit=!lit" ng-class="{active:lit}"
+                                <a href="" class="item" ng-click="showRemark=!showRemark" ng-class="{active:lit}"
                                    id="remark">Remarks</a>
                             </div>
-
-                            <div class="ui attached segment" ng-show="lit">
+							<div style="overflow: hidden">
+                            <div class="ui attached segment remark" ng-show="showRemark">
                                 <h5 class="ui grey header" ng-if="!job.remarks.length">
                                     <i class="attention icon"></i>
                                     No Remarks
@@ -185,8 +189,8 @@
 
                                         <div class="content" style="margin-left:5px">
                                             <div>
-                                                {{remark.comment}} - <span am-time-ago="remark.created_at"
-                                                                           style="font-size:0.8rem; font-weight:400; color:grey;"></span>
+                                                {{ remark.comment }} - <span am-time-ago="remark.created_at"
+                                                                             style="font-size:0.8rem; font-weight:400; color:grey;"></span>
                                             </div>
                                         </div>
 
@@ -209,6 +213,7 @@
 
                                 </form>
                             </div>
+                        	</div>
                         </div>
 
                     </div>
@@ -217,7 +222,7 @@
             </div>
         </div>
 
-        <div class="sixteen wide column" style="max-width:550px" ng-show="isSelected(2)">
+        <div class="sixteen wide column on" style="max-width:550px" ng-show="isSelected(2)">
 
             <h4 class="ui top attached header" style="background:teal; color:white">
                 <i class="hourglass full icon"></i>
@@ -236,40 +241,42 @@
                     <div class="sixteen wide column" ng-repeat="job in jobs | filter : !job.is_complete">
                         <div class="item">
                             <div class="content">
-                                <a class="ui teal header">{{job.client_name}}</a><br>
+                                <a class="ui teal header">{{ job.client_name }}</a><br>
                                 <div class="right floated meta"
                                      style="float: right; margin-right: 0; margin-left: .25em;" ng-if="job.balance > 0">
                                 
                                 <span class="right floated">
-                                    <span class="ui label">{{job.amount_due | currency:'₦'}} </span>- <span
-                                        class="ui label">{{job.amount_paid | currency:'₦'}}</span>
+                                    <span class="ui label">{{ job.amount_due | currency:'₦'}} </span>- <span
+                                        class="ui label">{{ job.amount_paid | currency:'₦'}}</span>
                                 </span><br>
 
 
                                     <span class="right floated ui blue label" style="float:right; margin-top:5px">
-                                    = {{job.balance | currency:'₦'}}
+                                    = {{ job.balance | currency:'₦'}}
                                 </span>
                                 </div>
 
                                 <div class="right floated meta"
                                      style="float: right; margin-right: 0; margin-left: .25em;"
                                      ng-if="job.balance === 0">
-                                    <span class="right floated"><span class="ui green label">{{job.amount_paid | currency:'₦'}}</span></span>
+                                    <span class="right floated"><span
+                                            class="ui green label">{{ job.amount_paid | currency:'₦'}}</span></span>
                                 </div>
 
-                                <span class="ui grey label" style="margin-top:5px; margin-bottom:5px">+234{{job.client_no | limitTo : 40 : 1}}</span><br>
+                                <span class="ui grey label"
+                                      style="margin-top:5px; margin-bottom:5px">+234{{ job.client_no | limitTo : 40 : 1}}</span><br>
 
-                                by: <span class="ui label" style="text-transform:capitalize">{{job.handler}}</span>
+                                by: <span class="ui label" style="text-transform:capitalize">{{ job.handler }}</span>
 
                             </div>
 
 
                             <div class="description" style="margin-top:10px">
-                                <p>{{job.job_description}}</p>
+                                <p>{{ job.job_description }}</p>
                             </div>
 
-                            <div class="ui black progress" data-percent="{{job.percentage}}" id="example1">
-                                <div class="bar" style="width: {{job.percentage}}%">
+                            <div class="ui black progress" data-percent="{{ job.percentage }}" id="example1">
+                                <div class="bar" style="width: {{ job.percentage }}%">
                                     <div class="progress"></div>
                                 </div>
                                 <div class="label">{{ job.percentage }}%<span
@@ -278,11 +285,11 @@
 
 
                             <div class="ui top attached tabular menu">
-                                <a href="" class="item" ng-click="lit=!lit" ng-class="{active:lit}"
+                                <a href="" class="item" ng-click="showRemarks=!showRemarks" ng-class="{active:lit}"
                                    id="remark">Remarks</a>
                             </div>
-
-                            <div class="ui attached segment" ng-show="lit">
+							<div style="overflow: hidden;">
+                            <div class="ui attached segment remark" ng-show="showRemarks">
                                 <h5 class="ui grey header" ng-if="!job.remarks.length">
                                     <i class="attention icon"></i>
                                     No Remarks
@@ -295,8 +302,8 @@
 
                                         <div class="content" style="margin-left:5px">
                                             <div>
-                                                {{remark.comment}} - <span am-time-ago="remark.created_at"
-                                                                           style="font-size:0.8rem; font-weight:400; color:grey;"></span>
+                                                {{ remark.comment }} - <span am-time-ago="remark.created_at"
+                                                                             style="font-size:0.8rem; font-weight:400; color:grey;"></span>
                                             </div>
                                         </div>
 
@@ -319,7 +326,8 @@
 
                                 </form>
                             </div>
-                        </div>
+                        	</div>
+                       	 </div>
 
                     </div>
                 </div>

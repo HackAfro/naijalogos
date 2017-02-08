@@ -1,6 +1,3 @@
-/**
- * Created by Afro on 12/19/2016.
- */
 (function () {
     'use strict';
 
@@ -141,17 +138,17 @@
             if (days > 0) {
                 if ($scope.billboard.entryDate) {
                     var date = new Date($scope.billboard.entryDate)
-                console.log($scope.billboard.entryDate)
-                console.log(date)
-                date.setDate(date.getDate() + parseInt(days))
-                var strDate = date.toDateString()
-                var day = strDate.slice(8, 10)
-                var month = monthToInt(strDate.slice(4, 7))
-                var year = strDate.slice(11, 15)
-                var full = year + '-' + month + '-' + day;
-                return full
+                    console.log($scope.billboard.entryDate)
+                    console.log(date)
+                    date.setDate(date.getDate() + parseInt(days))
+                    var strDate = date.toDateString()
+                    var day = strDate.slice(8, 10)
+                    var month = monthToInt(strDate.slice(4, 7))
+                    var year = strDate.slice(11, 15)
+                    var full = year + '-' + month + '-' + day;
+                    return full
                 }
-                
+
             }
             else {
                 var date = new Date()
@@ -211,44 +208,49 @@
         $scope.job = {}
         $scope.loading = false
         $scope.jobList = []
-        
+
         $scope.loading = true
-        
-        setTimeout(() => {            
+
+        setTimeout(() => {
             var url = '/office/jobs/'
 
-            if ('caches' in window) {
+            if ('caches' in window
+        )
+        {
 
-                var networkPending = true
-                caches.match(url).then(function (response) {
-                    if (response) {
-                        response.json().then(function (json) {
-                            if (networkPending) {
-                                var jobs = json
-                                $scope.jobList = []
-                                if (jobs[jobs.length - 1] !== undefined) {
-                                    $scope.jobList.push(jobs[jobs.length - 1])
-                                }
-                                $scope.loading = false
+            var networkPending = true
+            caches.match(url).then(function (response) {
+                if (response) {
+                    response.json().then(function (json) {
+                        if (networkPending) {
+                            var jobs = json
+                            $scope.jobList = []
+                            if (jobs[jobs.length - 1] !== undefined) {
+                                $scope.jobList.push(jobs[jobs.length - 1])
                             }
-                        })
-                    }
-                })
+                            $scope.loading = false
+                        }
+                    })
+                }
+            })
+        }
+
+        $http.get(url).then(function (data) {
+            var jobs = data.data
+            $scope.jobList = []
+            if (jobs[jobs.length - 1] !== undefined) {
+                $scope.jobList.push(jobs[jobs.length - 1])
             }
 
-            $http.get(url).then(function (data) {
-                var jobs = data.data
-                $scope.jobList = []
-                if (jobs[jobs.length - 1] !== undefined) {
-                    $scope.jobList.push(jobs[jobs.length - 1])
-                }
-
-                networkPending = false
-                $scope.loading = false
-            })
+            networkPending = false
+            $scope.loading = false
+        })
 
 
-		}, 2000);
+    },
+        2000
+        )
+        ;
 
 
         $scope.create = function (editing) {
@@ -305,11 +307,11 @@
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
-            
+
             $('html,body').animate({
-				scrollTop: 1005.4166870117188
-				
-			},'slow')
+                scrollTop: 1005.4166870117188
+
+            }, 'slow')
 
         }
         $scope.isEditingImprest = function () {
@@ -317,12 +319,12 @@
             $scope.editingVendor = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
-            
-            
-			$('html,body').animate({
-				scrollTop: 1005.4166870117188
-				
-			},'slow')
+
+
+            $('html,body').animate({
+                scrollTop: 1005.4166870117188
+
+            }, 'slow')
         }
 
         $scope.isEditingBillboard = function () {
@@ -330,11 +332,11 @@
             $scope.editingVendor = false;
             $scope.editingImprest = false;
             $scope.editingJob = false
-            
+
             $('html,body').animate({
-				scrollTop: 1005.4166870117188
-				
-			},'slow')
+                scrollTop: 1005.4166870117188
+
+            }, 'slow')
         }
 
         $scope.isEditingJob = function () {
@@ -342,11 +344,11 @@
             $scope.editingVendor = false;
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
-            
+
             $('html,body').animate({
-				scrollTop: 1005.4166870117188
-				
-			},'slow')
+                scrollTop: 1005.4166870117188
+
+            }, 'slow')
         }
 
         $scope.cancelEditing = function () {
@@ -354,11 +356,11 @@
             $scope.editingImprest = false;
             $scope.editingBillboard = false;
             $scope.editingJob = false
-            
+
             $('html,body').animate({
-				scrollTop: 1005.4166870117188
-				
-			})
+                scrollTop: 1005.4166870117188
+
+            }, 'slow')
 
         }
     }])

@@ -9,50 +9,53 @@
     office.controller('notificationCtrl', ['$scope', '$http', '$localForage', '$location', 'Pusher', function ($scope, $http, $localForage, $location, Pusher) {
         $localForage.getItem('user').then(function (data) {
             $scope.user = data
-            
+
             $scope.loading = true
-            
+
             setTimeout(() => {
 
-                
+
                 var url = '/api/inbox/'
                 $http.get(url).then(function (data) {
 
-                    var latest = data.data
-                    for (var j = 0; j < latest.length; j++) {
-                        latest[j].tags = JSON.parse(latest[j].tags)
-                    }
-                    $scope.latest = latest.reverse()
-                    $scope.loading = false
+                var latest = data.data
+                for (var j = 0; j < latest.length; j++) {
+                    latest[j].tags = JSON.parse(latest[j].tags)
+                }
+                $scope.latest = latest.reverse()
+                $scope.loading = false
 
-                    read() 
-                    function read() {
-                        console.log('reading')
-                        for (var i = 0; i < $scope.latest.length; i++) {
-                            if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff)) {
-                                if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
-                                    $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
-                                }
-                                else {
-                                    if ($scope.latest[i].tags.action === 'created' && $scope.user.username !== 'israel') {
-                                        $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
-                                    }
-                                }
-                            } else {
+                read()
+                function read() {
+                    console.log('reading')
+                    for (var i = 0; i < $scope.latest.length; i++) {
+                        if (($scope.latest[i].tags.action === 'created' || $scope.latest[i].tags.action === 'accepted') && ($scope.user.is_staff)) {
+                            if ($scope.latest[i].tags.action === 'accepted' && $scope.user.username !== 'lydia') {
                                 $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                             }
+                            else {
+                                if ($scope.latest[i].tags.action === 'created' && $scope.user.username !== 'israel') {
+                                    $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
+                                }
+                            }
+                        } else {
+                            $http.post('/api/inbox/' + $scope.latest[i].id + '/read/')
                         }
                     }
+                }
 
 
-                }, function (err) {
-                    console.log(err)
-                    $scope.latest = []
-                    $scope.loading = false
-                })
+            }, function (err) {
+                console.log(err)
+                $scope.latest = []
+                $scope.loading = false
+            })
 
 
-			}, 2000);
+        },
+            2000
+            )
+            ;
             Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
                 $scope.loading = true
                 $http.get('/api/inbox/').then(function (data) {
@@ -85,41 +88,46 @@
             return $scope.tab === checktab
         }
 
-        
+
         setTimeout(() => {
-        	var url = '/office/messages/'
+            var url = '/office/messages/'
 
-                if ('caches' in window) {
-                    caches.match(url).then(function (response) {
-                        if (response) {
+            if ('caches' in window
+        )
+        {
+            caches.match(url).then(function (response) {
+                if (response) {
 
-                            response.json().then(function (json) {
-                                if (pendingNetwork) {
-                                    var messages = json
-                                    for (var i = 0; i < messages.length; i++) {
-                                        messages[i].message.tags = JSON.parse(messages[i].message.tags)
-                                    }
-                                    $scope.messages = messages
-                                }
-
-                            })
-
-
+                    response.json().then(function (json) {
+                        if (pendingNetwork) {
+                            var messages = json
+                            for (var i = 0; i < messages.length; i++) {
+                                messages[i].message.tags = JSON.parse(messages[i].message.tags)
+                            }
+                            $scope.messages = messages
                         }
-                    })
-                }
-                var pendingNetwork = true
-                $http.get('/office/messages/').then(function (data) {
-                    var messages = data.data
-                    for (var i = 0; i < messages.length; i++) {
-                        messages[i].message.tags = JSON.parse(messages[i].message.tags)
-                    }
-                    $scope.messages = messages
-                    pendingNetwork = false
-                })
 
-		}, 2000);
-        
+                    })
+
+
+                }
+            })
+        }
+        var pendingNetwork = true
+        $http.get('/office/messages/').then(function (data) {
+            var messages = data.data
+            for (var i = 0; i < messages.length; i++) {
+                messages[i].message.tags = JSON.parse(messages[i].message.tags)
+            }
+            $scope.messages = messages
+            pendingNetwork = false
+        })
+
+    },
+        2000
+        )
+        ;
+
 
         $scope.view = function (feed) {
             if (feed.url.indexOf('v') === -1) {
@@ -274,47 +282,47 @@
                             $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
                                 $("#acc-imprest").slideUp(500);
                             });
-                            
+
                             var id = feed.id
-                            
+
                             $http.post('/api/inbox/' + id + '/read/')
                             feed.loading = false
                             $scope.latest.splice(index, 1)
 
-                            }, function () {
-                                $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
-                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                    $("#acc-imprest").slideUp(500);
-                            });
-                            feed.loading = false
-                        })
-                }else{
-                    $http.get(feed.url).then(function (data) {
-                    feed.loading = true
-                    imprests = data.data
-
-                    imprests.is_approved = true
-                    $http.put(feed.url, imprests).then(function () {
-                            $("#acc-imprest > p").text("Imprest accepted!! :)")
-                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                $("#acc-imprest").slideUp(500);
-                            });
-                            var id = feed.id
-                            $http.post('/api/inbox/' + id + '/read/')
-                            feed.loading = false
-                            $scope.latest.splice(index, 1)
-
-                        },
-                        function () {
+                        }, function () {
                             $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
                             $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
                                 $("#acc-imprest").slideUp(500);
                             });
                             feed.loading = false
                         })
+                } else {
+                    $http.get(feed.url).then(function (data) {
+                        feed.loading = true
+                        imprests = data.data
+
+                        imprests.is_approved = true
+                        $http.put(feed.url, imprests).then(function () {
+                                $("#acc-imprest > p").text("Imprest accepted!! :)")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                                });
+                                var id = feed.id
+                                $http.post('/api/inbox/' + id + '/read/')
+                                feed.loading = false
+                                $scope.latest.splice(index, 1)
+
+                            },
+                            function () {
+                                $("#acc-imprest > p").text("Error accepting imprest, please try again :(")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                                });
+                                feed.loading = false
+                            })
                     })
                 }
-                
+
             } else {
                 $http.get(feed.url).then(function (data) {
                     feed.loading = true
@@ -359,7 +367,7 @@
                             $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
                                 $("#acc-imprest").slideUp(500);
                             });
-                            
+
                             var id = feed.id
                             $http.post('/api/inbox/' + id + '/read/')
                             feed.loading = false
@@ -371,32 +379,32 @@
                                 $("#acc-imprest").slideUp(500);
                             });
                             feed.loading = false
-                        })  
-                }else{
-                    
-                    $http.get(feed.url).then(function (data) {
-                    feed.loading = true
-
-                    data = data.data
-                    data.is_approved = true
-                    $http.put(feed.url, data).then(function () {
-                            $("#acc-imprest > p").text("Vendor remittance form approved!!")
-                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                $("#acc-imprest").slideUp(500);
-                            });
-                            var id = feed.id
-                            $http.post('/api/inbox/' + id + '/read/')
-                            feed.loading = false
-                            $scope.latest.splice(index, 1)
-
-                        },
-                        function () {
-                            $("#acc-imprest > p").text("Error approving form, please try again :(")
-                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                $("#acc-imprest").slideUp(500);
-                            });
-                            feed.loading = false
                         })
+                } else {
+
+                    $http.get(feed.url).then(function (data) {
+                        feed.loading = true
+
+                        data = data.data
+                        data.is_approved = true
+                        $http.put(feed.url, data).then(function () {
+                                $("#acc-imprest > p").text("Vendor remittance form approved!!")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                                });
+                                var id = feed.id
+                                $http.post('/api/inbox/' + id + '/read/')
+                                feed.loading = false
+                                $scope.latest.splice(index, 1)
+
+                            },
+                            function () {
+                                $("#acc-imprest > p").text("Error approving form, please try again :(")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                                });
+                                feed.loading = false
+                            })
                     })
                 }
             } else {

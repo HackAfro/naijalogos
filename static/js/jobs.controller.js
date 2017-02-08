@@ -4,67 +4,70 @@
     var office = angular.module('naijalogosOffice');
 
     office.controller('jobsController', ['$scope', '$http', '$localForage', '$location', function ($scope, $http, $localForage, $location) {
-    	
-    	$localForage.getItem('user').then(function (data) {
+
+        $localForage.getItem('user').then(function (data) {
             $scope.user = data
         });
-    	$scope.getting = true
-    	
-    	setTimeout(() => {
-    		var url = '/office/jobs/'
-                
-                var complete = 0;
-                var incomplete = 0;
+        $scope.getting = true
 
-                if ('caches' in window) {
-                    caches.match(url).then(function (data) {
-                        if (data) {
-                            data.json().then(function (json) {
-                                if (networkPending) {
-                                    var jobs = json
+        setTimeout(() => {
+            var url = '/office/jobs/'
 
-                                    for (var i = 0; i < jobs.length; i++) {
-                                        if (jobs[i].is_complete === true) {
-                                            complete++
-                                        } else {
-                                            incomplete++
-                                        }
-                                    }
+            var complete = 0;
+        var incomplete = 0;
 
-                                    $scope.complete = complete;
-                                    $scope.incomplete = incomplete;
+        if ('caches' in window) {
+            caches.match(url).then(function (data) {
+                if (data) {
+                    data.json().then(function (json) {
+                        if (networkPending) {
+                            var jobs = json
 
-                                    $scope.jobs = jobs.reverse()
-                                    $scope.getting = false
+                            for (var i = 0; i < jobs.length; i++) {
+                                if (jobs[i].is_complete === true) {
+                                    complete++
+                                } else {
+                                    incomplete++
                                 }
-                            })
+                            }
+
+                            $scope.complete = complete;
+                            $scope.incomplete = incomplete;
+
+                            $scope.jobs = jobs.reverse()
+                            $scope.getting = false
                         }
                     })
                 }
+            })
+        }
 
-                var networkPending = true
-                $http.get(url).then(function (data) {
-                    var jobs = data.data
-                    complete = 0;
-                    incomplete = 0;
+        var networkPending = true
+        $http.get(url).then(function (data) {
+            var jobs = data.data
+            complete = 0;
+            incomplete = 0;
 
-                    for (var i = 0; i < jobs.length; i++) {
-                        if (jobs[i].is_complete === true) {
-                            complete++
-                        } else {
-                            incomplete++
-                        }
-                    }
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].is_complete === true) {
+                    complete++
+                } else {
+                    incomplete++
+                }
+            }
 
-                    $scope.complete = complete;
-                    $scope.incomplete = incomplete;
+            $scope.complete = complete;
+            $scope.incomplete = incomplete;
 
-                    $scope.jobs = jobs.reverse()
-                    networkPending = false
-                    $scope.getting = false
-                })
+            $scope.jobs = jobs.reverse()
+            networkPending = false
+            $scope.getting = false
+        })
 
-		}, 2000);
+    },
+        2000
+        )
+        ;
 
         activate()
         function activate() {
@@ -89,7 +92,7 @@
             $scope.loading = true
 
             job.balance = job.amount_due - job.amount_paid
-            
+
             $http.put('/office/jobs/' + job.id + '/', job).then(function (data) {
                 var newJob = data.data
 

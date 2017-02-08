@@ -1,25 +1,25 @@
 <nav-bar></nav-bar>
-    <!-- Masthead -->
+<!-- Masthead -->
 <div class="ui inverted center aligned masthead segment">
     <menu-button></menu-button>
-        
+
     <h2 class="ui purple center aligned icon header" style="margin-top: 60px">
         <i class="circular payment icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
         V.R.F's
-   	</h2>
+    </h2>
 </div>
 
 <div class="ui container" ng-controller="vendorFormCtrl">
-	
-	<h4 class="ui top attached inverted header" style="color:#A333C8">
-		<i class="file icon"></i>
-		Vendor Forms
-	</h4>
 
-	<div class="ui grey grey attached segment" style="min-height:150px">
-		<div class="ui stackable centered grid">
-			<div class="ui six wide column">
-				<div class="ui purple horizontal divider header">Outstanding Payments</div>
+    <h4 class="ui top attached inverted header" style="color:#A333C8">
+        <i class="file icon"></i>
+        Vendor Forms
+    </h4>
+
+    <div class="ui grey grey attached segment" style="min-height:150px">
+        <div class="ui stackable centered grid">
+            <div class="ui six wide column">
+                <div class="ui purple horizontal divider header">Outstanding Payments</div>
 
                 <h5 class="ui grey centered header" ng-if="!loading && !outstanding.length">
                     <i class="attention icon"></i>
@@ -28,46 +28,47 @@
                 <div class="ui active medium centered inline text loader" ng-show="loading">
                     Loading forms
                 </div>
-				<div class="ui items" ng-hide="loading">
-					<div class="item" ng-repeat="form in outstanding | orderBy: form.delivery_date:true">
+                <div class="ui items" ng-hide="loading">
+                    <div class="item" ng-repeat="form in outstanding | orderBy: form.delivery_date:true">
 
-						<div class="content">
-							<div class="ui blue header" style="text-transform:capitalize">{{form.vendor_name}}</div>
-							<div class="meta">
+                        <div class="content">
+                            <div class="ui blue header" style="text-transform:capitalize">{{ form.vendor_name }}</div>
+                            <div class="meta">
 								<span class="ui mini label">
 									<i class="building icon" style="margin-right:4px"></i>
-									{{form.account_details}}
+									{{ form.account_details }}
 								</span>
 
-								<span class="ui mini label">
+                                <span class="ui mini label">
 									<i class="calendar icon" style="margin-right:4px"></i>
-									{{form.delivery_date | date}}
+									{{ form.delivery_date | date }}
 								</span>
-							</div>
+                            </div>
 
-							<div class="description">
-								{{form.job_description }}
-							</div>
+                            <div class="description">
+                                {{ form.job_description }}
+                            </div>
 
-							<div class="extra" ng-if="form.outstanding_balance > 0">
-								<span class="ui mini label">{{form.amount_due | currency: '₦'}}</span>
-								<span class="ui mini label">{{form.current_payment | currency: '₦'}}</span><br>
-								<span class="ui mini red label">{{form.outstanding_balance | currency: '₦'}}</span>
-							</div>
+                            <div class="extra" ng-if="form.outstanding_balance > 0">
+                                <span class="ui mini label">{{ form.amount_due | currency: '₦'}}</span>
+                                <span class="ui mini label">{{ form.current_payment | currency: '₦'}}</span><br>
+                                <span class="ui mini red label">{{ form.outstanding_balance | currency: '₦'}}</span>
+                            </div>
 
-							<div class="meta" ng-if="form.outstanding_balance < 1">
-								<span class="ui mini green label">{{form.current_payment | currency: '₦'}}</span>
-							</div>
+                            <div class="meta" ng-if="form.outstanding_balance < 1">
+                                <span class="ui mini green label">{{ form.current_payment | currency: '₦'}}</span>
+                            </div>
 
-							<!---Edit Link-->
+                            <!---Edit Link-->
                             <div class="meta">
                                 <a class="link" style="font-size:0.8rem; font-weight:400"
                                    ng-click="editingVen=!editingVen">Edit</a>
                             </div>
-						
-							
+
+
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editingVen" ng-class="{loading:loadingForm}"
+                            <div style="overflow: hidden;">
+                            <form class="ui tiny form jobForm" ng-show="editingVen" ng-class="{loading:loadingForm}"
                                   ng-model-options="modelOptions">
                                 <h5 class="ui dividing header">Vendor Details</h5>
 
@@ -147,27 +148,30 @@
                                 <button class="ui right floated mini button" ng-click="editingVen=!editingVen">close
                                 </button>
                             </form>
-                           <div class="ui clearing divider"></div>
-						</div>
-					</div>
+                            </div>
+                            <div class="ui clearing divider"></div>
+                        </div>
+                    </div>
 
-				</div>
+                </div>
 
-			</div>
+            </div>
 
-			<div class="two wide column">
-				<h5 class="ui purple vertical divider header">
-					Search
-				</h5>
-			</div>
+            <div class="two wide column">
+                <h5 class="ui purple vertical divider header">
+                    Search
+                </h5>
+            </div>
 
-			<div class="ten wide column">
-				<div class="ui category search" style="text-align:center" ng-class="{loading:searching}" ng-show="!loading && vendorForms.length">
-  					<div class="ui icon input">
-    					<input class="prompt" placeholder="Search vendor forms..." type="text" ng-model="search" style="border:1px solid #B582C6">
-    					<i class="ui purple search icon"></i>
-  					</div>
-				</div>
+            <div class="ten wide column">
+                <div class="ui category search" style="text-align:center" ng-class="{loading:searching}"
+                     ng-show="!loading && vendorForms.length">
+                    <div class="ui icon input">
+                        <input class="prompt" placeholder="Search vendor forms..." type="text" ng-model="search"
+                               style="border:1px solid #B582C6">
+                        <i class="ui purple search icon"></i>
+                    </div>
+                </div>
 
                 <h3 class="ui centered grey header" ng-if="!loading && !vendorForms.length">
                     <i class="attention icon"></i>
@@ -177,133 +181,136 @@
                 <div class="ui active medium centered inline text loader" ng-show="loading" style="margin-top:15px">
                     Loading forms
                 </div>
-                
+
                 <h5 class="ui header" ng-if="filtered.length === 0">
-					<i class="red attention icon"></i>
-					Nothing matches your search
-				</h5>
-				
-				<div class="ui feed" ng-hide="loading">
-					<div class="event" ng-repeat="vendor in vendorForms | filter: search | limitTo: limit as filtered">
-						
+                    <i class="red attention icon"></i>
+                    Nothing matches your search
+                </h5>
+
+                <div class="ui feed" ng-hide="loading" style="overflow: hidden;">
+                    <div class="event imprest" ng-repeat="vendor in vendorForms | filter: search | limitTo: limit as filtered" style="margin-bottom: 10px">
+
                         <i class="ui grey tag icon" style="margin-right:5px"></i>
-						
-						<div class="content">
-							<div class="summary">
-								<a class="user" style="text-transform:capitalize">
-									{{vendor.vendor_name}}
-								</a>
-								<div class="date" style="color:black">
-									{{vendor.job_description | limitTo: 10}} <span ng-if="vendor.job_description.length > 10" style="color:grey">...</span>
-								</div>
 
-								- <div class="date">{{vendor.delivery_date | date}}</div>
-
-								<div class="ui horizontal list">
-                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                        ng-click="show=!show" ng-hide="show"> - view</a>
-                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                        ng-click="show=!show" ng-show="show"> - close </a>
+                        <div class="content">
+                            <div class="summary">
+                                <a class="user" style="text-transform:capitalize">
+                                    {{ vendor.vendor_name }}
+                                </a>
+                                <div class="date" style="color:black">
+                                    {{ vendor.job_description | limitTo: 10}} <span
+                                        ng-if="vendor.job_description.length > 10" style="color:grey">...</span>
                                 </div>
-							</div>
 
-							<div class="description" ng-show="show">
-								 <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="money icon"></i>
-                                Payment Details
-                            </h6>
+                                -
+                                <div class="date">{{ vendor.delivery_date | date }}</div>
 
-                            <!--Pay Details-->
-                            <!--Amount Due-->
-                            <span class="ui label" ng-if="vendor.outstanding_balance > 0">
-                                {{vendor.amount_due | currency: '₦'}}
-                                </span>
-                            <span ng-if="vendor.outstanding_balance > 0">-</span>
-                            <!--Amount Paid-->
-                            <span class="ui label" ng-class="{green:vendor.outstanding_balance < 1}">
-                                     {{vendor.current_payment | currency : '₦'}}
-                                 </span>
-                            <span ng-if="vendor.outstanding_balance > 0">=</span>
-                            <!--Outstanding Balance-->
-                            <span class="ui label" ng-if="vendor.outstanding_balance > 0">
-                                {{vendor.outstanding_balance | currency : '₦'}}
-                                </span>
-                            <!--End Pay Details-->                            
-
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="Payment icon"></i>
-                                Vendor Details
-                            </h6>
-
-                            <!--Job Description-->
-                            <div class="description">
-                                <!--Acc No-->
-                                Acc.no: {{vendor.account_details}}<br>
-
-                                <!---Bank Name-->
-                                <span class="ui label">
-                                    <i class="building icon"></i>
-                                    {{vendor.bank_name}}
-                                </span>
-
-                                <!---Divider-->
+                                <div class="ui horizontal list">
+                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                                       ng-click="show=!show" ng-hide="show"> - view</a>
+                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                                       ng-click="show=!show" ng-show="show"> - close </a>
+                                </div>
+                            </div>
+							<div style="overflow: hidden;">
+                            <div class="description data" ng-if="show">
+                                <!--Divider-->
                                 <h6 class="ui horizontal divider header">
-                                    <i class="tag icon"></i>
-                                    Job Description
+                                    <i class="money icon"></i>
+                                    Payment Details
                                 </h6>
 
-                                <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{vendor.job_description}}</span><br>
+                                <!--Pay Details-->
+                                <!--Amount Due-->
+                                <span class="ui label" ng-if="vendor.outstanding_balance > 0">
+                                {{ vendor.amount_due | currency: '₦'}}
+                                </span>
+                                <span ng-if="vendor.outstanding_balance > 0">-</span>
+                                <!--Amount Paid-->
+                                <span class="ui label" ng-class="{green:vendor.outstanding_balance < 1}">
+                                     {{ vendor.current_payment | currency : '₦'}}
+                                 </span>
+                                <span ng-if="vendor.outstanding_balance > 0">=</span>
+                                <!--Outstanding Balance-->
+                                <span class="ui red label" ng-if="vendor.outstanding_balance > 0">
+                                {{ vendor.outstanding_balance | currency : '₦'}}
+                                </span>
+                                <!--End Pay Details-->
 
-                                <!---Quantity-->
-                                <span class="ui label">
+                                <!--Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="Payment icon"></i>
+                                    Vendor Details
+                                </h6>
+
+                                <!--Job Description-->
+                                <div class="description">
+                                    <!--Acc No-->
+                                    Acc.no: {{ vendor.account_details }}<br>
+
+                                    <!---Bank Name-->
+                                    <span class="ui label">
+                                    <i class="building icon"></i>
+                                    {{ vendor.bank_name }}
+                                </span>
+
+                                    <!---Divider-->
+                                    <h6 class="ui horizontal divider header">
+                                        <i class="tag icon"></i>
+                                        Job Description
+                                    </h6>
+
+                                    <!--Vend Des-->
+                                    <span style="text-transform:capitalize">{{ vendor.job_description }}</span><br>
+
+                                    <!---Quantity-->
+                                    <span class="ui label">
                                     <i class="shop icon"></i>
-                                    {{vendor.quantity}} 
+                                    {{ vendor.quantity }}
                                     unit<span ng-if="vendor.quantity > 1">s</span>
                                 </span><br>
 
-                                <!---Delivery-->
-                                <span class="ui label" style="margin-top:2px">
+                                    <!---Delivery-->
+                                    <span class="ui label" style="margin-top:2px">
                                     <i class="calendar icon"></i>
-                                    {{vendor.delivery_date}}
+                                    {{ vendor.delivery_date }}
                                 </span>
-                           
-							</div>
-							</div>
 
-							<div class="meta">
-								<a class="like" ng-if="vendor.outstanding_balance < 1">
-									<i class="ui green checkmark icon"></i>
-									Payment complete
-								</a>
-								<a class="like"ng-if="vendor.outstanding_balance > 0">
-									<i class="ui red attention icon"></i>
-									Outstanding
-								</a>
+                                </div>
+                            </div>
 							</div>
-						</div>
-					</div>
-					
-					<div class="ui divider"></div>
-					<a class="ui link" href="" ng-click="addMore()" ng-hide="search.length || vendorForms.length < limit">
-						<h6 class="ui header"  style="padding-bottom: 20px">
-							<i class="plus icon"></i>
-							Add more
-						</h6>
-					</a>
-					
-					<a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
-						<h6 class="ui header"  style="padding-bottom: 20px">
-							<i class="plus icon"></i>
-							Add more
-						</h6>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>		
+                            <div class="meta">
+                                <a class="like" ng-if="vendor.outstanding_balance < 1">
+                                    <i class="ui green checkmark icon"></i>
+                                    Payment complete
+                                </a>
+                                <a class="like" ng-if="vendor.outstanding_balance > 0">
+                                    <i class="ui red attention icon"></i>
+                                    Outstanding
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui divider"></div>
+                    <a class="ui link" href="" ng-click="addMore()"
+                       ng-hide="search.length || vendorForms.length < limit">
+                        <h6 class="ui header" style="padding-bottom: 20px">
+                            <i class="plus icon"></i>
+                            Add more
+                        </h6>
+                    </a>
+
+                    <a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
+                        <h6 class="ui header" style="padding-bottom: 20px">
+                            <i class="plus icon"></i>
+                            Add more
+                        </h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!--Bottom Notification Bar-->
 <notify-bar></notify-bar>

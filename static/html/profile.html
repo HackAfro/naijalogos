@@ -1,199 +1,208 @@
 <nav-bar></nav-bar>
-    <div class="ui inverted masthead center aligned segment">
-        <menu-button></menu-button>
+<div class="ui inverted masthead center aligned segment">
+    <menu-button></menu-button>
 
-        <div class="ui text container" style="margin-top:60px">
-            <h3>
-                <img ng-src="/static/images/nl.png" class="ui centered circular image" width="60px" height="60px"
-                     style="padding-bottom:0">
-                <span style="text-transform:capitalize;">Hello   {{user.username}}</span>
-            </h3>
+    <div class="ui text container" style="margin-top:60px">
+        <h3>
+            <img ng-src="/static/images/nl.png" class="ui centered circular image" width="60px" height="60px"
+                 style="padding-bottom:0">
+            <span style="text-transform:capitalize;">Hello {{ user.username }}</span>
+        </h3>
+    </div>
+</div>
+<div class="ui container" ng-controller="profileCtrl">
+    <div class="item" ng-hide="isEditing">
+        <div class="tiny ui right floated black button" style="margin-top:7px" ng-click="editing()">
+            <i class="settings icon"></i>
+            Edit profile
+        </div>
+
+        <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()"
+             ng-show="user.is_staff">
+            <i class="payment icon"></i>
+            Top Up
         </div>
     </div>
-    <div class="ui container" ng-controller="profileCtrl">
-        <div class="item" ng-hide="isEditing">
-            <div class="tiny ui right floated black button" style="margin-top:7px" ng-click="editing()">
-                <i class="settings icon"></i>
-                Edit profile
+
+    <div ng-hide="isEditing"class="formsGrid">
+        <h3 class="ui blue header">Your Forms</h3>
+
+        <div class="ui clearing divider"></div>
+
+        <div class="ui top attached tabular menu">
+            <div class="item" ng-class="{active: isSelected(1)}">
+                <a href ng-click="selectTab(1)">Imprests</a>
             </div>
 
-            <div class="tiny ui right floated grey button" style="margin-top:7px" ng-click="account()"
-                 ng-show="user.is_staff">
-                <i class="payment icon"></i>
-                Top Up
+            <div class="item" ng-class="{active: isSelected(2)}">
+                <a href ng-click="selectTab(2)">Vendor Forms</a>
             </div>
         </div>
 
-        <div ng-hide="isEditing">
-            <h3 class="ui blue header">Your Forms</h3>
-
-            <div class="ui clearing divider"></div>
-
-            <div class="ui top attached tabular menu">
-                <div class="item" ng-class="{active: isSelected(1)}">
-                    <a href ng-click="selectTab(1)">Imprests</a>
-                </div>
-
-                <div class="item" ng-class="{active: isSelected(2)}">
-                    <a href ng-click="selectTab(2)">Vendor Forms</a>
-                </div>
-            </div>
-
-            <div class="ui bottom attached segment impSeg" ng-show="isSelected(1)" ng-class="{loading:loading}"
-                 style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="!imprests.length && !loading && imprests">
-                    <div class="column">
-                        <h2 class="ui grey center aligned icon header">
-                            <i class="circular attention icon"></i>
-                            Raise an imprest <a href="#!/home">Here</a>
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
-                    <div class="sixteen wide column imprest"
-                         ng-repeat="imprest in imprests | orderBy: imprest.created_at: true |limitTo: number">
-                        <div class="ui divided items">
-                            <div class="item">
-                                <div class="content">
-                                    <a class="header">
-                                        Imprest
-                                    </a>
-
-                                    <p class="right floated ui black label">{{imprest.created_at | amCalendar}}</p>
-                                    <div class="meta">
-                                        Amount: <span class="ui label">{{ imprest.amount | currency:'₦'}}</span>
-                                    </div>
-                                    <div class="description">
-                                        {{ imprest.description }}
-                                    </div>
-
-                                    <div class="extra">
-                                        <div class="item right floated">
-                                            Status: <span class="ui green" ng-if="imprest.is_approved"
-                                                          style="color:green">Approved</span>
-                                            <span class="ui red" ng-if="!imprest.is_approved"
-                                                  style="color:red">Pending</span>
-                                        </div>
-                                    </div>
-                                    <div class="ui divider"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right floated item" ng-if="imprests.length > number">
-                    <a class="right floated link" href="" ng-click="viewMore()">
-                        View More
-                    </a>
-                </div>
-            </div>
-
-            <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}"
-                 style="min-height:100px">
-                <div class="ui center aligned grid" ng-if="!vendors.length && !loading && vendors">
-                    <div class="column">
-                        <h2 class="ui grey center aligned icon header">
-                            <i class="circular down arrow icon"></i>
-                            Create a form <a href="#!/home">Here</a>
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
-                    <div class="sixteen wide column vendor"
-                         ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | limitTo: amount">
-                        <div class="ui divided items">
-                            <div class="item">
-                                <div class="content">
-                                    <a class="header">{{vendor.vendor_name}}</a>
-                                    <div class="right floated meta">
-                                        <span class="right floated date" style="margin-bottom:2px"><span class="ui grey label">{{vendor.delivery_date | date}}</span></span><br>
-                                        <div class="content" ng-if="vendor.outstanding_balance > 0">
-                                           <span class="right floated category"><span class="ui label">{{vendor.amount_due | currency:'₦'}}</span> - <span
-                                                class="ui label">{{vendor.current_payment | currency:'₦'}}</span></span><br>
-                                            <span class="right floated category"> = <span class="ui red label" style="margin-top:5px">{{vendor.outstanding_balance | currency:'₦'}}</span></span> 
-                                        </div>
-
-                                        <div class="content" ng-if="vendor.outstanding_balance < 1">
-                                             <span class="right floated category"><span class="ui green label" style="margin-top:2px">{{vendor.current_payment | currency:'₦'}}</span></span>
-                                        </div>
-                                        
-                                    </div>
-
-                                    <div class="meta">
-                                        <span class="category">Acc.no:  {{vendor.account_details}}</span><br>
-                                        <span class="category">{{vendor.bank_name}}</span>
-                                    </div>
-
-
-                                    <div class="description">
-                                        <p>{{vendor.job_description}}</p>
-                                    </div>
-
-                                    <div class="extra">
-                                        <div class="ui label">{{vendor.quantity}} Units</div>
-                                    </div>
-
-                                    <div class="extra">
-                                        <p class="black ui label">{{vendor.created_at | amCalendar}}</p>
-                                        <div class="item right floated">
-                                            Status: <span class="ui green" ng-if="vendor.is_approved"
-                                                          style="color:green">Approved</span>
-                                            <span class="ui red" ng-if="!vendor.is_approved"
-                                                  style="color:red">Pending</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui divider"></div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right floated meta" ng-if="vendors.length > amount">
-                    <a class="right floated link" ng-click="addMore()">
-                        View More
-                    </a>
-                </div>
-            </div>
-
-        </div>
-        <div class="item">
-            <div class="ui middle centered grid" ng-show="isEditing">
+        <div class="ui bottom attached segment impSeg" ng-show="isSelected(1)" ng-class="{loading:loading}"
+             style="min-height:100px">
+            <div class="ui center aligned grid" ng-if="!imprests.length && !loading && imprests">
                 <div class="column">
-                    <form class="ui form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()"
-                          ng-class="{loading:loading}" novalidate>
-                        <h3 class="ui grey header">Change Password</h3>
-                        <div class="ui negative message" ng-if="passForm.confirm.$touched && user.password !== new.confPass">
-                            <i class="ui red close icon"></i>
-                            Your Passwords don't match
-                        </div>
-
-                        <div class="ui positive message" ng-if="passForm.confirm.$touched && user.password === new.confPass">
-                            <i class="ui green checkmark icon"></i>
-                            Your passwords match
-                        </div>
-
-                        <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
-                            <label>New password</label>
-                            <input type="password" placeholder="Password" ng-model="user.password" required>
-                        </div>
-
-                        <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
-                            <label>Confirm Password</label>
-                            <input type="password" placeholder="Confirm Password" ng-model="new.confPass" name="confirm" required>
-                        </div>
-
-                        <button class="ui right floated button" type="submit" ng-class="{green:passForm.$valid && user.password === new.confPass}" ng-disabled="!passForm.$valid && user.password !== new.confPass">Submit
-                        </button>
-
-                        <button class="ui right floated button" ng-click="cancelEditing()" type="button">Cancel</button>
-                    </form>
+                    <h2 class="ui grey center aligned icon header">
+                        <i class="circular attention icon"></i>
+                        Raise an imprest <a href="#!/home">Here</a>
+                    </h2>
                 </div>
+            </div>
+
+            <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
+                <div class="sixteen wide column imprest"
+                     ng-repeat="imprest in imprests | orderBy: imprest.created_at: true |limitTo: number">
+                    <div class="ui divided items">
+                        <div class="item">
+                            <div class="content">
+                                <a class="header">
+                                    Imprest
+                                </a>
+
+                                <p class="right floated ui black label">{{ imprest.created_at | amCalendar }}</p>
+                                <div class="meta">
+                                    Amount: <span class="ui label">{{ imprest.amount | currency:'₦'}}</span>
+                                </div>
+                                <div class="description">
+                                    {{ imprest.description }}
+                                </div>
+
+                                <div class="extra">
+                                    <div class="item right floated">
+                                        Status: <span class="ui green" ng-if="imprest.is_approved"
+                                                      style="color:green">Approved</span>
+                                        <span class="ui red" ng-if="!imprest.is_approved"
+                                              style="color:red">Pending</span>
+                                    </div>
+                                </div>
+                                <div class="ui divider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right floated item" ng-if="imprests.length > number">
+                <a class="right floated link" href="" ng-click="viewMore()">
+                    View More
+                </a>
+            </div>
+        </div>
+
+        <div class="ui bottom attached segment" ng-show="isSelected(2)" ng-class="{loading:loading}"
+             style="min-height:100px">
+            <div class="ui center aligned grid" ng-if="!vendors.length && !loading && vendors">
+                <div class="column">
+                    <h2 class="ui grey center aligned icon header">
+                        <i class="circular down arrow icon"></i>
+                        Create a form <a href="#!/home">Here</a>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="ui grid" ng-hide="loading" style="overflow: hidden;">
+                <div class="sixteen wide column vendor"
+                     ng-repeat="vendor in vendors | orderBy: vendor.created_at: true | limitTo: amount">
+                    <div class="ui divided items">
+                        <div class="item">
+                            <div class="content">
+                                <a class="header">{{ vendor.vendor_name }}</a>
+                                <div class="right floated meta">
+                                    <span class="right floated date" style="margin-bottom:2px"><span
+                                            class="ui grey label">{{ vendor.delivery_date | date }}</span></span><br>
+                                    <div class="content" ng-if="vendor.outstanding_balance > 0">
+                                           <span class="right floated category"><span
+                                                   class="ui label">{{ vendor.amount_due | currency:'₦'}}</span> - <span
+                                                   class="ui label">{{ vendor.current_payment | currency:'₦'}}</span></span><br>
+                                        <span class="right floated category"> = <span class="ui red label"
+                                                                                      style="margin-top:5px">{{ vendor.outstanding_balance | currency:'₦'}}</span></span>
+                                    </div>
+
+                                    <div class="content" ng-if="vendor.outstanding_balance < 1">
+                                        <span class="right floated category"><span class="ui green label"
+                                                                                   style="margin-top:2px">{{ vendor.current_payment | currency:'₦'}}</span></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="meta">
+                                    <span class="category">Acc.no: {{ vendor.account_details }}</span><br>
+                                    <span class="category">{{ vendor.bank_name }}</span>
+                                </div>
+
+
+                                <div class="description">
+                                    <p>{{ vendor.job_description }}</p>
+                                </div>
+
+                                <div class="extra">
+                                    <div class="ui label">{{ vendor.quantity }} Units</div>
+                                </div>
+
+                                <div class="extra">
+                                    <p class="black ui label">{{ vendor.created_at | amCalendar }}</p>
+                                    <div class="item right floated">
+                                        Status: <span class="ui green" ng-if="vendor.is_approved"
+                                                      style="color:green">Approved</span>
+                                        <span class="ui red" ng-if="!vendor.is_approved"
+                                              style="color:red">Pending</span>
+                                    </div>
+                                </div>
+
+                                <div class="ui divider"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right floated meta" ng-if="vendors.length > amount">
+                <a class="right floated link" ng-click="addMore()">
+                    View More
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="item">
+        <div class="ui middle centered grid passwordChange" ng-show="isEditing">
+            <div class="column">
+                <form class="ui form" name="passForm" id="passForm" ng-submit="passForm.$valid && update()"
+                      ng-class="{loading:loading}" novalidate>
+                    <h3 class="ui grey header">Change Password</h3>
+                    <div class="ui negative message"
+                         ng-if="passForm.confirm.$touched && user.password !== new.confPass">
+                        <i class="ui red close icon"></i>
+                        Your Passwords don't match
+                    </div>
+
+                    <div class="ui positive message"
+                         ng-if="passForm.confirm.$touched && user.password === new.confPass">
+                        <i class="ui green checkmark icon"></i>
+                        Your passwords match
+                    </div>
+
+                    <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
+                        <label>New password</label>
+                        <input type="password" placeholder="Password" ng-model="user.password" required>
+                    </div>
+
+                    <div class="field" ng-class="{error:passForm.confirm.$touched && user.password !== new.confPass}">
+                        <label>Confirm Password</label>
+                        <input type="password" placeholder="Confirm Password" ng-model="new.confPass" name="confirm"
+                               required>
+                    </div>
+
+                    <button class="ui right floated button" type="submit"
+                            ng-class="{green:passForm.$valid && user.password === new.confPass}"
+                            ng-disabled="!passForm.$valid && user.password !== new.confPass">Submit
+                    </button>
+
+                    <button class="ui right floated button" ng-click="cancelEditing()" type="button">Cancel</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <notify-bar></notify-bar>
+<notify-bar></notify-bar>

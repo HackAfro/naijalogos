@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files-v1'
+var fileCache = 'naijalogos-files-v2'
 var dataCache = 'naijalogos-data'
 
 var files = [
@@ -51,7 +51,8 @@ var files = [
                 '/static/js/sidebar.controller.js',
                 '/static/js/angular-animate.js',
                 '/static/images/calendar.png',
-                '/static/images/avatar.png'
+                '/static/images/avatar.png',
+                '/static/css/animate.css'
 			]
 
 self.addEventListener('install',function (e) {

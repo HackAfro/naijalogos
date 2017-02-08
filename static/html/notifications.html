@@ -1,7 +1,7 @@
 <nav-bar></nav-bar>
 <div class="ui masthead center aligned segment" style="background:transparent">
     <div class="ui black fixed extra large circular icon button" id="rotate"
-        style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent" ng-controller="profileCtrl">
+         style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent">
         <i class="ui black content icon"></i>
     </div>
 </div>
@@ -15,7 +15,7 @@
         <a class="item" ng-click="selectTab(1)"
            ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
             Unread
-            <span class="ui label" ng-class="{red:latest.length > 0 && isSelected(1)}">{{latest.length}}</span>
+            <span class="ui label" ng-class="{red:latest.length > 0 && isSelected(1)}">{{ latest.length }}</span>
         </a>
         <a class="item" ng-click="selectTab(2)" ng-class="{active:isSelected(2), blue:isSelected(2)}">
             All
@@ -26,11 +26,11 @@
     </div>
 
     <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
-         style="min-height:100px">
+         style="min-height:100px; overflow: hidden;">
 
         <!---No new messages display-->
 
-        <h2 class="ui center aligned icon header" ng-if="latest.length < 1">
+        <h2 class="ui center aligned icon header unread" ng-if="latest.length < 1">
             <i class="circular thumbs up icon"></i>
             No unread notifications
         </h2>
@@ -52,14 +52,14 @@
 
                         <!--Message-->
                         <a class="user" style="font-weight:600" ng-if="feed.tags.actor.toLowerCase() !== user.username">
-                            {{feed.tags.actor}}
+                            {{ feed.tags.actor }}
                         </a>
                         <a class="user" style="text-transform:capitalize; font-weight:600"
                            ng-if="feed.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
-                        {{feed.message | limitTo : 100}} <a class="user">
-                        {{feed.tags.target}}
+                        {{ feed.message | limitTo : 100}} <a class="user">
+                        {{ feed.tags.target }}
                     </a>
 
                         <!--Imprest View Link-->
@@ -104,7 +104,7 @@
                     </div>
 
                     <!--Extra Content-->
-                    <div style="overflow: hidden;">
+					<div style="overflow: hidden;">
                     <div class="extra content data" ng-if="show">
 
                         <!--Loader-->
@@ -114,9 +114,9 @@
                         <!--Imprest Description-->
                         <div class="description data" ng-if="details && !conLoading && details.id === feed.id ">
 
-                            <span>{{details.data.description}}</span><br>
+                            <span>{{ details.data.description }}</span><br>
                             <div class="meta">
-                                <span class="ui label">{{details.data.amount | currency:'₦'}}</span>
+                                <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
                             </div>
                             <br>
 
@@ -128,7 +128,8 @@
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions"
+                            <div style="overflow: hidden;">
+                              <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions"
                                   ng-class="{loading:loadingForm}">
                                 <div class="field">
                                     <label>Description</label>
@@ -140,7 +141,7 @@
                                 </div>
                                 <div class="ui right floated mini button" ng-click="editing=false">Save</div>
                             </form>
-
+							</div>
                         </div>
 
                         <div class="description" ng-if="vendor && !conLoading && vendor.id === feed.id">
@@ -153,17 +154,17 @@
                             <!--Pay Details-->
                             <!--Amount Due-->
                             <span class="ui label">
-                                {{vendor.data.amount_due | currency: '₦'}}
+                                {{ vendor.data.amount_due | currency: '₦'}}
                                 </span>
                             -
                             <!--Amount Paid-->
                             <span class="ui label">
-                                     {{vendor.data.current_payment | currency : '₦'}}
+                                     {{ vendor.data.current_payment | currency : '₦'}}
                                  </span>
                             =
                             <!--Outstanding Balance-->
                             <span class="ui label">
-                                {{vendor.data.outstanding_balance | currency : '₦'}}
+                                {{ vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
                             <!--End Pay Details-->
 
@@ -176,12 +177,12 @@
                             <!--Job Description-->
                             <div class="description">
                                 <!--Acc No-->
-                                Acc.no: {{vendor.data.account_details}}<br>
+                                Acc.no: {{ vendor.data.account_details }}<br>
 
                                 <!---Bank Name-->
                                 <span class="ui label">
                                     <i class="building icon"></i>
-                                    {{vendor.data.bank_name}}
+                                    {{ vendor.data.bank_name }}
                                 </span>
 
                                 <!---Divider-->
@@ -191,19 +192,19 @@
                                 </h6>
 
                                 <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{vendor.data.job_description}}</span><br>
+                                <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
 
                                 <!---Quantity-->
                                 <span class="ui label">
                                     <i class="shop icon"></i>
-                                    {{vendor.data.quantity}} 
+                                    {{ vendor.data.quantity }}
                                     unit<span ng-if="vendor.data.quantity > 1">s</span>
                                 </span><br>
 
                                 <!---Delivery-->
                                 <span class="ui label" style="margin-top:2px">
                                     <i class="calendar icon"></i>
-                                    {{vendor.data.delivery_date}}
+                                    {{ vendor.data.delivery_date }}
                                 </span>
                             </div>
 
@@ -214,7 +215,8 @@
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editingVen" ng-class="{loading:loadingForm}"
+                            <div style="overflow:hidden;">
+                            <form class="ui tiny form jobForm" ng-show="editingVen" ng-class="{loading:loadingForm}"
                                   ng-model-options="modelOptions">
                                 <h5 class="ui dividing header">Vendor Details</h5>
 
@@ -295,6 +297,7 @@
                                 <button class="ui right floated mini button" ng-click="editingVen=!editingVen">Save
                                 </button>
                             </form>
+                        	</div>
                         </div>
 
                     </div>
@@ -314,7 +317,7 @@
                         <button class="ui red basic mini circular icon button">
                             <i class="close icon"></i>
                         </button>
- 
+
                     </div>
 
                     <div class="extra content"
@@ -335,8 +338,10 @@
 
                     <!---Action Icons-->
                     <div class="extra content" ng-if="feed.tags.action === 'accepted'">
-                        <i class="ui green checkmark icon" ng-if="user.username !== 'lydia' || feed.url.indexOf('m') === -1"></i>
-                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia' && feed.url.indexOf('m') !== -1"
+                        <i class="ui green checkmark icon"
+                           ng-if="user.username !== 'lydia' || feed.url.indexOf('m') === -1"></i>
+                        <button class="ui olive basic mini circular icon button"
+                                ng-show="user.username === 'lydia' && feed.url.indexOf('m') !== -1"
                                 ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i
                                 class="Angle Double Right icon"></i></button>
                     </div>
@@ -398,17 +403,17 @@
                     <div class="summary" style="font-weight:400">
                         <a class="user" style="text-transform:capitalize; font-weight:600"
                            ng-if="message.message.tags.actor.toLowerCase() !== user.username">
-                            {{message.message.tags.actor}}
+                            {{ message.message.tags.actor }}
                         </a>
                         <a class="user" style="text-transform:capitalize; font-weight:600"
                            ng-if="message.message.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
                         <!--Message-->
-                        {{message.message.message}}
+                        {{ message.message.message }}
 
                         <a class="user">
-                            {{message.message.tags.target}}
+                            {{ message.message.tags.target }}
                         </a>
 
                         <!--Imprest View Link-->
@@ -454,7 +459,8 @@
                     </div>
 
                     <!--Extra Content-->
-                    <div class="extra content" ng-show="show">
+                    <div style="overflow: hidden;">
+                    <div class="extra content data" ng-if="show">
 
                         <!--Loader-->
                         <div class="ui mini centered inline loader"
@@ -463,9 +469,9 @@
 
                         <!--Description-->
                         <div class="description" ng-if="!loading && details.id === message.message.id">
-                            {{details.data.description}}<br>
+                            {{ details.data.description }}<br>
                             <div class="meta">
-                                <span class="ui label">{{details.data.amount | currency:'₦'}}</span>
+                                <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
                             </div>
                             <br>
 
@@ -476,7 +482,9 @@
                             </div>
 
                             <!--Edit Form-->
-                            <form class="ui tiny form" ng-show="editing" ng-model-options="modelOptions"
+                            
+                            <div style="overflow: hidden;">
+                            <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions"
                                   ng-class="{loading:loadingForm}">
                                 <div class="field">
                                     <label>Description</label>
@@ -488,7 +496,8 @@
                                 </div>
                                 <div class="ui right floated mini button" ng-click="editing=false">Save</div>
                             </form>
-
+							</div>
+							
                             <div class="extra content"
                                  ng-if="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
 
@@ -517,17 +526,17 @@
                             <!--Pay Details-->
                             <!--Amount Due-->
                             <span class="ui label">
-                                {{vendor.data.amount_due | currency: '₦'}}
+                                {{ vendor.data.amount_due | currency: '₦'}}
                                 </span>
                             -
                             <!--Amount Paid-->
                             <span class="ui label">
-                                     {{vendor.data.current_payment | currency : '₦'}}
+                                     {{ vendor.data.current_payment | currency : '₦'}}
                                  </span>
                             =
                             <!--Outstanding Balance-->
                             <span class="ui label">
-                                {{vendor.data.outstanding_balance | currency : '₦'}}
+                                {{ vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
                             <!--End Pay Details-->
 
@@ -540,12 +549,12 @@
                             <!--Job Description-->
                             <div class="description">
                                 <!--Acc No-->
-                                Acc.no: {{vendor.data.account_details}}<br>
+                                Acc.no: {{ vendor.data.account_details }}<br>
 
                                 <!---Bank Name-->
                                 <span class="ui label">
                                     <i class="building icon"></i>
-                                    {{vendor.data.bank_name}}
+                                    {{ vendor.data.bank_name }}
                                 </span>
 
                                 <!---Divider-->
@@ -555,19 +564,19 @@
                                 </h6>
 
                                 <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{vendor.data.job_description}}</span><br>
+                                <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
 
                                 <!---Quantity-->
                                 <span class="ui label">
                                     <i class="shop icon"></i>
-                                    {{vendor.data.quantity}} 
+                                    {{ vendor.data.quantity }}
                                     unit<span ng-if="vendor.data.quantity > 1">s</span>
                                 </span><br>
 
                                 <!---Delivery-->
                                 <span class="ui label" style="margin-top:2px">
                                     <i class="send icon"></i>
-                                    {{vendor.data.delivery_date}}
+                                    {{ vendor.data.delivery_date }}
                                 </span>
                             </div>
 
@@ -590,7 +599,7 @@
                         </div>
 
                     </div>
-
+					</div>
                     <!---Action Icons-->
                     <div class="extra content" ng-if="message.message.tags.action === 'accepted'">
                         <i class="ui green checkmark icon"></i>

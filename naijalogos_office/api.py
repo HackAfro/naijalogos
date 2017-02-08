@@ -213,7 +213,7 @@ class JobViewSet(ModelViewSet):
         users = ['israel','afro','lydia','andre','paul','aba']
         
         try:
-            pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} started a job for {}'.format(data['handler'], request.data['client_name'].capitalize())})
+            pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} started a job for {}'.format(data['handler'].capitalize(), request.data['client_name'].capitalize())})
         except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
             pass
         
@@ -229,7 +229,7 @@ class JobViewSet(ModelViewSet):
             data['is_complete'] = True
             
             try:
-                 pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} completed a job for {}'.format(data['handler'], request.data['client_name'].capitalize())})
+                 pusher.trigger([u'{}_inbox'.format(user) for user in users],u'update',{'message':'{} completed a job for {}'.format(data['handler'].capitalize(), request.data['client_name'].capitalize())})
             except (socket.gaierror,requests.exceptions.ConnectionError,requests.exceptions.ReadTimeout,requests.exceptions.ConnectTimeout) as e:
                 pass
 

@@ -1,7 +1,7 @@
 <nav-bar></nav-bar>
 <div class="ui inverted center aligned masthead segment">
     <menu-button></menu-button>
-    
+
     <h2 class="ui brown center aligned  icon header" style="margin-top: 60px">
         <i class="circular payment icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
         Accounts
@@ -23,8 +23,8 @@
                         <i class="arrow down icon"></i>
                     </div>
                     <div class="ui active centered small inline loader" ng-show="balLoading" id="balLoader"></div>
-                    <div class="content" ng-hide="balLoading">
-                        {{balance.balance | currency:'₦'}}
+                    <div class="content balance" ng-hide="balLoading">
+                        {{ balance.balance | currency:'₦'}}
                     </div>
 
                 </h1>
@@ -43,7 +43,7 @@
 
                         <div class="content" style="margin-left:5px">
                             <div class="summary">
-                                {{credit.description}}
+                                {{ credit.description }}
 
                                 <div class="date">
                                     <span am-time-ago="credit.deposit_date"
@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="extra content">
-                                <span style="font-weight:400;" class="ui label">{{credit.amount | currency:'₦'}}</span>
+                                <span style="font-weight:400;" class="ui label">{{ credit.amount | currency:'₦'}}</span>
                             </div>
                         </div>
                     </div>
@@ -65,8 +65,8 @@
             </div>
 
 
-            <div class="eight wide column">
-                <form class="ui mini form" ng-submit="create()" ng-class="{loading:loading}">
+            <div class="eight wide column" style="overflow: hidden;">
+                <form class="ui mini form animated slideInDown" ng-submit="create()" ng-class="{loading:loading}">
                     <h3 class="ui brown header">Top Up</h3>
                     <div class="field">
                         <label>Amount</label>
@@ -74,7 +74,8 @@
                     </div>
                     <div class="field">
                         <label>Description</label>
-                        <textarea placeholder="Cash Source..." ng-model="detail.description" style="height:5%"></textarea>
+                        <textarea placeholder="Cash Source..." ng-model="detail.description"
+                                  style="height:5%"></textarea>
                     </div>
                     <button class="right floated ui tiny black button" type="submit">Top Up</button>
                 </form>

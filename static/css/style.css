@@ -2,6 +2,7 @@ body {
     background-color: #DADADA;
     background: #DADADA;
 }
+
 body.pushable>.pusher {
     background: #DADADA;
 }
@@ -58,128 +59,134 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+.view.ng-enter{
+	position: absolute;
+	top:0;
+	right:0;
+	width: 100%
+}
+
+.view.ng-leave{
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+}
+
 .remark{
 	transition: 0.4s;
 }
 
-.remark.ng-enter{
-	opacity: 0;
-	transform: translateY(10px);
+.credit.ng-enter,.imprest.ng-enter,.vendor.ng-enter,.inbox.ng-enter,.remark.ng-enter{
+	animation: 0.5s slideInUp ease;
 }
 
-.remark.ng-enter.ng-enter-active{
-	opactity:1;
-	transform: translateY(0);
+.imprest.ng-leave{
+	animation: 0.5s lightSpeedOut ease;
 }
 
-
-.credit,.imprest,.vendor,.inbox,.data{
-	transition: 0.5s linear;
-}
-
-.ng-enter-prepare{
-	opacity: 0;
-}
-
-.credit.ng-enter,.imprest.ng-enter,.vendor.ng-enter,.inbox.ng-enter{
-	opacity: 0;
-	transform: translateY(50px);
-}
-
-.credit.ng-enter.ng-enter-active,.imprest.ng-enter.ng-enter-active,.vendor.ng-enter.ng-enter-active,.inbox.ng-enter.ng-enter-active{
-	transform: translateY(0);
-	opacity: 1;
-}
-
-.credit.ng-enter-stagger,.imprest.ng-enter-stagger,.vendor.ng-enter-stagger{
+.credit.ng-enter-stagger,.vendor.ng-enter-stagger{
 	transition-delay: 0.3s;
-	transition-duration:0;
+	transition-duration: 0;
 }
 
 .data.ng-enter{
-	opacity: 0;
-	transform: translateY(-20px);
-}
-
-.data.ng-enter.ng-enter-active{
-	opacity: 1;
-	transform: translateY(0);
+	animation: 0.6s slideInDown ease;
 }
 
 .data.ng-leave{
-	transform: translateY(0);
-	opacity: 1;
-}
-
-.data.ng-leave.ng-leave-active{
-	transform: translateY(-20px);
-	opacity: 0;
-}
-
-
-.link.ng-hide{
-	transition: 0.5s;
-	opacity: 0;
+	animation: 0.6s slideOutUp ease;
 }
 
 .inbox.ng-leave{
-	opacity: 1;
+	animation: 0.5s slideOutLeft ease;
 }
 
-.inbox.ng-leave.ng-leave-active{
-	transform: translateX(-100px);
-	opacity: 0;
-	
+.unread.ng-enter{
+	animation: 0.5s slideInDown ease;
 }
 
-
-html{ overflow-y:hidden; }
-
-.view.ng-leave 	{
-	width:100%; 
-	position: absolute;
-	 }
-.view.ng-enter 	{
-	width:100%;
-	position:  absolute;
-	 }
-
-.view.ng-leave        {
-    -webkit-animation:slideOutLeft 0.5s both linear;
-	-moz-animation:slideOutLeft 0.5s both linear;
-	animation:slideOutLeft 0.5s both linear;   
-}
 .view.ng-enter 		{  
-    -webkit-animation:slideInRight 0.5s both ease-in;
-	-moz-animation:slideInRight 0.5s both ease-in;
-	animation:slideInRight 0.5s both ease-in;    
+    animation: 0.6s zoomIn ease;    
 }
 
-@keyframes slideOutLeft {
-	from {opacity:1; }
-	to 		{ transform: translateX(-100%); opacity:0;}
+.imGrid.ng-hide-remove {
+	animation: 0.5s zoomIn ease;
 }
 
-@-moz-keyframes slideOutLeft {	
-	from {opacity:1;}
-	to 		{ -moz-transform: translateX(-100%); opacity:0;}
+.imGrid.ng-hide-add{
+	animation: 0.5s zoomOut ease;
 }
 
-@-webkit-keyframes slideOutLeft {
-	from {opacity:1;}
-	to 		{ -webkit-transform: translateX(-100%); opacity:0;}
+.link.ng-hide-remove{
+	animation: 0.5s slideInRight ease;
 }
 
-@keyframes slideInRight {
-	from 	{ transform:translateX(100%); }
-	to 		{ transform: translateX(0); }
-}
-@-moz-keyframes slideInRight {
-	from 	{ -moz-transform:translateX(100%); }
-	to 		{ -moz-transform: translateX(0); }
-}
-@-webkit-keyframes slideInRight {
-	from 	{ -webkit-transform:translateX(100%); }
-	to 		{ -webkit-transform: translateX(0); }
+.link.ng-hide-add{
+	animation: 0.5s slideOutRight ease;
 }
 
+.on.ng-hide-remove{
+	animation: 0.7s zoomIn ease;
+}
+
+.on.ng-hide-add{
+	animation: 0.5s fadeOut ease;
+}
+
+.remark.ng-hide-remove{
+	animation: 0.5s fadeInDown ease;
+}
+
+.remark.ng-hide-add{
+	animation: 0.5s fadeOutUp ease;
+}
+
+.jobForm.ng-hide-remove{
+	animation: 0.5s slideInDown ease;
+}
+
+.jobForm.ng-hide-add{
+	animation: 0.5s slideOutUp ease;
+}
+
+.jobs.ng-hide-remove{
+	animation: 0.5s zoomIn ease;
+}
+
+.passwordChange.ng-hide-add,.formsGrid.ng-hide-add{
+	animation: 0.5s lightSpeedOut ease;
+}
+
+.passwordChange.ng-hide-remove,.formsGrid.ng-hide-remove{
+	animation: 0.5s fadeInUpBig ease;
+}
+
+.filter.ng-hide-remove,.filterUser.ng-hide-remove{
+	animation: 0.5s fadeInUp ease;
+}
+
+.filter.ng-hide-add,.filterUser.ng-hide-add{
+	animation: 0.5s slideOutLeft ease;
+}
+
+.filter.ng-enter,.filterUser.ng-enter{
+	animation: 0.5s slideInUp ease;
+}
+
+.filter.ng-leave,.filterUser.ng-leave{
+	animation: 0.5s slideOutLeft ease;
+}
+
+.filter.ng-leave-stagger{
+	transition-delay: 0.3s;
+	transition-duration: 0;
+}
+
+.board.ng-enter{
+	animation: 0.5s slideInLeft ease;
+}
+
+.balance.ng-hide-remove{
+	animation: 0.5s zoomIn ease;
+}

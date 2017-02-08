@@ -1,22 +1,18 @@
-/**
- * Created by Afro on 12/17/2016.
- */
-
 (function () {
     'use strict';
 
-    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch','ngAnimate']);
+    var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch', 'ngAnimate']);
 
     office.config(['PusherServiceProvider', function (PusherServiceProvider) {
         PusherServiceProvider.setToken("1e6cf382786b2218bb7b");
     }
     ]);
-    
-    office.controller('officeCtrl',['$scope','$localForage','Pusher', function ($scope,$localForage,Pusher) {
-        
+
+    office.controller('officeCtrl', ['$scope', '$localForage', 'Pusher', function ($scope, $localForage, Pusher) {
+
         $localForage.getItem('user').then(function (data) {
-        	$scope.user = data
-        	
+            $scope.user = data
+
             Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
 
                 $("#acc-imprest > p").text(item.message);
@@ -26,7 +22,7 @@
             });
         });
     }]);
-    
+
 
     office.filter('time', function () {
         return function (items, month) {
@@ -43,69 +39,74 @@
         }
     })
 
-    office.controller('allImprestCtrl', ['Pusher','$http', '$scope', '$location', '$localForage', 'timeFilter', function (Pusher,$http, $scope, $location, $localForage, timeFilter) {
+    office.controller('allImprestCtrl', ['Pusher', '$http', '$scope', '$location', '$localForage', 'timeFilter', function (Pusher, $http, $scope, $location, $localForage, timeFilter) {
 
-    	$scope.loading = true
-    	
+        $scope.loading = true
+
         setTimeout(() => {
             var url = '/office/imprests/'
-                
-                
-                if ('caches' in window) {
-                    caches.match(url).then(function (response) {
-                        if (response) {
-                            response.json().then(function (json) {
-                                if (networkLoading) {
-                                    var imprests = json
-                                    $scope.imprests = imprests.reverse()
-                                    $scope.loading = false
-                                }
-                            })
+
+
+            if ('caches' in window
+        )
+        {
+            caches.match(url).then(function (response) {
+                if (response) {
+                    response.json().then(function (json) {
+                        if (networkLoading) {
+                            var imprests = json
+                            $scope.imprests = imprests.reverse()
+                            $scope.loading = false
                         }
                     })
                 }
-                var networkLoading = true
-                $http.get(url).then(function (response) {
-                    $scope.imprests = response.data.reverse()
-                    $scope.loading = false
-                    networkLoading = false
-                })
+            })
+        }
+        var networkLoading = true
+        $http.get(url).then(function (response) {
+            $scope.imprests = response.data.reverse()
+            $scope.loading = false
+            networkLoading = false
+        })
 
-                $scope.total = function (month) {
-                    var filtered = timeFilter($scope.imprests, month)
-                    var total = 0;
-                    for (var i = 0; i < filtered.length; i++) {
-                        total += filtered[i].amount
-                    }
-                    return total
-                }
+        $scope.total = function (month) {
+            var filtered = timeFilter($scope.imprests, month)
+            var total = 0;
+            for (var i = 0; i < filtered.length; i++) {
+                total += filtered[i].amount
+            }
+            return total
+        }
 
-                $scope.totalUser = function (user) {
-                    var total = 0
-                    for (var i = 0; i < $scope.imprests.length; i++) {
-                        if ($scope.imprests[i].user.username === user) {
-                            total += $scope.imprests[i].amount
-                        }
-                    }
-                    return total
+        $scope.totalUser = function (user) {
+            var total = 0
+            for (var i = 0; i < $scope.imprests.length; i++) {
+                if ($scope.imprests[i].user.username === user) {
+                    total += $scope.imprests[i].amount
                 }
-		}, 1000);
-    	
+            }
+            return total
+        }
+    },
+        1000
+        )
+        ;
+
         $('#filter').dropdown()
         $('#search').dropdown()
-        
+
         $scope.limit = 10
-        
-        $scope.addMore = function() {
-			$scope.limit += 10
-		}
-        
-        
-        $scope.change = function(user) {
-			$scope.search = user
-		}
-        
-        
+
+        $scope.addMore = function () {
+            $scope.limit += 10
+        }
+
+
+        $scope.change = function (user) {
+            $scope.search = user
+        }
+
+
         activate()
         function activate() {
             $localForage.getItem('user').then(function (data) {

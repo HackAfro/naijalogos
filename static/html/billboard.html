@@ -1,119 +1,128 @@
 <nav-bar></nav-bar>
-    <!-- Masthead -->
-    <div class="ui inverted center aligned masthead segment">
-        <menu-button></menu-button>
-        
-        <h2 class="ui orange center aligned icon header" style="margin-top: 60px">
-            <i class="circular tv icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
-            Billboards
-        </h2>
-    </div>
-    <!-- End Masthead -->
+<!-- Masthead -->
+<div class="ui inverted center aligned masthead segment">
+    <menu-button></menu-button>
 
-    <div class="ui container" ng-controller="boardCtrl">
-        <!-- Header -->
-        <h4 class="ui top attached inverted header" style="color:#F2711C;">
-            <i class="info icon"></i>
-            Billboard Info
-        </h4>
+    <h2 class="ui orange center aligned icon header" style="margin-top: 60px">
+        <i class="circular tv icon" style="box-shadow:0 0 0 0.2em grey inset"></i>
+        Billboards
+    </h2>
+</div>
+<!-- End Masthead -->
+
+<div class="ui container" ng-controller="boardCtrl">
+    <!-- Header -->
+    <h4 class="ui top attached inverted header" style="color:#F2711C;">
+        <i class="info icon"></i>
+        Billboard Info
+    </h4>
 
 
-        <div class="ui attached segment">
-            <div class="ui stackable grid">
-                <div class="eight wide column" style="min-height:100px">
+    <div class="ui attached segment">
+        <div class="ui stackable grid">
+            <div class="eight wide column" style="min-height:100px">
                 <div class="ui active centered loader" ng-show="loading"></div>
-                    <div class="ui vertical list" ng-hide="loading">
-                        <div class="ui item" style="margin-bottom:10px">
-                            <a href="" class="ui link change" ng-click="switch(0)"><h3 class="change" ng-class="{blur:num === 0 }">
-                                {{billboards[0].location}} </h3></a>
-                            <span ng-if="billboards[0].is_leased" class="ui red mini label" style="margin-top:5px">Leased</span>
-                            <span ng-if="!billboards[0].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
-        
-                        </div>
-
-                        <div class="ui item" style="margin-bottom:10px">
-                            <a href="" class="ui link" ng-click="switch(1)"><h3 class="change" ng-class="{blur:num === 1}">
-                                {{billboards[1].location}} </h3></a>
-                            <span ng-if="billboards[1].is_leased" class="ui red mini label" style="margin-top:5px">Leased</span>
-                            <span ng-if="!billboards[1].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
-                        </div>
-
-                        <div class="ui item">
-                            <a class="ui link change" ng-click="switch(2)"><h3 class="change" ng-class="{blur:num === 2}">
-                                {{billboards[2].location}} </h3></a>
-                            <span ng-if="billboards[2].is_leased" class="ui red mini label" style="margin-top:5px">Leased</span>
-                            <span ng-if="!billboards[2].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
-                        </div>                        
+                <div class="ui vertical list" ng-hide="loading">
+                    <div class="ui item" style="margin-bottom:10px">
+                        <a href="" class="ui link change" ng-click="switch(0)">
+                        	<h3 class="change" ng-class="{blur:num === 0 }">
+                            	{{ billboards[0].location }}
+                            </h3></a>
+                        <span ng-if="billboards[0].is_leased" class="ui red mini label"
+                              style="margin-top:5px">Leased</span>
+                        <span ng-if="!billboards[0].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
 
                     </div>
-                </div>
 
-                <div class="one wide column">
-                    <div class="ui vertical divider"></div>
-                </div>
-
-                <div class="ten wide column" style="min-height:100px">
-                    <div class="ui horizontal orange header divider">
-                        <i class="history icon"></i>
-                        Billboard Timeline
+                    <div class="ui item" style="margin-bottom:10px">
+                        <a href="" class="ui link" ng-click="switch(1)"><h3 class="change" ng-class="{blur:num === 1}">
+                            {{ billboards[1].location }} </h3></a>
+                        <span ng-if="billboards[1].is_leased" class="ui red mini label"
+                              style="margin-top:5px">Leased</span>
+                        <span ng-if="!billboards[1].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
                     </div>
 
-                    <div class="ui active centered loader" style="margin-top:15px; margin-bottom:15px" ng-show="loading"></div>
-                
-                    <div class="ui feed" ng-hide="loading">
-
-                         <div class="ui grey header" ng-show="!billboards[num].lease_info.length">
-                            <i class="attention icon"></i>
-                            No leases on the billboard.
-                        </div>
-                           
-                        <div class="event" ng-repeat="lease in billboards[num].lease_info | orderBy : lease.start_date : true">
-                            <i class="ui orange up arrow icon" ng-hide="lease.active || lease.pending"></i>
-                            <i class="ui green right arrow icon" ng-show="lease.active"></i>
-                            <i class="ui red right arrow icon" ng-show="lease.pending"></i>
-                            <div class="content" style="margin-left:5px">
-                                <div class="summary">
-                                    <a href="" class="user">{{lease.client_name}}</a> 
-
-                                    <div class="date">
-                                        {{lease.start_date | date}} - {{lease.expiry_date | date}}
-                                    </div>
-
-                                    <div class="ui horizontal list">
-                                        <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                           ng-click="show=!show" ng-hide="show"> - view</a>
-                                        <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                                           ng-click="show=!show" ng-show="show"> - close </a>
-                                    </div>
-                                </div>
-
-                                <div class="extra content" ng-show="show">
-                                    <h5 class="ui horizontal divider header">Payment Details</h5>
-
-                                    <div class="content" ng-if="lease.balance > 0">
-                                        <span class="ui label">{{lease.amount_due | currency: '₦'}}</span> - <span
-                                            class="ui label">{{lease.amount_paid | currency: '₦'}}</span><br>
-                                        <span class="ui red label" style="margin-top:5px; margin-bottom:5px">{{lease.balance | currency: '₦'}}</span>
-                                    </div>
-
-                                    <div class="content" ng-if="lease.balance < 1">
-										<span class="ui green label" style="margin-bottom:5px">
-											{{lease.amount_paid | currency: '₦'}}
-										</span>
-                                    </div>
-
-                                    <span class="ui icon label">
-										<i class="user icon" style="margin-right:3px"></i>
-										{{lease.agent}}
-									</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="ui item">
+                        <a class="ui link change" ng-click="switch(2)"><h3 class="change" ng-class="{blur:num === 2}">
+                            {{ billboards[2].location }} </h3></a>
+                        <span ng-if="billboards[2].is_leased" class="ui red mini label"
+                              style="margin-top:5px">Leased</span>
+                        <span ng-if="!billboards[2].is_leased" class="ui green mini label" style="margin-top:5px">Available</span>
                     </div>
 
                 </div>
             </div>
+
+            <div class="one wide column">
+                <div class="ui vertical divider"></div>
+            </div>
+
+            <div class="ten wide column" style="min-height:100px; overflow: hidden;">
+                <div class="ui horizontal orange header divider">
+                    <i class="history icon"></i>
+                    Billboard Timeline
+                </div>
+
+                <div class="ui active centered loader" style="margin-top:15px; margin-bottom:15px"
+                     ng-show="loading"></div>
+
+                <div class="ui feed" ng-hide="loading">
+
+                    <div class="ui grey header" ng-show="!billboards[num].lease_info.length">
+                        <i class="attention icon"></i>
+                        No leases on the billboard.
+                    </div>
+
+                    <div class="event board"
+                         ng-repeat="lease in billboards[num].lease_info | orderBy : lease.start_date : true">
+                        <i class="ui orange up arrow icon" ng-hide="lease.active || lease.pending"></i>
+                        <i class="ui green right arrow icon" ng-show="lease.active"></i>
+                        <i class="ui red right arrow icon" ng-show="lease.pending"></i>
+                        <div class="content" style="margin-left:5px">
+                            <div class="summary">
+                                <a href="" class="user">{{ lease.client_name }}</a>
+
+                                <div class="date">
+                                    {{ lease.start_date | date }} - {{ lease.expiry_date | date }}
+                                </div>
+
+                                <div class="ui horizontal list">
+                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                                       ng-click="show=!show" ng-hide="show"> - view</a>
+                                    <a class="link" href="" style="font-size:0.8rem; font-weight:400"
+                                       ng-click="show=!show" ng-show="show"> - close </a>
+                                </div>
+                            </div>
+							<div style="overflow: hidden;">
+                            <div class="extra content data" ng-if="show">
+                                <h5 class="ui horizontal divider header">Payment Details</h5>
+
+                                <div class="content" ng-if="lease.balance > 0">
+                                    <span class="ui label">{{ lease.amount_due | currency: '₦'}}</span> - <span
+                                        class="ui label">{{ lease.amount_paid | currency: '₦'}}</span><br>
+                                    <span class="ui red label"
+                                          style="margin-top:5px; margin-bottom:5px">{{ lease.balance | currency: '₦'}}</span>
+                                </div>
+
+                                <div class="content" ng-if="lease.balance < 1">
+										<span class="ui green label" style="margin-bottom:5px">
+											{{ lease.amount_paid | currency: '₦'}}
+										</span>
+                                </div>
+
+                                <span class="ui icon label">
+										<i class="user icon" style="margin-right:3px"></i>
+										{{ lease.agent }}
+									</span>
+                            </div>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+</div>
 <notify-bar></notify-bar>
 
