@@ -19,6 +19,7 @@
                 $http.get(url).then(function (data) {
 
                 var latest = data.data
+                
                 for (var j = 0; j < latest.length; j++) {
                     latest[j].tags = JSON.parse(latest[j].tags)
                 }
@@ -86,6 +87,26 @@
 
         $scope.isSelected = function (checktab) {
             return $scope.tab === checktab
+        }
+        
+        $scope.logout = function () {
+
+            $localForage.removeItem('user');
+            $http.post('/auth_api/logout/');
+
+            $location.url('/login')
+        };                      
+
+        $scope.notification = function () {
+            $location.url('/notifications')
+        }
+
+        $scope.home = function () {
+            $location.url('/')
+        }
+        
+        $scope.profile = function(){
+            $location.url('/profile')
         }
 
 
@@ -441,49 +462,96 @@
             feed.loading = true
 
             if (details) {
-                var newDetails = details.data
+            	if (details.id === feed.id) {
+            		var newDetails = details.data
 
-                $http.get(url).then(function (data) {
-                        var balance = data.data[0]
-                        balance.balance = balance.balance - newDetails.amount
+                    $http.get(url).then(function (data) {
+                            var balance = data.data[0]
+                            balance.balance = balance.balance - newDetails.amount
 
-                        if (balance.balance < 0) {
-                            $("#acc-imprest > p").text("Balance is too low for this operation. Please top up.")
-                            $("#acc-imprest").fadeTo(2000, 500).slideUp(2000, function () {
-                                $("#acc-imprest").slideUp(2000);
+                            if (balance.balance < 0) {
+                                $("#acc-imprest > p").text("Balance is too low for this operation. Please top up.")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(2000, function () {
+                                    $("#acc-imprest").slideUp(2000);
+                                });
+                                feed.loading = false
+                                return;
+                            }
+                            else {
+                                $http.put(url + '1/', balance).then(function () {
+                                        $("#acc-imprest > p").text("Imprest issued!!")
+                                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                            $("#acc-imprest").slideUp(500);
+                                        });
+                                        var id = feed.id
+                                        $http.post('/api/inbox/' + id + '/read/')
+                                        $scope.latest.splice(index, 1)
+                                        feed.loading = false
+                                    },
+                                    function () {
+                                        $("#acc-imprest > p").text("Error, check network and try again!!")
+                                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                            $("#acc-imprest").slideUp(500);
+                                        });
+                                        feed.loading = false
+                                    })
+                            }
+
+
+                        },
+                        function () {
+                            $("#acc-imprest > p").text("Error, check network and try again!!")
+                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#acc-imprest").slideUp(500);
                             });
-                            feed.loading = false
-                            return;
-                        }
-                        else {
-                            $http.put(url + '1/', balance).then(function () {
-                                    $("#acc-imprest > p").text("Imprest issued!!")
-                                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                        $("#acc-imprest").slideUp(500);
-                                    });
-                                    var id = feed.id
-                                    $http.post('/api/inbox/' + id + '/read/')
-                                    $scope.latest.splice(index, 1)
-                                    feed.loading = false
-                                },
-                                function () {
-                                    $("#acc-imprest > p").text("Error, check network and try again!!")
-                                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                                        $("#acc-imprest").slideUp(500);
+                        })
+                }else{
+                    $http.get(feed.url).then(function (data) {
+                        var newDetails = data.data
+                        $http.get(url).then(function (data) {
+                                var balance = data.data[0]
+                                balance.balance = balance.balance - newDetails.amount
+
+                                if (balance.balance < 0) {
+                                    $("#acc-imprest > p").text("Balance is too low for this operation. Please top up.")
+                                    $("#acc-imprest").fadeTo(2000, 500).slideUp(2000, function () {
+                                        $("#acc-imprest").slideUp(2000);
                                     });
                                     feed.loading = false
-                                })
-                        }
+                                    return;
+                                }
+                                else {
+                                    $http.put(url + '1/', balance).then(function () {
+                                            $("#acc-imprest > p").text("Imprest issued!!")
+                                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                                $("#acc-imprest").slideUp(500);
+                                            });
+                                            var id = feed.id
+                                            $http.post('/api/inbox/' + id + '/read/')
+                                            $scope.latest.splice(index, 1)
+                                            feed.loading = false
+                                        },
+                                        function () {
+                                            $("#acc-imprest > p").text("Error, check network and try again!!")
+                                            $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                                $("#acc-imprest").slideUp(500);
+                                            });
+                                            feed.loading = false
+                                        })
+                                }
 
 
-                    },
-                    function () {
-                        $("#acc-imprest > p").text("Error, check network and try again!!")
-                        $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                            $("#acc-imprest").slideUp(500);
-                        });
+                            },
+                            function () {
+                                $("#acc-imprest > p").text("Error, check network and try again!!")
+                                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                                    $("#acc-imprest").slideUp(500);
+                                });
+                            })
                     })
-            }
+                }
+	
+				}
             else {
                 $http.get(feed.url).then(function (data) {
                     var newDetails = data.data

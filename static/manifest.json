@@ -3,9 +3,10 @@
 	"short_name": "Office",
 	"description": "Nigeria's #1 Online Logo Design Shop",
 	"display": "standalone",
-	"start_url": "/#!",
+	"start_url": "/#!/",
 	"theme_color": "#712BE2",
 	"background_color":"black",
+	"gcm_sender_id": "146506633562",
 	"orientation": "portrait",
 	"icons":[
 		{

@@ -10,7 +10,7 @@
             $http.post('/auth_api/login/', $scope.user)
                 .then(function (data) {
                         $localForage.setItem('user', data.data)
-
+                        $scope.user = {}
                         $location.url('/')
                     },
                     function () {
