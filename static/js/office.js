@@ -4,7 +4,7 @@
     var office = angular.module('naijalogosOffice', ['ngRoute', 'LocalForageModule', 'angularMoment', 'doowb.angular-pusher', 'ngTouch', 'ngAnimate']);
 
     office.config(['PusherServiceProvider', function (PusherServiceProvider) {
-        PusherServiceProvider.setToken("1e6cf382786b2218bb7b");
+        PusherServiceProvider.setToken("6cfd92c53d2b858e9196");
     }
     ]);
 
@@ -16,8 +16,8 @@
             Pusher.subscribe($scope.user.username + '_inbox', 'update', function (item) {
 
                 $("#acc-imprest > p").text(item.message);
-                $("#acc-imprest").fadeTo(2000, 2000).slideUp(1000, function () {
-                    $("#acc-imprest").slideUp(1000);
+                $("#acc-imprest").fadeTo(10000, 2000).slideUp(500, function () {
+                    $("#acc-imprest").slideUp(500);
                 });
             });
         });

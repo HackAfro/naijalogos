@@ -16,13 +16,16 @@
                 .then(function () {
                     $scope.loading = false
                     $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
-                        $("#acc-imprest").slideUp(500);
+                    
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
+                    	 $("#acc-imprest").slideUp(500);
                     });
+                    
+                    
                 }, function () {
                     $scope.loading = false
                     $("#acc-imprest > p").text("Error submitting form, please try again!!")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                         $("#acc-imprest").slideUp(500);
                     });
                 })
@@ -69,13 +72,13 @@
                 .then(function () {
                     $scope.loading = false
                     $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                         $("#acc-imprest").slideUp(500);
                     });
                 }, function () {
                     $scope.loading = false
                     $("#acc-imprest > p").text("Error submitting form, please try again!!")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                         $("#acc-imprest").slideUp(500);
                     });
                 })
@@ -119,13 +122,13 @@
             $http.post('/office/leases/', form).then(function () {
                 $scope.loading = false
                 $("#acc-imprest > p").text("Billboarb entry success!")
-                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                     $("#acc-imprest").slideUp(500);
                 });
             }, function () {
                 $scope.loading = false
                 $("#acc-imprest > p").text("Error submitting form, please try again!!")
-                $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                     $("#acc-imprest").slideUp(500);
                 });
             })
@@ -275,7 +278,7 @@
                     editing = false
                     recentJob()
                     $("#acc-imprest > p").text("Form submitted!")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                         $("#acc-imprest").slideUp(500);
                     });
                 },
@@ -283,7 +286,7 @@
                     console.log(err)
                     $scope.loading = false
                     $("#acc-imprest > p").text("Error Submitting form, check network and try again")
-                    $("#acc-imprest").fadeTo(2000, 500).slideUp(500, function () {
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
                         $("#acc-imprest").slideUp(500);
                     });
                 })

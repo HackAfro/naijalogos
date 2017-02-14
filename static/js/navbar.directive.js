@@ -33,11 +33,11 @@
 
                     $http.get(url).then(function (response) {
                         $scope.notifications = response.data.length
-                    })  
+                    }) 
                 }
                 
                 notify()
-
+                
                 $scope.notification = function () {
                     $location.url('/notifications')
                 }

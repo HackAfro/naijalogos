@@ -156,11 +156,13 @@
                     </div>
                 </div>
             </div>
-            <div class="right floated meta" ng-if="vendors.length > amount">
-                <a class="right floated link" ng-click="addMore()">
-                    View More
-                </a>
-            </div>
+            
+            <a class="ui link" href="" ng-click="addMore()" ng-if="vendors.length > amount">
+                   <h6 class="ui header" style="padding-bottom: 20px">
+                      <i class="plus icon"></i>
+                      Add more
+                 </h6>
+			</a>
         </div>
 
     </div>

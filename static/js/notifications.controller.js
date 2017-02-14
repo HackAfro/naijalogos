@@ -89,27 +89,6 @@
             return $scope.tab === checktab
         }
         
-        $scope.logout = function () {
-
-            $localForage.removeItem('user');
-            $http.post('/auth_api/logout/');
-
-            $location.url('/login')
-        };                      
-
-        $scope.notification = function () {
-            $location.url('/notifications')
-        }
-
-        $scope.home = function () {
-            $location.url('/')
-        }
-        
-        $scope.profile = function(){
-            $location.url('/profile')
-        }
-
-
         setTimeout(() => {
             var url = '/office/messages/'
 

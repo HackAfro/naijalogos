@@ -20,6 +20,8 @@ from django.contrib.auth.models import User
 from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark, Billboard
 from .serializers import VendorRemittanceSerializer, ImprestSerializer, BoardSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer
 
+from webpush import send_notification_to_user
+
 pusher = Pusher(app_id=settings.PUSHER_APP_ID,
                         key=settings.PUSHER_KEY,
                         secret=settings.PUSHER_SECRET)
@@ -36,7 +38,11 @@ class ImprestViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
+        data = request.data
         israel = User.objects.get(username='israel')
+        payload = {"head":"{} raised an Imprest".format(request.user.username.capitalize()),"body": "{} {} N{}".format(data['description'].capitalize(),'\n',data['amount']),"tag":"created"}
+       
+        send_notification_to_user(user=israel, payload=json.dumps(payload), ttl=100000)
         
         try:
             if request.user != israel:
@@ -51,7 +57,7 @@ class ImprestViewSet(ModelViewSet):
         old_imprest = imprest
         serializer = self.serializer_class(imprest,data=request.data)
         serializer.is_valid(raise_exception=True)
-        users = [imprest.user,User.objects.get(username='lydia')]
+        users = [imprest.user,User.objects.get(username='lydia'),User.objects.get(username='aba')]
         lydia = users[1]
         data = request.data
         
@@ -60,6 +66,9 @@ class ImprestViewSet(ModelViewSet):
             
             tags = {"action":"accepted","actor": request.user.username.capitalize(), "target": imprest.description.capitalize()}
             if users[1] == imprest.user:
+
+                payload1 = {"head":"{} accepted your imprest".format(request.user.username.capitalize()),"body":"{} {} N{}".format(imprest.description.capitalize(),'\n',imprest.amount),"tag":"accepted"}
+                send_notification_to_user(user=imprest.user, payload=json.dumps(payload1), ttl=100000)
 
                 try:
                     pusher.trigger(u'lydia_inbox',u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
@@ -70,7 +79,15 @@ class ImprestViewSet(ModelViewSet):
                 add_message_for(users=[lydia],level=3, message_text=" accepted your imprest",date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))
                 add_message_for(users=[User.objects.get(username="aba")],level=3, message_text="accepted {}'s imprest".format(imprest.user.username.capitalize()),date=datetime.now(), extra_tags=json.dumps(tags), url='/office/imprests/{}/'.format(imprest.id))    
             else:
+                
+                payload1 = {"head":"{} accepted your imprest".format(request.user.username.capitalize()),"body":"{} {} N{}".format(imprest.description.capitalize(),'\n',imprest.amount),"tag":"accepted"}
+                send_notification_to_user(user=users[0], payload=json.dumps(payload1), ttl=100000)
 
+                payload = {"head":"{} accepted {}'s imprest".format(request.user.username.capitalize(),imprest.user.username.capitalize()),"body":"{} {} N{}".format(imprest.description.capitalize(),'\n',imprest.amount),"tag":"accepted"}
+                send_notification_to_user(user=users[1], payload=json.dumps(payload), ttl=100000)
+                send_notification_to_user(user=users[2], payload=json.dumps(payload), ttl=100000)
+
+            
                 try:
                     pusher.trigger([u'lydia_inbox',u'aba_inbox'],u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
                     pusher.trigger(u'{}_inbox'.format(imprest.user.username),u'update',{'message':'{} accepted your imprest'.format(request.user.username.capitalize())})
@@ -112,6 +129,14 @@ class VendorViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
+        israel = User.objects.get(username='israel')
+        aba = User.objects.get(username='aba')
+
+
+        payload = {"head":"{} created a vendor remittance form for {}".format(request.user.username.capitalize(),request.data['vendor_name']),"body":"{}".format(request.data['job_description']),"tag":"created"}
+        send_notification_to_user(user=israel, payload=json.dumps(payload), ttl=100000)
+        send_notification_to_user(user=aba, payload=json.dumps(payload), ttl=100000)
+
 
         try:
             pusher.trigger([u'israel_inbox',u'aba_inbox'],u'update',{'message':'{} created a new vendor remittance form for - {}'.format(request.user.username.capitalize(), request.data['vendor_name'].capitalize())})
@@ -127,10 +152,14 @@ class VendorViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         users = [User.objects.get(username='lydia'),User.objects.get(username='aba')]
         self.perform_update(serializer)
+
         
         if request.data['is_approved'] != vendor.is_approved:
             
             if vendor.user == users[0]:
+
+                payload = {"head":"{} accepted a vendor remittance form for {}".format(request.user.username.capitalize(),request.data['vendor_name']),"body":"{}".format(request.data['job_description']),"tag":"created"}
+                send_notification_to_user(user=users[1], payload=json.dumps(payload), ttl=100000)
 
                 try:
                     pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved a vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
@@ -144,6 +173,9 @@ class VendorViewSet(ModelViewSet):
                 add_message_for(users=[users[0]],level=3, message_text="approved your vendor remittance form for",extra_tags=json.dumps(tags), date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
         
             else:
+
+                payload = {"head":"{} accepted a vendor remittance form for {}".format(request.user.username.capitalize(),request.data['vendor_name']),"body":"{}".format(request.data['job_description']),"tag":"created"}
+                send_notification_to_user(user=users[1], payload=json.dumps(payload), ttl=100000)
 
                 try:
                     pusher.trigger(u'aba_inbox',u'update',{'message':'{} approved vendor remittance form for - {}'.format(request.user.username.capitalize(),vendor.vendor_name.capitalize())})
