@@ -37,16 +37,16 @@ function initialise() {
 		.then(function(sub) {
 			isSubscribed = !(sub === null)
 			
-			postSubscribeObj('subscribe',sub)
-			
 			if (isSubscribed) {
 				console.log('User is subscribed')
+				postSubscribeObj('subscribe',sub)
 			}else{
 				console.log('User is Not subscribed')
+				$('#show').addClass('notify')
 			}
 		})
 		
-	$(document).ready(updateBtn)	
+	updateBtn()	
 }
 
 function updateBtn() {
@@ -61,10 +61,10 @@ function updateBtn() {
 	}
 	  
 	if (isSubscribed) {
-		subBtn.style.display = 'none';
+		console.log("Is subscribed")
 			
 	}else{
-		$('#webpush').show()
+		console.log('Not subscribed')
 	}
 	
 	subBtn.disabled = false
@@ -80,6 +80,12 @@ function subscribeUser() {
 		postSubscribeObj('subscribe',subscription)
 		
 		isSubscribed = true
+		$('#slider > label').text('Push Enabled')
+		setTimeout(() => {
+			$('#show').removeClass('notify')
+			$('#show').addClass("push")
+		}, 2000);
+		
 		
 		updateBtn()
 	})
@@ -136,7 +142,6 @@ function postSubscribeObj(statusType, subscription) {
 	        // Show unsubscribe button instead
 	    	
 	        subBtn.disabled = false;
-	        isPushEnabled = true;
 	      }
 	      
 	      else{

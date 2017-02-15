@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load webpush_notifications %}
 <html lang="en" ng-app="naijalogosOffice">
 <head>
     <meta charset="UTF-8">
@@ -51,6 +52,13 @@
 </div>
 <div class="pusher" ng-controller="swipeCtrl" ng-swipe-right="showSideBar()" ng-swipe-left="hideSideBar()">
     <ng-view class="view"></ng-view>
+    
+    <div id="show">
+        <div class="ui inverted slider checkbox" id="slider">
+            <input name="public" type="checkbox" id="webpush">
+            <label>Enable Push Notifications</label>
+        </div>
+    </div>
 </div>
 
 <notify-bar></notify-bar>

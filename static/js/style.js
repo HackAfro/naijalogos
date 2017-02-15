@@ -40,6 +40,8 @@ function main() {
             $('#menu').addClass('white')
         }
     });
+    
+   
 
 }
 $(document).ready(main);

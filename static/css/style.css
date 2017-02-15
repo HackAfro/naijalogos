@@ -190,3 +190,56 @@ input[type="number"] {
 .balance.ng-hide-remove{
 	animation: 0.5s zoomIn ease;
 }
+
+#show{
+    background: rgba(0,0,0,.70);
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid rgba(0,0,0,.87);
+    border-radius: 5px;
+    box-shadow: 3px 3px 7px 4px rgba(0,0,0,.26);
+    color: snow;
+    font-weight: 500;
+    position: fixed;
+    right: 10px;  
+    bottom: -60px;
+    transition: 0.5s 
+}
+
+#show:hover{
+	background: rgba(0,0,0,.80);
+	transform: translateY(10px);
+    box-shadow: 5px 5px 9px 4px rgba(0,0,0,.26);
+}
+
+#slider > label{
+	color: white
+}
+
+#slider > label:hover{
+	color: whitesmoke;
+}
+
+.notify{
+    animation: slideBounce 1s 10s ease forwards;
+}
+
+.push{
+	transform: translateY(-65px);
+	animation: slideDown 1s ease forwards;
+}
+
+@keyframes slideBounce{
+    0%{opacity: 0}
+    70%{transform: translateY(-70px)}
+    90%{transform: translateY(-65px)}
+    95%{transform: translateY(-68px)}
+    100%{transform: translateY(-65px); opacity: 1}
+}
+
+@keyframes slideDown{
+    0%{transform: translateY(-80px)}
+    100%{transform: translateY(-10px);}
+}
