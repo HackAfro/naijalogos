@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'je2t6jiko9baer-zus27391p$c5i*ll9y5syty78^tmu5vg)(3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.naijalogosoffice.com']
 
@@ -45,8 +45,16 @@ INSTALLED_APPS = [
     'stored_messages',
     'rest_framework',
     'naijalogos_office',
-    'auth_api'
+    'auth_api',
+    'webpush'
 ]
+
+WEBPUSH_SETTINGS = {
+    "GCM_ID": "146506633562",
+    "GCM_KEY":"AAAAIhx50Vo:APA91bHOgdAJENXD29aL_1N3JksdCib02JhaVtEmiaKNOK1e3X5tl5NzXZPOVY0brKC84F97oY4-5j4rXp6x-QD1hmAuR-Z5VWYH4n9ubKKJIgmZ3ovptuW2mu3pCPyt9r-r9P0HN126"
+}
+
+
 MESSAGE_STORAGE = 'stored_messages.storage.PersistentStorage'
 
 MIDDLEWARE = [
