@@ -22,33 +22,9 @@
             return $scope.page === page
         }
 
-        $scope.imprests = function (page) {
+        $scope.view = function (page,url) {
             $scope.page = page
-            $location.url('/imprests')
-            $('.ui.left.sidebar').sidebar('hide')
-        }
-
-        $scope.vendors = function (page) {
-            $scope.page = page
-            $location.url('/vendorforms')
-            $('.ui.left.sidebar').sidebar('hide')
-        }
-
-        $scope.billboards = function (page) {
-            $scope.page = page
-            $location.url('/billboards')
-            $('.ui.left.sidebar').sidebar('hide')
-        }
-
-        $scope.accounts = function (page) {
-            $scope.page = page
-            $location.url('/account')
-            $('.ui.left.sidebar').sidebar('hide')
-        }
-
-        $scope.jobs = function (page) {
-            $scope.page = page
-            $location.url('/jobs')
+            $location.url(url)
             $('.ui.left.sidebar').sidebar('hide')
         }
 

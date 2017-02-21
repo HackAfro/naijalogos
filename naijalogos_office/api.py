@@ -1,8 +1,9 @@
 import requests 
 import socket
-from datetime import datetime
 import json
+
 from pusher import Pusher
+from datetime import datetime
 
 from rest_framework import status
 from rest_framework import permissions
@@ -17,8 +18,8 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
-from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark, Billboard
-from .serializers import VendorRemittanceSerializer, ImprestSerializer, BoardSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer
+from .models import Imprest, VendorRemittance, BillboardTracker, JobTracker, Account, Credit, Remark, Billboard, Vendor
+from .serializers import VendorRemittanceSerializer, ImprestSerializer, BoardSerializer, BillboardSerializer, RemarkSerializer, ArchiveSerializer, JobSerializer, AccountSerializer,  CreditSerializer, VendorSerializer
 
 from webpush import send_notification_to_user
 
@@ -118,7 +119,7 @@ class ImprestViewSet(ModelViewSet):
         instance = serializer.save(user=self.request.user)
 
 
-class VendorViewSet(ModelViewSet):
+class VendorFormViewSet(ModelViewSet):
     queryset = VendorRemittance.objects.all()
     serializer_class = VendorRemittanceSerializer
     permission_classes = permissions.IsAuthenticated,
@@ -328,4 +329,10 @@ class CreditViewSet(ModelViewSet):
 class RemarkViewSet(ModelViewSet):
     queryset = Remark.objects.all()
     serializer_class = RemarkSerializer
+    permission_classes = permissions.IsAuthenticated,
+
+
+class VendorViewSet(viewsets.ModelViewSet):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
     permission_classes = permissions.IsAuthenticated,

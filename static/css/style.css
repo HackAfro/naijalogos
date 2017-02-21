@@ -81,7 +81,7 @@ input[type="number"] {
 	animation: 0.5s slideInUp ease;
 }
 
-.imprest.ng-leave{
+.imprest.ng-leave,.credit.ng-leave{
 	animation: 0.5s lightSpeedOut ease;
 }
 
@@ -124,6 +124,22 @@ input[type="number"] {
 
 .link.ng-hide-add{
 	animation: 0.5s slideOutRight ease;
+}
+
+.select.ng-hide-add{
+	animation: 0.5s slideOutUp ease;
+}
+
+.select.ng-hide-remove{
+	animation: 0.5s slideInDown ease;
+}
+
+.newVendor.ng-hide-remove{
+	animation: 0.5s slideInDown ease;
+}
+
+.newVendor.ng-hide-add{
+	animation: 0.5s slideOutUp ease;
 }
 
 .on.ng-hide-remove{
@@ -205,7 +221,7 @@ input[type="number"] {
     position: fixed;
     right: 10px;  
     bottom: -60px;
-    transition: 0.5s 
+    transition: 0.5s; 
 }
 
 #show:hover{

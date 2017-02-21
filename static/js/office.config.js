@@ -39,6 +39,9 @@
             .when('/vendorforms',{
                 templateUrl: '/static/html/vendor.html'
             })
+            .when('/vendors',{
+                templateUrl: '/static/html/vendors.html'
+            })
             .otherwise('/')
     }])
 })();

@@ -22,7 +22,6 @@
                 if (response) {
                     response.json().then(function (json) {
                         if (networkPending) {
-                            console.log(JSON.stringify(json[0]))
                             $scope.balance = json[0]
                             $scope.balLoading = false
                         }

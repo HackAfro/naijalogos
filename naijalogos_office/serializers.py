@@ -2,7 +2,7 @@ from rest_framework import serializers
 from auth_api.serializers import UserSerializer
 from stored_messages.models import MessageArchive, Message
 
-from .models import Imprest, VendorRemittance, BillboardTracker, Account, JobTracker, Billboard, Credit, Remark
+from .models import Imprest, VendorRemittance, BillboardTracker, Account, JobTracker, Billboard, Credit, Remark, Vendor
 from django.contrib.auth.models import User
 
 
@@ -41,7 +41,13 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobTracker
         fields = '__all__'
-    
+
+class VendSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vendor
+        fields = '__all__'
+
 
 class VendorRemittanceSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, required=False)
@@ -79,6 +85,7 @@ class BillboardSerializer(serializers.ModelSerializer):
 
 class BoardSerializer(serializers.ModelSerializer):
     lease_info = BillboardSerializer(read_only=True,many=True)
+    
     class Meta:
         model = Billboard
         fields = '__all__'
@@ -98,3 +105,10 @@ class ArchiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = MessageArchive
         fields = '__all__'
+
+class VendorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Vendor
+        fields = '__all__'
+    

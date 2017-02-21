@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files-v2'
+var fileCache = 'naijalogos-files-v3'
 var dataCache = 'naijalogos-data'
 
 var files = [
@@ -54,7 +54,9 @@ var files = [
                 '/static/images/avatar.png',
                 '/static/css/animate.css',
                 '/static/images/cancel.png',
-                '/static/images/check-mark-button.png'
+                '/static/images/check-mark-button.png',
+                '/static/js/vendors.controller.js',
+                '/static/html/vendors.html'
 			]
 
 self.addEventListener('install',function (e) {
@@ -87,7 +89,7 @@ self.addEventListener('fetch',function (event) {
 
 	console.log('[ServiceWorker] fetch', url);
 
-	if (url === 'https://www.naijalogosoffice.com/office/vendors/' || url === 'https://www.naijalogosoffice.com/office/billboards/' || url === 'https://www.naijalogosoffice.com/office/imprests/' || url === 'https://www.naijalogosoffice.com/office/messages/' || url === 'https://www.naijalogosoffice.com/office/jobs/' || url === 'https://www.naijalogosoffice.com/office/balance/' || url === 'https://www.naijalogosoffice.com/api/inbox/' || url === 'https://www.naijalogosoffice.com/office/credits/') {
+	if (url === 'https://www.naijalogosoffice.com/office/vendors/' || url === 'https://www.naijalogosoffice.com/office/vendor/' || url === 'https://www.naijalogosoffice.com/office/billboards/' || url === 'https://www.naijalogosoffice.com/office/imprests/' || url === 'https://www.naijalogosoffice.com/office/messages/' || url === 'https://www.naijalogosoffice.com/office/jobs/' || url === 'https://www.naijalogosoffice.com/office/balance/' || url === 'https://www.naijalogosoffice.com/api/inbox/' || url === 'https://www.naijalogosoffice.com/office/credits/') {
 		console.log('Getting data')
 		console.log('Method: ',event.request.method)
 

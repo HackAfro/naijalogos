@@ -39,13 +39,17 @@ class Vendor(models.Model):
     bank_name = models.CharField(max_length=100)
     account_details = models.PositiveIntegerField()
     mobile = models.CharField(max_length=16)
+
+    def __str__(self):
+        return "Vendor: {}".format(self.name)
     
 
 
 class VendorRemittance(models.Model):
     vendor_name = models.CharField(max_length=500)
-    bank_name = models.CharField(max_length=500)
+    bank_name = models.CharField(max_length=100)
     account_details = models.PositiveIntegerField()
+    mobile = models.CharField(max_length=16)
     job_description = models.TextField()
     quantity = models.PositiveIntegerField()
     currency = models.CharField(max_length=5)
@@ -58,7 +62,7 @@ class VendorRemittance(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return 'Vendor: {}'.format(self.vendor_name)
+        return 'Vendor: {}'.format(self.vendor)
 
 
 class Billboard(models.Model):

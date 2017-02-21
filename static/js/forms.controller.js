@@ -55,37 +55,74 @@
         $scope.addVendor = function () {
 
             $scope.loading = true
-            var form = {
-                vendor_name: $scope.vendor.vendorName,
-                bank_name: $scope.vendor.bankName,
-                account_details: $scope.vendor.accountDetails,
-                job_description: $scope.vendor.jobDescription,
-                quantity: $scope.vendor.quantity,
-                currency: $scope.vendor.currency,
-                amount_due: $scope.vendor.amountDue,
-                delivery_date: $scope.vendor.deliveryDate,
-                current_payment: $scope.vendor.currentPayment,
-                outstanding_balance: $scope.vendor.outstandingBalance,
-                is_approved: false
+
+            if ($scope.newVendor) {
+                var vendor = {
+                    name: $scope.vendor.vendorName,
+                    bank_name: $scope.vendor.bankName,
+                    account_details: $scope.vendor.accountDetails,
+                    mobile: $scope.vendor.mobile
+                }
+
+                $http.post('/office/vendor/',vendor).then(function () {
+                    $("#acc-imprest > p").text("New vendor has been added successfully")
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
+                        $("#acc-imprest").slideUp(500);
+                    });
+                })   
             }
+
+            var form = {
+                    vendor_name: $scope.vendor.vendorName,
+                    bank_name: $scope.vendor.bankName,
+                    account_details: $scope.vendor.accountDetails,
+                    mobile: $scope.vendor.mobile,   
+                    job_description: $scope.vendor.jobDescription,
+                    quantity: $scope.vendor.quantity,
+                    currency: $scope.vendor.currency,
+                    amount_due: $scope.vendor.amountDue,
+                    delivery_date: $scope.vendor.deliveryDate,
+                    current_payment: $scope.vendor.currentPayment,
+                    outstanding_balance: $scope.vendor.outstandingBalance,
+                }
+    
+
             $http.post('/office/vendors/', form)
-                .then(function () {
-                    $scope.loading = false
-                    $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
-                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
-                        $("#acc-imprest").slideUp(500);
-                    });
-                }, function () {
-                    $scope.loading = false
-                    $("#acc-imprest > p").text("Error submitting form, please try again!!")
-                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
-                        $("#acc-imprest").slideUp(500);
-                    });
-                })
-
-
-            $scope.vendor = {}
+            .then(function () {
+                $scope.loading = false
+                $("#acc-imprest > p").text("Form sent!!. You'll be notified once it's accepted!!")
+                $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#acc-imprest").slideUp(500);
+                });
+            }, function () {
+                $scope.loading = false
+                $("#acc-imprest > p").text("Error submitting form, please try again!!")
+                $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
+                    $("#acc-imprest").slideUp(500);
+                });
+            })
+            
+            $scope.vendor = {}    
         }
+
+        $scope.vendorDetails = function (index) {
+            $scope.vendor.vendorName = $scope.vendors[index].name
+            $scope.vendor.bankName = $scope.vendors[index].bank_name
+            $scope.vendor.accountDetails = $scope.vendors[index].account_details
+            $scope.vendor.mobile = $scope.vendors[index].mobile
+        }
+
+        function getVendors() {
+            $http.get('/office/vendor/').then(function (vendors) {
+                $scope.vendors = vendors.data
+                $('.ui.selection.dropdown').dropdown()
+            })
+        }
+
+        getVendors()
+
+        $('.ui.fluid.dropdown').dropdown()
+
 
         activate();
         function activate() {

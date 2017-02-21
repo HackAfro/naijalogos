@@ -13,17 +13,6 @@ function main() {
         }).sidebar('toggle');
     })
 
-    $('.ui.accordion')
-        .accordion()
-    ;
-    $(document).on('click', '.ui.styled.accordion', function () {
-
-        $('.ui.styled.accordion').accordion()
-    })
-
-    $(document).on('click', '.ui.fluid.dropdown', function () {
-        $('.ui.fluid.dropdown').dropdown()
-    })
 
     $(window).scroll(function () {
         var scroll = $(window).scrollTop(); // how many pixels you've scrolled
