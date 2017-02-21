@@ -37,7 +37,7 @@ class Imprest(models.Model):
 class Vendor(models.Model):
     name = models.CharField(max_length=100)
     bank_name = models.CharField(max_length=100)
-    account_details = models.PositiveIntegerField()
+    account_details = models.CharField(max_length=20)
     mobile = models.CharField(max_length=16)
 
     def __str__(self):
