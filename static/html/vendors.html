@@ -17,7 +17,7 @@
     <div class="ui attached segment">
         <div class="ui centered stackable grid">
             <div class="six wide column">
-                <div class="ui yellow horizontal divider header" ng-hide="!vendors.length">Vendors</div>
+                <div class="ui yellow horizontal divider header">Vendors</div>
 
                 
                     <div class="ui icon top left pointing dropdown button" id="order" data-tooltip="Sort By" data-delay="500" ng-hide="loading || !vendors.length">
@@ -46,18 +46,22 @@
 
                 <div class="ui divider" ng-hide="loading || !vendors.length"></div>
 
-                <h5 class="ui grey centered header" ng-if="!loading && !vendors.length">
-                    <i class="red attention icon"></i>
-                    No outstanding forms
-                </h5>
+                <h2 class="ui center aligned icon header" ng-if="!loading && !vendors.length">
+                    <i class="grey user outline icon"></i>
+                    <div class="content">
+                        No Listed Vendors
+                        <div class="sub header">Fill out the form to add a new vendor</div>
+                    </div>
+                    
+                </h2>
                 <div class="ui active medium centered inline text loader" ng-show="loading">
                     Loading forms
                 </div>
 
-                <h5 class="ui header" ng-if="filtered.length === 0">
+                <h4 class="ui centered header" ng-if="vendors.length && filtered.length === 0">
                     <i class="red attention icon"></i>
                     Nothing matches your search
-                </h5>
+                </h4>
 
                 <div class="ui items" ng-hide="loading">
                     <div class="item credit" ng-repeat="vendor in vendors | filter: search | orderBy: name : recent | limitTo: limit as filtered">

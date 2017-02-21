@@ -1,4 +1,4 @@
-var fileCache = 'naijalogos-files-v3'
+var fileCache = 'naijalogos-files-v4'
 var dataCache = 'naijalogos-data'
 
 var files = [
