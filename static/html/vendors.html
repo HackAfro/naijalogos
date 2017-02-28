@@ -94,6 +94,48 @@
                                 <span class="ui label"><i class="building icon" style="margin-right:5px"></i>{{ vendor.account_details }}</span>
                             </div>
 
+                            <div class="meta">
+                                <a class="link" style="font-size:0.8rem; font-weight:400"
+                                   ng-click="edit=!edit">Edit</a>
+                            </div>
+
+                            <div class="description" style="overflow: hidden">
+                                <form class="ui tiny form jobForm" ng-show="edit" ng-submit="update(vendor)" ng-class="{loading:editLoading}">
+                                    <div class="field">
+                                        <label>Name</label>
+                                        <input type="text" ng-model="vendor.name">
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Mobile</label>
+                                                <input type="tel" ng-model="vendor.mobile">
+                                            </div>
+
+                                            <div class="field">
+                                                <label>Email</label>
+                                                <input type="email" ng-model="vendor.email">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label>Bank Name</label>
+                                        <input type="text" ng-model="vendor.bank_name">
+                                    </div>
+
+                                    <div class="field">
+                                        <label>Account No.</label>
+                                        <input type="tel" ng-model="vendor.account_details">
+                                    </div>
+
+                                    <button class="ui circular icon button" type="button" ng-click="edit=!edit">
+                                        <i class="arrow up icon"></i>
+                                    </button>
+                                    <button class="ui right floated green basic circular tiny button" type="submit" style="margin-bottom: 15px">Submit</button>
+                                </form>
+                            </div>
                             <div class="ui divider"></div>
                         </div>
                     </div>

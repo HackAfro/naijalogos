@@ -60,7 +60,24 @@
         	}
         }
 
-        
+        $scope.update = function (vendor) {
+			var url = '/office/vendor/' + vendor.id + '/'
+			$scope.editLoading = true
+
+			$http.put(url,vendor).then(function () {
+				$scope.editLoading = false
+				$("#acc-imprest > p").text("Details Updated")
+                	$("#acc-imprest").fadeTo(5000, 5000).slideUp(500, function () {
+                   		$("#acc-imprest").slideUp(500);
+                	});
+            },function () {
+				$scope.editLoading = false
+                    $("#acc-imprest > p").text("Error updating details. Try again")
+                    $("#acc-imprest").fadeTo(5000, 500).slideUp(500, function () {
+                        $("#acc-imprest").slideUp(500);
+                    })
+            })
+        }
 
         $('#order').dropdown()
 

@@ -139,7 +139,9 @@
                                     <label>Amount</label>
                                     <input ng-change="update(details)" ng-model="details.data.amount" required>
                                 </div>
-                                <div class="ui right floated mini button" ng-click="editing=false">Save</div>
+                                <button class="ui right floated circular icon button" ng-click="editing=false">
+                                    <i class="close icon"></i>
+                                </button>
                             </form>
 							</div>
                         </div>
@@ -294,7 +296,8 @@
                                     </div>
                                 </div>
 
-                                <button class="ui right floated mini button" ng-click="editingVen=!editingVen">Save
+                                <button class="ui right floated circular icon button" ng-click="editingVen=!editingVen">
+                                    <i class="close icon"></i>
                                 </button>
                             </form>
                         	</div>
