@@ -30,26 +30,27 @@ class Imprest(models.Model):
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=datetime.now)
 
-
     def __str__(self):
         return 'Raised by: {}'.format(self.user)
+
 
 class Vendor(models.Model):
     name = models.CharField(max_length=100)
     bank_name = models.CharField(max_length=100)
     account_details = models.CharField(max_length=25)
     mobile = models.CharField(max_length=16)
+    email = models.EmailField()
 
     def __str__(self):
         return "Vendor: {}".format(self.name)
-    
 
 
 class VendorRemittance(models.Model):
     vendor_name = models.CharField(max_length=500)
     bank_name = models.CharField(max_length=100)
-    account_details = models.PositiveIntegerField()
+    account_details = models.CharField(max_length=25)
     mobile = models.CharField(max_length=16)
+    email = models.EmailField()
     job_description = models.TextField()
     quantity = models.PositiveIntegerField()
     currency = models.CharField(max_length=5)

@@ -176,7 +176,7 @@
                         <i class="dropdown icon"></i>
                         <div class="default text">Select a vendor</div>
                         <div class="menu">
-                            <div class="item" data-value="vend.id" ng-repeat="vend in vendors | orderBy : 'name'" ng-click="vendorDetails($index)">{{vend.name}}</div>
+                            <div class="item" data-value="vend.id" ng-repeat="vend in vendors" ng-click="vendorDetails($index)">{{vend.name}}</div>
                         </div>
                     </div>
                     </div>
@@ -192,15 +192,20 @@
                     <div ng-show="newVendor" class="newVendor">
                     <h4 class="ui dividing header">New Vendor Details</h4>
 
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field" ng-class="{error:veForm.vendor_name.$touched && veForm.vendor_name.$invalid}">
+                        <div class="field" ng-class="{error:veForm.vendor_name.$touched && veForm.vendor_name.$invalid}">
                                 <label>Name</label>
                                 <input placeholder="Vendor name" type="text" name="vendor_name" ng-model="vendor.vendorName"
                                 required>
                             </div>
 
-                            <div class="field">
+                    <div class="field">
+                        <div class="two fields">
+
+                            <div class="field" ng-class="{error:veForm.vendor_email.$touched && veForm.vendor_email.$invalid}">
+                                <label>Email</label>
+                                <input placeholder="Email" type="email" ng-model="vendor.email" name="vendor_email">
+                            </div>
+                            <div class="field" ng-class="{error:veForm.vendorMobile.$touched && veForm.vendorMobile.$invalid}">
                                 <label>Mobile No.</label>
                                 <input placeholder="Mobile Number" type="tel" name="vendorMobile" ng-model="vendor.mobile">
                             </div>

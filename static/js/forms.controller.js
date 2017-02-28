@@ -61,7 +61,8 @@
                     name: $scope.vendor.vendorName,
                     bank_name: $scope.vendor.bankName,
                     account_details: $scope.vendor.accountDetails,
-                    mobile: $scope.vendor.mobile
+                    mobile: $scope.vendor.mobile,
+                    email: $scope.vendor.email
                 }
 
                 $http.post('/office/vendor/',vendor).then(function () {
@@ -76,7 +77,8 @@
                     vendor_name: $scope.vendor.vendorName,
                     bank_name: $scope.vendor.bankName,
                     account_details: $scope.vendor.accountDetails,
-                    mobile: $scope.vendor.mobile,   
+                    mobile: $scope.vendor.mobile,
+                    email: $scope.vendor.email,
                     job_description: $scope.vendor.jobDescription,
                     quantity: $scope.vendor.quantity,
                     currency: $scope.vendor.currency,
@@ -110,6 +112,7 @@
             $scope.vendor.bankName = $scope.vendors[index].bank_name
             $scope.vendor.accountDetails = $scope.vendors[index].account_details
             $scope.vendor.mobile = $scope.vendors[index].mobile
+            $scope.vendor.email = $scope.vendors[index].email
         }
 
         function getVendors() {

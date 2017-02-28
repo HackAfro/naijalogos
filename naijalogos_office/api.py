@@ -32,7 +32,6 @@ class ImprestViewSet(ModelViewSet):
     queryset = Imprest.objects.all()
     serializer_class = ImprestSerializer
     permission_classes = permissions.IsAuthenticated,
-    
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -61,7 +60,6 @@ class ImprestViewSet(ModelViewSet):
         users = [imprest.user,User.objects.get(username='lydia'),User.objects.get(username='aba')]
         lydia = users[1]
         data = request.data
-        
 
         if old_imprest.description == data['description'] and int(old_imprest.amount) == int(data['amount']):
             
@@ -87,7 +85,6 @@ class ImprestViewSet(ModelViewSet):
                 payload = {"head":"{} accepted {}'s imprest".format(request.user.username.capitalize(),imprest.user.username.capitalize()),"body":"{} {} N{}".format(imprest.description.capitalize(),'\n',imprest.amount),"tag":"accepted"}
                 send_notification_to_user(user=users[1], payload=json.dumps(payload), ttl=100000)
                 send_notification_to_user(user=users[2], payload=json.dumps(payload), ttl=100000)
-
             
                 try:
                     pusher.trigger([u'lydia_inbox',u'aba_inbox'],u'update',{'message':'{} accepted {}\'s imprest'.format(request.user.username.capitalize(),imprest.user.username.capitalize())})
@@ -133,11 +130,9 @@ class VendorFormViewSet(ModelViewSet):
         israel = User.objects.get(username='israel')
         aba = User.objects.get(username='aba')
 
-
         payload = {"head":"{} created a vendor remittance form for {}".format(request.user.username.capitalize(),request.data['vendor_name']),"body":"{}".format(request.data['job_description']),"tag":"created"}
         send_notification_to_user(user=israel, payload=json.dumps(payload), ttl=100000)
         send_notification_to_user(user=aba, payload=json.dumps(payload), ttl=100000)
-
 
         try:
             pusher.trigger([u'israel_inbox',u'aba_inbox'],u'update',{'message':'{} created a new vendor remittance form for - {}'.format(request.user.username.capitalize(), request.data['vendor_name'].capitalize())})
@@ -154,7 +149,6 @@ class VendorFormViewSet(ModelViewSet):
         users = [User.objects.get(username='lydia'),User.objects.get(username='aba')]
         self.perform_update(serializer)
 
-        
         if request.data['is_approved'] != vendor.is_approved:
             
             if vendor.user == users[0]:
@@ -185,8 +179,6 @@ class VendorFormViewSet(ModelViewSet):
             
                 tags = {"action":"accepted","actor": request.user.username.capitalize(), "target": vendor.vendor_name}
                 add_message_for(users=[users[1]],level=3, message_text="approved a vendor remittance form for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/vendors/{}/'.format(vendor.id))
-        
-        
 
         if getattr(vendor,  '_prefetched_objects_cache',None):
             instance._prefetched_objects_cache = {}
@@ -221,7 +213,6 @@ class ArchiveViewSet(viewsets.ViewSet):
     queryset = MessageArchive.objects.all()
     permission_classes = permissions.IsAuthenticated,
 
-
     def list(self,request):
         messages = MessageArchive.objects.filter(user=request.user)
         serializer = ArchiveSerializer(messages,many=True)
@@ -251,9 +242,8 @@ class JobViewSet(ModelViewSet):
             pass
         
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
 
-    def update(self,request, pk=None):
+    def update(self, request, pk=None):
         job = get_object_or_404(self.queryset,pk=pk)
         data = request.data 
         users = ['israel','afro','lydia','andre','paul','aba']
@@ -270,7 +260,6 @@ class JobViewSet(ModelViewSet):
             add_message_for(users=User.objects.all(),level=3, message_text="completed a job for", extra_tags=json.dumps(tags),date=datetime.now(),url='/office/jobs/{}/'.format(job.id))
         else:
             data['is_complete'] = False
-        
 
         serializer = self.serializer_class(job,data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -72,7 +72,8 @@
         		name: $scope.vendor.name,
         		mobile: $scope.vendor.mobile,
         		account_details: $scope.vendor.number,
-        		bank_name: $scope.vendor.bankName
+        		bank_name: $scope.vendor.bankName,
+				email: $scope.vendor.email
         	}
         	$http.post(url,vendor).then(function (data) {
         			$scope.vendors.push(data.data)

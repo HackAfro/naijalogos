@@ -19,26 +19,27 @@
             <div class="six wide column">
                 <div class="ui yellow horizontal divider header">Vendors</div>
 
-                
-                    <div class="ui icon top left pointing dropdown button" id="order" data-tooltip="Sort By" data-delay="500" ng-hide="loading || !vendors.length">
-                        <i class="filter icon"></i>
-                        <div class="menu">
-                            <div class="header">
-                                <i class="tags icon"></i>
-                                Order by tag
-                            </div>
-                            <div class="divider"></div>
-                            <div class="item" ng-click="recent = !recent; name=''">
-                                <i class="calendar outline icon"></i>
-                                Most Recent
-                            </div>
-                            <div class="item" ng-click="orderAlpha(); recent = false">
-                                <i class="Sort Alphabet Ascending icon"></i>
-                                Alphabetically
-                            </div>
-    
+
+                <div class="ui icon top left pointing dropdown button" id="order" data-tooltip="Sort By"
+                     data-delay="500" ng-hide="loading || !vendors.length">
+                    <i class="filter icon"></i>
+                    <div class="menu">
+                        <div class="header">
+                            <i class="tags icon"></i>
+                            Order by tag
                         </div>
+                        <div class="divider"></div>
+                        <div class="item" ng-click="recent = !recent; name=''">
+                            <i class="calendar outline icon"></i>
+                            Most Recent
+                        </div>
+                        <div class="item" ng-click="orderAlpha(); recent = false">
+                            <i class="Sort Alphabet Ascending icon"></i>
+                            Alphabetically
+                        </div>
+
                     </div>
+                </div>
 
                 <div class="ui right floated search" style="float:right" ng-hide="loading || !vendors.length">
                     <input class="prompt" placeholder="Search Vendors..." type="text" ng-model="search">
@@ -52,7 +53,7 @@
                         No Listed Vendors
                         <div class="sub header">Fill out the form to add a new vendor</div>
                     </div>
-                    
+
                 </h2>
                 <div class="ui active medium centered inline text loader" ng-show="loading">
                     Loading forms
@@ -64,7 +65,8 @@
                 </h4>
 
                 <div class="ui items" ng-hide="loading">
-                    <div class="item credit" ng-repeat="vendor in vendors | filter: search | orderBy: name : recent | limitTo: limit as filtered">
+                    <div class="item credit"
+                         ng-repeat="vendor in vendors | filter: search | orderBy: name : recent | limitTo: limit as filtered">
 
                         <div class="content">
                             <div class="ui blue header" style="text-transform:capitalize">{{ vendor.name }}</div>
@@ -77,6 +79,14 @@
                                 <span>
                                     <i class="mobile icon" style="margin-right:2px"></i>
                                     {{ vendor.mobile}}
+                                </span><br>
+
+                            </div>
+
+                            <div class="meta">
+                                <span style="margin: 4px 0">
+                                    <i class="send icon" style="margin-right:2px"></i>
+                                    {{ vendor.email }}
                                 </span>
                             </div>
 
@@ -90,19 +100,19 @@
                 </div>
 
                 <a class="ui link" href="" ng-click="addMore()"
-                       ng-hide="search.length || vendors.length < limit">
-                        <h6 class="ui header" style="padding-bottom: 20px">
-                            <i class="plus icon"></i>
-                            Add more
-                        </h6>
-                    </a>
+                   ng-hide="search.length || vendors.length < limit">
+                    <h6 class="ui header" style="padding-bottom: 20px">
+                        <i class="plus icon"></i>
+                        Add more
+                    </h6>
+                </a>
 
-                    <a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
-                        <h6 class="ui header" style="padding-bottom: 20px">
-                            <i class="plus icon"></i>
-                            Add more
-                        </h6>
-                    </a>                   
+                <a class="ui link" href="" ng-click="addMore()" ng-show="search.length && filtered.length >= limit">
+                    <h6 class="ui header" style="padding-bottom: 20px">
+                        <i class="plus icon"></i>
+                        Add more
+                    </h6>
+                </a>
             </div>
             <div class="two wide column">
                 <h3 class="ui vertical divider">
@@ -113,36 +123,47 @@
 
             <div class="eight wide column" style="overflow: hidden;">
                 <div class="ui raised segment">
-                    <form class="ui raised form animated slideInDown" ng-submit="create()" ng-class="{loading:formLoading}">
-                    <h3 class="ui yellow header">Add A New Vendor</h3>
-                    <div class="field">
-                        <label>Name</label>
-                        <input type="text" ng-model="vendor.name" placeholder="Vendor Name">
-                    </div>
+                    <form class="ui raised form animated slideInDown" ng-submit="create()"
+                          ng-class="{loading:formLoading}">
+                        <h3 class="ui yellow header">Add A New Vendor</h3>
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" ng-model="vendor.name" placeholder="Vendor Name">
+                        </div>
 
-                    <div class="field">
-                        <label>Mobile No.</label>
-                        <input type="tel" ng-model="vendor.mobile" placeholder="Mobile Number">
-                    </div>
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Email</label>
+                                    <input type="email" ng-model="vendor.email" placeholder="Email">
+                                </div>
 
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field">
-                                <label>Bank Name</label>
-                                <input type="text" ng-model="vendor.bankName" placeholder="Bank Name">
+                                <div class="field">
+                                    <label>Mobile No.</label>
+                                    <input type="tel" ng-model="vendor.mobile" placeholder="Mobile Number">
+                                </div>
                             </div>
+                        </div>
 
-                            <div class="field">
-                                <label>Account No.</label>
-                                <input type="number" ng-model="vendor.number" placeholder="Account Number">
+
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Bank Name</label>
+                                    <input type="text" ng-model="vendor.bankName" placeholder="Bank Name">
+                                </div>
+
+                                <div class="field">
+                                    <label>Account No.</label>
+                                    <input type="number" ng-model="vendor.number" placeholder="Account Number">
+                                </div>
                             </div>
-                        </div>                       
-                    </div>
+                        </div>
 
-                    <button class="ui green button" type="submit">Submit</button>
-                </form>
+                        <button class="ui green button" type="submit">Submit</button>
+                    </form>
                 </div>
-                
+
             </div>
         </div>
 
