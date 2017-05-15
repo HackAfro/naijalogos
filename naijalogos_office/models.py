@@ -31,7 +31,7 @@ class Imprest(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return 'Raised by: {}'.format(self.user)
+        return '{} - Raised by: {}'.format(self.description, self.user)
 
 
 class Vendor(models.Model):
@@ -138,16 +138,16 @@ def my_handler(sender,instance,created,**kwargs):
             add_message_for(users=users[1:], level=3, message_text='raised an imprest', extra_tags=json.dumps(tags), date=datetime.now(), url="/office/imprests/{}/".format(instance.id))     
         else:
             add_message_for(users=users, level=3, message_text='raised an imprest', extra_tags=json.dumps(tags), date=datetime.now(), url="/office/imprests/{}/".format(instance.id))
-            
-        
 
-def notify_vendor(sender,instance,created,**kwargs):
+
+def notify_vendor(sender, instance, created, **kwargs):
     tags = {"action":"created","actor": instance.user.username.capitalize(), "target": instance.vendor_name.capitalize()}
     if created:
         users = [User.objects.get(username='israel'),User.objects.get(username='aba')]
         add_message_for(users=users,level=3,message_text='created a vendor remittance form for', extra_tags=json.dumps(tags),date=datetime.now(), url="/office/vendors/{}/".format(instance.id))
 
-def new_job(sender,instance,created,**kwargs):
+
+def new_job(sender, instance, created, **kwargs):
     tags = {"action":"started","actor": instance.handler.capitalize(), "target": instance.client_name.capitalize()}
 
     if created:
