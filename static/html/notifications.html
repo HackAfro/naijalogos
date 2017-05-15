@@ -1,7 +1,6 @@
 <nav-bar></nav-bar>
 <div class="ui masthead center aligned segment" style="background:transparent">
-    <div class="ui black fixed extra large circular icon button" id="rotate"
-         style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent">
+    <div class="ui black fixed extra large circular icon button" id="rotate" style="margin-top:35px; position:fixed; left:-7px; z-index:101; font-size:1.7rem; background:transparent; border:none; border-color: transparent">
         <i class="ui black content icon"></i>
     </div>
 </div>
@@ -12,8 +11,7 @@
     <h2 class="ui centered header" style="margin-top: 60px"><i class="world icon"></i>Notifications</h2>
 
     <div class="ui top attached tabular menu">
-        <a class="item" ng-click="selectTab(1)"
-           ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
+        <a class="item" ng-click="selectTab(1)" ng-class="{active:isSelected(1), red:isSelected(1) && latest.length > 0}">
             Unread
             <span class="ui label" ng-class="{red:latest.length > 0 && isSelected(1)}">{{ latest.length }}</span>
         </a>
@@ -25,14 +23,12 @@
         </a>
     </div>
 
-    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)" ng-class="{loading:loading}"
-         style="min-height:100px; overflow: hidden;">
+    <div class="ui bottom attached stacked padded segment" ng-show="isSelected(1)" ng-class="{loading:loading}" style="min-height:100px; overflow: hidden;">
 
         <!---No new messages display-->
 
         <h2 class="ui center aligned icon header unread" ng-if="latest.length < 1">
-            <i class="circular thumbs up icon"></i>
-            No unread notifications
+            <i class="circular thumbs up icon"></i> No unread notifications
         </h2>
 
         <!---Feed-->
@@ -54,31 +50,25 @@
                         <a class="user" style="font-weight:600" ng-if="feed.tags.actor.toLowerCase() !== user.username">
                             {{ feed.tags.actor }}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600"
-                           ng-if="feed.tags.actor.toLowerCase() === user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="feed.tags.actor.toLowerCase() === user.username">
                             You
-                        </a>
-                        {{ feed.message | limitTo : 100}} <a class="user">
+                        </a> {{ feed.message | limitTo : 100}} <a class="user">
                         {{ feed.tags.target }}
                     </a>
 
                         <!--Imprest View Link-->
                         <div class="ui horizontal list" ng-show="feed.url.indexOf('m') !== -1">
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                               ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                               ng-show="show && details.id === feed.id "> - close </a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click=" show=!show; view(feed);" ng-hide="show && details.id === feed.id"> - view</a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show" ng-show="show && details.id === feed.id "> - close </a>
                         </div>
 
                         <!---End Imprest View Link-->
 
                         <!---Vendor View Link-->
                         <div class="ui horizontal list" ng-show="feed.url.indexOf('v') !== -1">
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                               ng-click=" show=!show; view(feed);" ng-hide="show && vendor.id === feed.id"> - view</a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click=" show=!show; view(feed);" ng-hide="show && vendor.id === feed.id"> - view</a>
 
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                               ng-show="show && vendor.id === feed.id "> - close </a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show" ng-show="show && vendor.id === feed.id "> - close </a>
                         </div>
                         <!---End Vendor View Link-->
 
@@ -104,236 +94,214 @@
                     </div>
 
                     <!--Extra Content-->
-					<div style="overflow: hidden;">
-                    <div class="extra content data" ng-if="show">
+                    <div style="overflow: hidden;">
+                        <div class="extra content data" ng-if="show">
 
-                        <!--Loader-->
-                        <div class="ui mini centered inline loader" ng-class="{active:feed.conLoading}"></div>
-                        <!---EndLoader-->
+                            <!--Loader-->
+                            <div class="ui mini centered inline loader" ng-class="{active:feed.conLoading}"></div>
+                            <!---EndLoader-->
 
-                        <!--Imprest Description-->
-                        <div class="description data" ng-if="details && !conLoading && details.id === feed.id ">
+                            <!--Imprest Description-->
+                            <div class="description data" ng-if="details && !conLoading && details.id === feed.id ">
 
-                            <span>{{ details.data.description }}</span><br>
-                            <div class="meta">
-                                <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
-                            </div>
-                            <br>
-
-
-                            <!---Edit Link-->
-                            <div class="meta" ng-show="user.username === 'israel'">
-                                <a class="link" style="font-size:0.8rem; font-weight:400"
-                                   ng-click="editing=!editing">Edit</a>
-                            </div>
-
-                            <!--Edit Form-->
-                            <div style="overflow: hidden;">
-                              <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions"
-                                  ng-class="{loading:loadingForm}">
-                                <div class="field">
-                                    <label>Description</label>
-                                    <input ng-change="update(details)" ng-model="details.data.description" required>
+                                <span>{{ details.data.description }}</span><br>
+                                <div class="meta">
+                                    <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
                                 </div>
-                                <div class="field">
-                                    <label>Amount</label>
-                                    <input ng-change="update(details)" ng-model="details.data.amount" required>
+                                <br>
+
+
+                                <!---Edit Link-->
+                                <div class="meta" ng-show="user.username === 'israel'">
+                                    <a class="link" style="font-size:0.8rem; font-weight:400" ng-click="editing=!editing">Edit</a>
                                 </div>
-                                <button class="ui right floated circular icon button" ng-click="editing=false">
+
+                                <!--Edit Form-->
+                                <div style="overflow: hidden;">
+                                    <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
+                                        <div class="field">
+                                            <label>Description</label>
+                                            <input ng-change="update(details)" ng-model="details.data.description" required>
+                                        </div>
+                                        <div class="field">
+                                            <label>Amount</label>
+                                            <input ng-change="update(details)" ng-model="details.data.amount" required>
+                                        </div>
+                                        <button class="ui right floated circular icon button" ng-click="editing=false">
                                     <i class="close icon"></i>
                                 </button>
-                            </form>
-							</div>
-                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
-                        <div class="description" ng-if="vendor && !conLoading && vendor.id === feed.id">
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="money icon"></i>
-                                Payment Details
-                            </h6>
+                            <div class="description" ng-if="vendor && !conLoading && vendor.id === feed.id">
+                                <!--Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="money icon"></i> Payment Details
+                                </h6>
 
-                            <!--Pay Details-->
-                            <!--Amount Due-->
-                            <span class="ui label">
+                                <!--Pay Details-->
+                                <!--Amount Due-->
+                                <span class="ui label">
                                 {{ vendor.data.amount_due | currency: '₦'}}
-                                </span>
-                            -
-                            <!--Amount Paid-->
-                            <span class="ui label">
+                                </span> -
+                                <!--Amount Paid-->
+                                <span class="ui label">
                                      {{ vendor.data.current_payment | currency : '₦'}}
-                                 </span>
-                            =
-                            <!--Outstanding Balance-->
-                            <span class="ui label">
+                                 </span> =
+                                <!--Outstanding Balance-->
+                                <span class="ui label">
                                 {{ vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
-                            <!--End Pay Details-->
+                                <!--End Pay Details-->
 
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="Payment icon"></i>
-                                Vendor Details
-                            </h6>
+                                <!--Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="Payment icon"></i> Vendor Details
+                                </h6>
 
-                            <!--Job Description-->
-                            <div class="description">
-                                <!--Acc No-->
-                                Acc.no: {{ vendor.data.account_details }}<br>
+                                <!--Job Description-->
+                                <div class="description">
+                                    <!--Acc No-->
+                                    Acc.no: {{ vendor.data.account_details }}<br>
 
-                                <!---Bank Name-->
-                                <span class="ui label">
+                                    <!---Bank Name-->
+                                    <span class="ui label">
                                     <i class="building icon"></i>
                                     {{ vendor.data.bank_name }}
                                 </span>
 
-                                <!---Divider-->
-                                <h6 class="ui horizontal divider header">
-                                    <i class="tag icon"></i>
-                                    Job Description
-                                </h6>
+                                    <!---Divider-->
+                                    <h6 class="ui horizontal divider header">
+                                        <i class="tag icon"></i> Job Description
+                                    </h6>
 
-                                <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
+                                    <!--Vend Des-->
+                                    <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
 
-                                <!---Quantity-->
-                                <span class="ui label">
+                                    <!---Quantity-->
+                                    <span class="ui label">
                                     <i class="shop icon"></i>
                                     {{ vendor.data.quantity }}
                                     unit<span ng-if="vendor.data.quantity > 1">s</span>
-                                </span><br>
+                                    </span><br>
 
-                                <!---Delivery-->
-                                <span class="ui label" style="margin-top:2px">
+                                    <!---Delivery-->
+                                    <span class="ui label" style="margin-top:2px">
                                     <i class="calendar icon"></i>
                                     {{ vendor.data.delivery_date }}
                                 </span>
-                            </div>
-
-                            <!---Edit Link-->
-                            <div class="meta" ng-show="user.username === 'israel'">
-                                <a class="link" style="font-size:0.8rem; font-weight:400"
-                                   ng-click="editingVen=!editingVen">Edit</a>
-                            </div>
-
-                            <!--Edit Form-->
-                            <div style="overflow:hidden;">
-                            <form class="ui tiny form jobForm" ng-show="editingVen" ng-class="{loading:loadingForm}"
-                                  ng-model-options="modelOptions">
-                                <h5 class="ui dividing header">Vendor Details</h5>
-
-                                <div class="field">
-                                    <label>Name</label>
-                                    <input type="text" ng-model="vendor.data.vendor_name" ng-change="update(vendor)">
                                 </div>
 
-                                <h5 class="ui dividing header">Bank Details</h5>
-                                <div class="field">
-                                    <div class="two fields">
-                                        <div class="field">
-                                            <label>Account Number</label>
-                                            <input type="tel" ng-model="vendor.data.account_details"
-                                                   ng-change="update(vendor)">
-                                        </div>
-
-                                        <div class="field">
-                                            <label>Bank Name</label>
-                                            <input type="text" ng-model="vendor.data.bank_name"
-                                                   ng-change="update(vendor)">
-                                        </div>
-                                    </div>
+                                <!---Edit Link-->
+                                <div class="meta" ng-show="user.username === 'israel'">
+                                    <a class="link" style="font-size:0.8rem; font-weight:400" ng-click="editingVen=!editingVen">Edit</a>
                                 </div>
 
-                                <h5 class="ui dividing header">Job Details</h5>
+                                <!--Edit Form-->
+                                <div style="overflow:hidden;">
+                                    <form class="ui tiny form jobForm" ng-show="editingVen" ng-class="{loading:loadingForm}" ng-model-options="modelOptions">
+                                        <h5 class="ui dividing header">Vendor Details</h5>
 
-                                <div class="field">
-                                    <label>Job description</label>
-                                    <textarea ng-model="vendor.data.job_description"
-                                              ng-change="update(vendor)"></textarea>
-                                </div>
-
-                                <div class="field">
-                                    <div class="two fields">
                                         <div class="field">
-                                            <label>Qty</label>
-                                            <input type="tel" ng-model="vendor.data.quantity"
-                                                   ng-change="update(vendor)">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h5 class="ui dividing header">Payment Details</h5>
-                                <div class="field">
-                                    <div class="two fields">
-                                        <div class="field">
-                                            <label>Amount Due</label>
-                                            <input type="tel" ng-model="vendor.data.amount_due"
-                                                   ng-change="update(vendor)">
+                                            <label>Name</label>
+                                            <input type="text" ng-model="vendor.data.vendor_name" ng-change="update(vendor)">
                                         </div>
 
+                                        <h5 class="ui dividing header">Bank Details</h5>
                                         <div class="field">
-                                            <label>Delivery Date</label>
-                                            <input type="text" ng-model="vendor.data.delivery_date"
-                                                   ng-change="update(vendor)">
-                                        </div>
-                                    </div>
-                                </div>
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <label>Account Number</label>
+                                                    <input type="tel" ng-model="vendor.data.account_details" ng-change="update(vendor)">
+                                                </div>
 
-                                <div class="field">
-                                    <div class="two fields">
+                                                <div class="field">
+                                                    <label>Bank Name</label>
+                                                    <input type="text" ng-model="vendor.data.bank_name" ng-change="update(vendor)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="ui dividing header">Job Details</h5>
+
                                         <div class="field">
-                                            <label>Current Payment</label>
-                                            <input type="tel" ng-model="vendor.data.current_payment"
-                                                   ng-change="update(vendor)">
+                                            <label>Job description</label>
+                                            <textarea ng-model="vendor.data.job_description" ng-change="update(vendor)"></textarea>
                                         </div>
 
                                         <div class="field">
-                                            <label>Outstanding Balance</label>
-                                            <input type="tel"
-                                                   ng-model="vendor.data.outstanding_balance = vendor.data.amount_due - vendor.data.current_payment"
-                                                   ng-change="update(vendor)">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <label>Qty</label>
+                                                    <input type="tel" ng-model="vendor.data.quantity" ng-change="update(vendor)">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <button class="ui right floated circular icon button" ng-click="editingVen=!editingVen">
+                                        <h5 class="ui dividing header">Payment Details</h5>
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <label>Amount Due</label>
+                                                    <input type="tel" ng-model="vendor.data.amount_due" ng-change="update(vendor)">
+                                                </div>
+
+                                                <div class="field">
+                                                    <label>Delivery Date</label>
+                                                    <input type="text" ng-model="vendor.data.delivery_date" ng-change="update(vendor)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <label>Current Payment</label>
+                                                    <input type="tel" ng-model="vendor.data.current_payment" ng-change="update(vendor)">
+                                                </div>
+
+                                                <div class="field">
+                                                    <label>Outstanding Balance</label>
+                                                    <input type="tel" ng-model="vendor.data.outstanding_balance = vendor.data.amount_due - vendor.data.current_payment" ng-change="update(vendor)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button class="ui right floated circular icon button" ng-click="editingVen=!editingVen">
                                     <i class="close icon"></i>
                                 </button>
-                            </form>
-                        	</div>
-                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
-                    </div>
+                        </div>
                     </div>
 
                     <!--Extra content-->
-                    <div class="extra content"
-                         ng-if="user.username === 'israel' && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
+                    <div class="extra content" ng-if="user.username === 'israel' && feed.url.indexOf('v') === -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
-                        <button class="ui green basic mini circular icon button"
-                                ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,feed, $index)">
+                        <button class="ui green basic mini circular icon button" ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,feed, $index)">
                             <i class="checkmark icon"></i>
                         </button>
 
                         <!--Reject button-->
-                        <button class="ui red basic mini circular icon button">
+                        <button class="ui red basic mini circular icon button" ng-class="{loading:feed.deleting}" ng-click="rejectForm(details,feed, $index)">
                             <i class="close icon"></i>
                         </button>
 
                     </div>
 
-                    <div class="extra content"
-                         ng-if="user.username === 'israel' && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
+                    <div class="extra content" ng-if="user.username === 'israel' && feed.url.indexOf('v') !== -1 && feed.tags.action !== 'started' && feed.tags.action !== 'accepted' && feed.tags.action !== 'edited' && feed.tags.action !== 'balance' && feed.tags.action !== 'completed'">
 
                         <!---Accept Button-->
-                        <button class="ui green basic mini circular icon button"
-                                ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,feed, $index)">
+                        <button class="ui green basic mini circular icon button" ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,feed, $index)">
                             <i class="checkmark icon"></i>
                         </button>
 
                         <!--Reject button-->
-                        <button class="ui red basic mini circular icon button">
+                        <button class="ui red basic mini circular icon button" ng-class="{loading: feed.deleting}" ng-click="rejectForm(vendor,feed, $index)">
                             <i class="close icon"></i>
                         </button>
 
@@ -341,11 +309,8 @@
 
                     <!---Action Icons-->
                     <div class="extra content" ng-if="feed.tags.action === 'accepted'">
-                        <i class="ui green checkmark icon"
-                           ng-if="user.username !== 'lydia' || feed.url.indexOf('m') === -1"></i>
-                        <button class="ui olive basic mini circular icon button"
-                                ng-show="user.username === 'lydia' && feed.url.indexOf('m') !== -1"
-                                ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i
+                        <i class="ui green checkmark icon" ng-if="user.username !== 'lydia' || feed.url.indexOf('m') === -1"></i>
+                        <button class="ui olive basic mini circular icon button" ng-show="user.username === 'lydia' && feed.url.indexOf('m') !== -1" ng-click="issue(feed,details,$index)" ng-class="{loading:feed.loading}"><i
                                 class="Angle Double Right icon"></i></button>
                     </div>
 
@@ -394,7 +359,7 @@
         <div class="ui centered feed">
 
             <!--Event-->
-            <div class="event" ng-repeat="message in messages | orderBy: message.message.date:true |limitTo:100">
+            <div class="event" ng-repeat="message in messages | limitTo:100">
                 <div class="label">
                     <img src="/static/images/nl.png">
                 </div>
@@ -404,12 +369,10 @@
 
                     <!--Summary-->
                     <div class="summary" style="font-weight:400">
-                        <a class="user" style="text-transform:capitalize; font-weight:600"
-                           ng-if="message.message.tags.actor.toLowerCase() !== user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() !== user.username">
                             {{ message.message.tags.actor }}
                         </a>
-                        <a class="user" style="text-transform:capitalize; font-weight:600"
-                           ng-if="message.message.tags.actor.toLowerCase() === user.username">
+                        <a class="user" style="text-transform:capitalize; font-weight:600" ng-if="message.message.tags.actor.toLowerCase() === user.username">
                             You
                         </a>
                         <!--Message-->
@@ -421,24 +384,18 @@
 
                         <!--Imprest View Link-->
                         <div class="ui horizontal list" ng-show="message.message.url.indexOf('m') !== -1">
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                               ng-click=" show=!show; view(message.message);"
-                               ng-hide="show && details.id === message.message.id"> - view</a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click=" show=!show; view(message.message);" ng-hide="show && details.id === message.message.id"> - view</a>
 
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                               ng-show="show && details.id === message.message.id "> - close </a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show" ng-show="show && details.id === message.message.id "> - close </a>
                         </div>
 
                         <!---End Imprest View Link-->
 
                         <!---Vendor View Link-->
                         <div class="ui horizontal list" ng-show="message.message.url.indexOf('v') !== -1">
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400"
-                               ng-click=" show=!show; view(message.message);"
-                               ng-hide="show && vendor.id === message.message.id"> - view</a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click=" show=!show; view(message.message);" ng-hide="show && vendor.id === message.message.id"> - view</a>
 
-                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show"
-                               ng-show="show && vendor.id === message.message.id"> - close </a>
+                            <a class="link" href="" style="font-size:0.8rem; font-weight:400" ng-click="show=!show" ng-show="show && vendor.id === message.message.id"> - close </a>
                         </div>
                         <!---End Vendor View Link-->
 
@@ -463,146 +420,131 @@
 
                     <!--Extra Content-->
                     <div style="overflow: hidden;">
-                    <div class="extra content data" ng-if="show">
+                        <div class="extra content data" ng-if="show">
 
-                        <!--Loader-->
-                        <div class="ui mini centered inline loader"
-                             ng-class="{active:message.message.conLoading}"></div>
-                        <!---EndLoader-->
+                            <!--Loader-->
+                            <div class="ui mini centered inline loader" ng-class="{active:message.message.conLoading}"></div>
+                            <!---EndLoader-->
 
-                        <!--Description-->
-                        <div class="description" ng-if="!loading && details.id === message.message.id">
-                            {{ details.data.description }}<br>
-                            <div class="meta">
-                                <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
-                            </div>
-                            <br>
-
-                            <div class="meta"
-                                 ng-show="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
-                                <a class="link" style="font-size:0.8rem; font-weight:400"
-                                   ng-click="editing=!editing">Edit</a>
-                            </div>
-
-                            <!--Edit Form-->
-                            
-                            <div style="overflow: hidden;">
-                            <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions"
-                                  ng-class="{loading:loadingForm}">
-                                <div class="field">
-                                    <label>Description</label>
-                                    <input ng-change="update(details)" ng-model="details.data.description" required>
+                            <!--Description-->
+                            <div class="description" ng-if="!loading && details.id === message.message.id">
+                                {{ details.data.description }}<br>
+                                <div class="meta">
+                                    <span class="ui label">{{ details.data.amount | currency:'₦'}}</span>
                                 </div>
-                                <div class="field">
-                                    <label>Amount</label>
-                                    <input ng-change="update(details)" ng-model="details.data.amount" required>
-                                </div>
-                                <div class="ui right floated mini button" ng-click="editing=false">Save</div>
-                            </form>
-							</div>
-							
-                            <div class="extra content"
-                                 ng-if="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+                                <br>
 
-                                <!---Accept Button-->
-                                <button class="ui green basic mini circular icon button"
-                                        ng-class="{loading:feed.loading}"
-                                        ng-click="acceptImprest(details,message.message, $index); editing=false">
+                                <div class="meta" ng-show="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+                                    <a class="link" style="font-size:0.8rem; font-weight:400" ng-click="editing=!editing">Edit</a>
+                                </div>
+
+                                <!--Edit Form-->
+
+                                <div style="overflow: hidden;">
+                                    <form class="ui tiny form jobForm" ng-show="editing" ng-model-options="modelOptions" ng-class="{loading:loadingForm}">
+                                        <div class="field">
+                                            <label>Description</label>
+                                            <input ng-change="update(details)" ng-model="details.data.description" required>
+                                        </div>
+                                        <div class="field">
+                                            <label>Amount</label>
+                                            <input ng-change="update(details)" ng-model="details.data.amount" required>
+                                        </div>
+                                        <div class="ui right floated mini button" ng-click="editing=false">Save</div>
+                                    </form>
+                                </div>
+
+                                <div class="extra content" ng-if="user.username === 'israel' && message.message.url.indexOf('v') === -1 && !details.data.is_approved">
+
+                                    <!---Accept Button-->
+                                    <button class="ui green basic mini circular icon button" ng-class="{loading:feed.loading}" ng-click="acceptImprest(details,message.message, $index); editing=false">
                                     <i class="checkmark icon"></i>
                                 </button>
 
-                                <!--Reject button-->
-                                <button class="ui red basic mini circular icon button">
+                                    <!--Reject button-->
+                                    <button class="ui red basic mini circular icon button">
                                     <i class="close icon"></i>
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="description" ng-if="!loading && vendor.id === message.message.id">
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="money icon"></i>
-                                Payment Details
-                            </h6>
+                            <div class="description" ng-if="!loading && vendor.id === message.message.id">
+                                <!--Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="money icon"></i> Payment Details
+                                </h6>
 
-                            <!--Pay Details-->
-                            <!--Amount Due-->
-                            <span class="ui label">
+                                <!--Pay Details-->
+                                <!--Amount Due-->
+                                <span class="ui label">
                                 {{ vendor.data.amount_due | currency: '₦'}}
-                                </span>
-                            -
-                            <!--Amount Paid-->
-                            <span class="ui label">
+                                </span> -
+                                <!--Amount Paid-->
+                                <span class="ui label">
                                      {{ vendor.data.current_payment | currency : '₦'}}
-                                 </span>
-                            =
-                            <!--Outstanding Balance-->
-                            <span class="ui label">
+                                 </span> =
+                                <!--Outstanding Balance-->
+                                <span class="ui label">
                                 {{ vendor.data.outstanding_balance | currency : '₦'}}
                                 </span>
-                            <!--End Pay Details-->
+                                <!--End Pay Details-->
 
-                            <!--Divider-->
-                            <h6 class="ui horizontal divider header">
-                                <i class="Payment icon"></i>
-                                Vendor Details
-                            </h6>
+                                <!--Divider-->
+                                <h6 class="ui horizontal divider header">
+                                    <i class="Payment icon"></i> Vendor Details
+                                </h6>
 
-                            <!--Job Description-->
-                            <div class="description">
-                                <!--Acc No-->
-                                Acc.no: {{ vendor.data.account_details }}<br>
+                                <!--Job Description-->
+                                <div class="description">
+                                    <!--Acc No-->
+                                    Acc.no: {{ vendor.data.account_details }}<br>
 
-                                <!---Bank Name-->
-                                <span class="ui label">
+                                    <!---Bank Name-->
+                                    <span class="ui label">
                                     <i class="building icon"></i>
                                     {{ vendor.data.bank_name }}
                                 </span>
 
-                                <!---Divider-->
-                                <h6 class="ui horizontal divider header">
-                                    <i class="tag icon"></i>
-                                    Job Description
-                                </h6>
+                                    <!---Divider-->
+                                    <h6 class="ui horizontal divider header">
+                                        <i class="tag icon"></i> Job Description
+                                    </h6>
 
-                                <!--Vend Des-->
-                                <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
+                                    <!--Vend Des-->
+                                    <span style="text-transform:capitalize">{{ vendor.data.job_description }}</span><br>
 
-                                <!---Quantity-->
-                                <span class="ui label">
+                                    <!---Quantity-->
+                                    <span class="ui label">
                                     <i class="shop icon"></i>
                                     {{ vendor.data.quantity }}
                                     unit<span ng-if="vendor.data.quantity > 1">s</span>
-                                </span><br>
+                                    </span><br>
 
-                                <!---Delivery-->
-                                <span class="ui label" style="margin-top:2px">
+                                    <!---Delivery-->
+                                    <span class="ui label" style="margin-top:2px">
                                     <i class="send icon"></i>
                                     {{ vendor.data.delivery_date }}
                                 </span>
-                            </div>
+                                </div>
 
-                            <div class="extra content"
-                                 ng-if="user.username === 'israel' && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
+                                <div class="extra content" ng-if="user.username === 'israel' && message.message.url.indexOf('v') !== -1 && !vendor.data.is_approved">
 
-                                <!---Accept Button-->
-                                <button class="ui green basic mini circular icon button"
-                                        ng-class="{loading:feed.loading}"
-                                        ng-click="acceptVendor(vendor,message.message, $index)">
+                                    <!---Accept Button-->
+                                    <button class="ui green basic mini circular icon button" ng-class="{loading:feed.loading}" ng-click="acceptVendor(vendor,message.message, $index)">
                                     <i class="checkmark icon"></i>
                                 </button>
 
-                                <!--Reject button-->
-                                <button class="ui red basic mini circular icon button">
+                                    <!--Reject button-->
+                                    <button class="ui red basic mini circular icon button">
                                     <i class="close icon"></i>
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-					</div>
                     <!---Action Icons-->
                     <div class="extra content" ng-if="message.message.tags.action === 'accepted'">
                         <i class="ui green checkmark icon"></i>

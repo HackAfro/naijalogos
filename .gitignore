@@ -1,0 +1,8 @@
+.idea/
+static/Semantic-Ui-1.0/
+naijalogosoffice/__pycache__/
+naijalogosoffice/migrations/
+naijalogos/__pycache__/
+naijalogos/settings.py/
+auth_api/__pycache__/
+db.sqlite3
